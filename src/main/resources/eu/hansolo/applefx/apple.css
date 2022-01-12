@@ -1,0 +1,539 @@
+/*
+ * Copyright (c) 2018 by Gerrit Grunwald
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@font-face {
+    font-family: "SF Pro";
+    src: url('fonts/SF-Pro-Display-Regular.ttf');
+}
+
+/********** Apple General *********/
+.apple {
+    -BLUE-AQUA    : rgb(0, 122, 255);
+    -BLUE-DARK    : rgb(10, 132, 255);
+    -BROWN-AQUA   : rgb(162, 132, 94);
+    -BROWN-DARK   : rgb(172, 142, 104);
+    -GRAY-AQUA    : rgb(142, 142, 147);
+    -GRAY-DARK    : rgb(152, 152, 157);
+    -GREEN-AQUA   : rgb(40, 205, 65);
+    -GREEN-DARK   : rgb(50, 215, 75);
+    -INIDIGO-AQUA : rgb(88, 86, 214);
+    -INDIGO-DARK  : rgb(94, 92, 230);
+    -ORANGE-AQUA  : rgb(255, 149, 0);
+    -ORANGE-DARK  : rgb(255, 159, 0);
+    -PINK-AQUA    : rgb(255, 45, 85);
+    -PINK-DARK    : rgb(255, 55, 95);
+    -PURPLE-AQUA  : rgb(175, 82, 222);
+    -PURPLE-DARK  : rgb(191, 90, 242);
+    -RED-AQUA     : rgb(255, 59, 48);
+    -RED-DARK     : rgb(255, 69, 58);
+    -TEAL-AQUA    : rgb(85, 190, 240);
+    -TEAL-DARK    : rgb(90, 200, 245);
+    -YELLOW-AQUA  : rgb(255, 204, 0);
+    -YELLOW-DARK  : rgb(255, 214, 10);
+    -WHITE        : rgb(255, 255, 255);
+    -CUSTOM-GRAY  : rgb(229, 239, 244);
+    -LIGHT-GRAY   : rgb(229 ,229, 234);
+    -LIGHT-GRAY2  : rgb(209, 209, 214);
+    -MID-GRAY     : rgb(199, 199, 204);
+    -GRAY         : rgb(142, 142, 147);
+    -DARK-GRAY    : rgb(102, 102, 102);
+    -BLACK        : rgb(0, 0, 0);
+
+    -LIGHT-BACKGROUND     : rgb(236, 234, 234);
+    -LIGHT-CTRL-BACKGROUND: rgb(211, 210, 211);
+    -DARK-BACKGROUND      : rgb(31, 28, 29);
+    -DARK-CTRL-BACKGROUND : rgb(61, 59, 61);
+}
+
+
+.ios-button {
+    -fx-background-color : transparent;
+    -fx-background-radius: 8px;
+    -fx-border-color     : -BLUE-AQUA;
+    -fx-border-radius    : 8px;
+    -fx-alignment        : center;
+    -fx-font-size        : 14px;
+    -fx-text-fill        : -BLUE-AQUA;
+    -fx-font-family      : 'SF Pro';
+}
+.ios-button:pressed {
+    -fx-background-color: -BLUE-AQUA;
+    -fx-text-fill       : white;
+    -fx-border-color    : -BLUE-AQUA;
+}
+
+
+.ios-entry {
+    -title-fill      : rgb(0, 0, 0);
+    -subtitle-fill   : rgb(216, 216, 216);
+    -action-fill     : rgb(142, 142, 147);
+    -delete-fill     : -RED-AQUA;
+    -button-text-fill: rgb( 255, 255, 255);
+}
+.ios-entry .title {
+    -fx-font-size: 17px;
+    -fx-text-fill: -title-fill;
+}
+.ios-entry .subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: -subtitle-fill;
+}
+.ios-entry .action {
+    -fx-text-fill       : -button-text-fill;
+    -fx-alignment       : center;
+    -fx-font-size       : 18px;
+    -fx-background-color: -action-fill;
+}
+.ios-entry .delete {
+    -fx-text-fill       : -button-text-fill;
+    -fx-alignment       : center;
+    -fx-font-size       : 18px;
+    -fx-background-color: -delete-fill;
+}
+
+
+.ios-list-view {
+
+}
+.list-cell {
+    -fx-background      : -fx-control-inner-background;
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill       : -fx-text-background-color;
+    -fx-border-color    : rgb(229 ,229, 234);
+    -fx-border-width    : 0 0 1 0;
+}
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill       : white;
+}
+.list-cell:odd {
+    -fx-cell-hover-color: transparent;
+    -fx-background-color: rgb(255, 255, 255);
+}
+.list-cell:filled:hover {
+    -fx-cell-hover-color: transparent;
+    -fx-text-fill       : rgb(0, 0, 0);
+}
+.list-cell:empty {
+    visibility:hidden;
+}
+
+
+.ios-multi-button {
+    -circle-color   : rgb(199, 199, 204);
+    -add-color      : -GREEN-AQUA;
+    -delete-color   : -RED-AQUA;
+    -symbol-color   : rgb(255, 255, 255);
+    -selected-color : -BLUE-AQUA;
+}
+.ios-multi-button .circle {
+    -fx-stroke: -circle-color;
+    -fx-fill  : transparent;
+}
+.ios-multi-button .icon {
+    -fx-fill: transparent;
+}
+.ios-multi-button:checkbox:selected .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : -selected-color;
+}
+.ios-multi-button:checkbox:selected .icon {
+    -fx-background-color: -symbol-color;
+    -fx-rotate          : 225;
+    -fx-translate-y     : -2px;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M7,6L12.436,5.993L12.437,7.038L8,7L8,18L7,18L7,6Z";
+}
+.ios-multi-button:add .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : -add-color;
+}
+.ios-multi-button:add .icon {
+    -fx-background-color: -symbol-color;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M6,10.5L10.5,10.5L10.5,6L11.5,6L11.5,10.5L16,10.5L16,11.5L11.5,11.5L11.5,16L10.5,16L10.5,11.5L6,11.5L6,10.5Z";
+}
+.ios-multi-button:delete .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : -delete-color;
+}
+.ios-multi-button:delete .icon {
+    -fx-background-color: -symbol-color;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M5.5,5.5L16.5,5.5L16.5,7L5.5,7L5.5,5.5Z";
+}
+.ios-multi-button:dot .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : transparent;
+}
+.ios-multi-button:dot .icon {
+    -fx-background-color: -selected-color;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M3,11a8,8 0 1,0 16,0a8,8 0 1,0 -16,0Z";
+}
+.ios-multi-button:smalldot .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : transparent;
+}
+.ios-multi-button:smalldot .icon {
+    -fx-background-color: -selected-color;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M7,11a4,4 0 1,0 8,0a4,4 0 1,0 -8,0";
+}
+.ios-multi-button:info .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : transparent;
+}
+.ios-multi-button:info .icon {
+    -fx-background-color: -selected-color;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M11,28c-6.075,0 -11,-4.925 -11,-11c0,-6.075 4.925,-11 11,-11c6.075,0 11,4.925 11,11c0,6.075 -4.925,11 -11,11Zm0,-1c5.523,0 10,-4.477 10,-10c0,-5.523 -4.477,-10 -10,-10c-5.523,0 -10,4.477 -10,10c0,5.523 4.477,10 10,10Zm-2,-12.5l3,0l0,8l1,0l0,0.5l-4,0l0,-0.5l1,0l0,-7.5l-1,0l0,-0.5Zm1.75,-1.5c-0.69,0 -1.25,-0.56 -1.25,-1.25c0,-0.69 0.56,-1.25 1.25,-1.25c0.69,0 1.25,0.56 1.25,1.25c0,0.69 -0.56,1.25 -1.25,1.25Z";
+}
+.ios-multi-button:plus .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : transparent;
+}
+.ios-multi-button:plus .icon {
+    -fx-background-color: -selected-color;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M11,22c-6.075,0 -11,-4.925 -11,-11c0,-6.075 4.925,-11 11,-11c6.075,0 11,4.925 11,11c0,6.075 -4.925,11 -11,11Zm0,-1c5.523,0 10,-4.477 10,-10c0,-5.523 -4.477,-10 -10,-10c-5.523,0 -10,4.477 -10,10c0,5.523 4.477,10 10,10Zm-0.5,-10.5l0,-5l1,0l0,5l5,0l0,1l-5,0l0,5l-1,0l0,-5l-5,0l0,-1l5,0Z";
+}
+.ios-multi-button:checkmark .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : transparent;
+}
+.ios-multi-button:checkmark .icon {
+    -fx-background-color: transparent;
+    -fx-rotate          : 45;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M13.753,3.867L11.633,3.868L11.278,14.122L7.743,14.12L7.743,16.24L13.402,16.245L13.753,3.867Z";
+}
+.ios-multi-button:checkmark:selected .icon {
+    -fx-background-color: -selected-color;
+    -fx-rotate          : 45;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M13.753,3.867L11.633,3.868L11.278,14.122L7.743,14.12L7.743,16.24L13.402,16.245L13.753,3.867Z";
+}
+.ios-multi-button:forward .circle {
+    -fx-stroke: transparent;
+    -fx-fill  : transparent;
+}
+.ios-multi-button:forward .icon {
+    -fx-background-color: -selected-color;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M1.333,13l6.667,-6.5l-6.667,-6.5l-1.333,1.3l5.333,5.2l-5.333,5.2l1.333,1.3Z";
+}
+
+
+.ios-plus-minus-button {
+    -control-color: -BLUE-AQUA;
+}
+.ios-plus-minus-button .minus-button .minus-sign {
+    -fx-fill: -control-color;
+}
+.ios-plus-minus-button .minus-button:pressed .minus-sign {
+    -fx-fill: white;
+}
+.ios-plus-minus-button .plus-button .plus-sign {
+    -fx-fill: -control-color;
+}
+.ios-plus-minus-button .plus-button:pressed .plus-sign {
+    -fx-fill: white;
+}
+
+
+.ios-round-toggle-button,
+.ios-round-toggle-button:focused {
+    -selected-color      : -BLUE-AQUA;
+    -fx-background-color : rgba(255, 255, 255, 0.5);
+    -fx-background-radius: 54px;
+}
+.ios-round-toggle-button .graphics,
+.ios-round-toggle-button:focused .graphics{
+    -fx-background-color: white;
+    -fx-fill            : white;
+}
+.ios-round-toggle-button:inactive,
+.ios-round-toggle-button:inactive:focused {
+    -fx-background-color : rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 54px;
+}
+.ios-round-toggle-button:selected,
+.ios-round-toggle-button:selected:focused {
+    -fx-background-color : -selected-color;
+    -fx-background-radius: 54px;
+}
+.ios-round-toggle-button:selected .graphics,
+.ios-round-toggle-button:selected:focused .graphics {
+    -fx-background-color: white;
+    -fx-fill            : white;
+}
+.ios-round-toggle-button:inactive .graphics,
+.ios-round-toggle-button:inactive:focused .graphics {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-fill            : rgba(255, 255, 255, 0.5);
+}
+
+
+.ios-segmented-button-bar {
+    -control-color: -BLUE-AQUA;
+}
+.ios-segmented-button-bar .button,
+.ios-segmented-button-bar .toggle-button {
+    -fx-text-fill        : -control-color;
+    -fx-background-color : transparent;
+    -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
+    -fx-background-radius: 0;
+    -fx-padding          : 5 15 5 15;
+    -fx-border-color     : -control-color -control-color -control-color transparent;
+    -fx-border-width     : 1px;
+    -fx-border-radius    : 0;
+}
+.ios-segmented-button-bar .button.first,
+.ios-segmented-button-bar .toggle-button.first {
+    -fx-background-insets: 0, 1, 2 1 1 1;
+    -fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
+    -fx-border-radius    : 3 0 0 3, 2 0 0 2, 2 0 0 2;
+    -fx-border-color     : -control-color;
+}
+.ios-segmented-button-bar .button.last,
+.ios-segmented-button-bar .toggle-button.last {
+    -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
+    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
+    -fx-border-radius    : 0 3 3 0, 0 2 2 0, 0 2 2 0;
+    -fx-border-insets    : 0 0 0 -1;
+}
+.ios-segmented-button-bar .button:pressed,
+.ios-segmented-button-bar .toggle-button:selected {
+    -fx-background-color: -control-color;
+    -fx-text-fill       : white;
+}
+.tool-bar {
+    -fx-base             : black;
+    -fx-font-size        : 13px;
+    -fx-background-color : transparent;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-effect           : null;
+}
+.tool-bar .spacer {
+    -fx-padding: 0 5.417em 0 0;
+}
+
+
+.slider {
+    -thumb-fill         : white;
+    -track-fill         : rgba(0, 0, 0, 0.3);
+    -track-progress-fill: -BLUE-AQUA;
+}
+.slider .track {
+    -fx-background-color : -track-fill;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1 1 1 1;
+    -fx-padding          : 0.5px;
+}
+.slider:vertical .track {
+    -fx-background-color: -track-fill;
+}
+.slider:balance .track {
+    -fx-background-color : -track-fill;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1 1 1 1;
+    -fx-padding          : 0.5px;
+    -fx-border-color     : transparent -track-fill transparent -track-fill;
+    -fx-border-width     : 1;
+    -fx-border-insets    : -3 0 -3 0;
+}
+.slider:balance:vertical .track {
+    -fx-background-color: -track-fill;
+    -fx-border-color    : transparent -track-fill transparent -track-fill;
+    -fx-border-width    : 1;
+    -fx-border-insets   : 0 -3 0 -3;
+}
+.slider .center-line {
+    -fx-stroke    : transparent;
+    -fx-stroke-width: 1px;
+}
+.slider:balance .center-line,
+.slider:balance:vertical .center-line {
+    -fx-stroke: -track-fill;
+}
+.slider .track-progress {
+    -fx-background-color : -track-progress-fill;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1 1 1 1;
+    -fx-padding          : 0.1px;
+}
+.slider:vertical .track-progress {
+    -fx-background-color: -track-progress-fill;
+}
+.slider .axis {
+    -fx-tick-label-fill  : derive(-fx-text-background-color, 30%);
+    -fx-tick-length      : 5px;
+    -fx-minor-tick-length: 3px;
+    -fx-border-color     : null;
+}
+.slider .thumb {
+    -fx-padding          : 14px;
+    -fx-background-color : -thumb-fill;
+    -fx-background-insets: 0;
+    -fx-background-radius: 14px;
+    -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.25), 5, 0.0, 0, 2);
+}
+.slider .thumb:hover {
+    -fx-background-color: -thumb-fill;
+}
+.slider:focused .thumb {
+    -fx-background-color: -thumb-fill;
+}
+.slider:pressed .thumb {
+    -fx-background-color: -thumb-fill;
+}
+
+
+.ios-switch {
+    -background-color : rgb(229, 229, 229);
+    -dark-main-color  : rgb(0, 0, 0);
+    -selected-color   : -GREEN-AQUA;
+    -knob-color       : rgb(255, 255, 255);
+}
+.ios-switch .background-area {
+    -fx-fill: -background-color;
+}
+.ios-switch .one {
+    -fx-fill: rgb(255, 255, 255);
+}
+.ios-switch .main-area {
+    -fx-fill: linear-gradient(from 0% 0% to 100% 0%, rgb(244, 244, 244) 35%, rgb(255, 255, 255) 80%);
+}
+.ios-switch .zero {
+    -fx-fill  : null;
+    -fx-stroke: rgb(175, 175, 175);
+}
+.ios-switch .knob {
+    -fx-fill: -knob-color;
+}
+.ios-switch:dark .background-area {
+    -fx-fill: -background-color;
+}
+.ios-switch:dark .one {
+    -fx-fill: rgb(255, 255, 255);
+}
+.ios-switch:dark .main-area {
+    -fx-fill: -dark-main-color;
+}
+.ios-switch:dark .zero {
+    -fx-fill  : null;
+    -fx-stroke: rgb(175, 175, 175);
+}
+.ios-switch:dark .knob {
+    -fx-fill: -knob-color;
+}
+
+
+.macos-button {
+    -fx-font-family            : 'SF Pro';
+    -selection-color           : -BLUE-AQUA;
+    -disabled-color            : #5e5c58;
+    -disabled-text-color       : #a6a6a7;
+    -dark-control-background   : #5e5e5f;
+    -text-color                : #dddddd;
+    -light-control-background  : #ffffff;
+    -light-text-color          : #2a2a2a;
+    -light-disabled-color      : #f5f5f5;
+    -light-disabled-text-color : #b7b7b7;
+    -fx-pref-height            : 15;
+    -fx-background-color       : -light-control-background;
+    -fx-background-insets      : 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius      : 5px;
+    -fx-padding                : 2 5 2 5;
+    -fx-text-fill              : -light-text-color;
+    -fx-alignment              : CENTER;
+    -fx-content-display        : LEFT;
+    -fx-font-family            : 'SF Pro';
+    -fx-font-size              : 12px;
+}
+.macos-button:armed {
+    -fx-pref-height      : 16;
+    -fx-background-color : -selection-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 5px;
+    -fx-padding          : 2 5 2 5;
+    -fx-text-fill        : -text-color;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+}
+.macos-button:disabled {
+    -fx-background-color: -light-disabled-color;
+    -fx-text-fill       : -light-disabled-text-color;
+}
+.macos-button:dark {
+    -fx-pref-height      : 15;
+    -fx-background-color : -dark-control-background;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 5px;
+    -fx-padding          : 2 5 2 5;
+    -fx-text-fill        : -text-color;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+    -fx-font-family      : 'SF Pro';
+    -fx-font-size        : 12px;
+}
+.macos-button:armed {
+    -fx-pref-height      : 16;
+    -fx-background-color : -selection-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 5px;
+    -fx-padding          : 2 5 2 5;
+    -fx-text-fill        : -text-color;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+}
+.macos-button:dark:disabled {
+    -fx-background-color: -disabled-color;
+    -fx-text-fill       : -disabled-text-color;
+}
+
+
+.macos-switch {
+    -selected-color: -BLUE-AQUA;
+    -knob-color    : -WHITE;
+}
+.macos-switch .background-area {
+    -fx-fill: -LIGHT-CTRL-BACKGROUND;
+}
+.macos-switch .one {
+    -fx-fill: -WHITE;
+}
+.macos-switch .zero {
+    -fx-fill  : null;
+    -fx-stroke: rgb(175, 175, 175);
+}
+.macos-switch .knob {
+    -fx-fill: -knob-color;
+}
+.macos-switch:dark .background-area {
+    -fx-fill: -DARK-CTRL-BACKGROUND;
+}
+.macos-switch:dark .one {
+    -fx-fill: -WHITE;
+}
+.macos-switch:dark .zero {
+    -fx-fill  : null;
+    -fx-stroke: rgb(175, 175, 175);
+}
+.macos-switch:dark .knob {
+    -fx-fill: -knob-color;
+}
