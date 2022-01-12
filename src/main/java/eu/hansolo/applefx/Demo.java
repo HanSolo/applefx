@@ -18,7 +18,7 @@ package eu.hansolo.applefx;
 
 import eu.hansolo.applefx.IosMultiButton.Type;
 import eu.hansolo.applefx.event.MacEvt;
-import eu.hansolo.applefx.tools.Helper.MacOSSystemColor;
+import eu.hansolo.applefx.tools.MacOSSystemColor;
 import eu.hansolo.toolbox.evt.Evt;
 import eu.hansolo.toolbox.evt.EvtType;
 import javafx.application.Application;

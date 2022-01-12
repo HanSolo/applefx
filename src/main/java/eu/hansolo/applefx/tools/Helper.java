@@ -16,6 +16,7 @@
 
 package eu.hansolo.applefx.tools;
 
+import eu.hansolo.toolbox.OperatingSystem;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
@@ -24,106 +25,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static eu.hansolo.toolbox.Helper.getOperatingSystem;
 
 
 public class Helper {
-    public enum OperatingSystem { WINDOWS, MACOS, LINUX, ALPINE_LINUX, SOLARIS, NOT_FOUND }
-    public enum MacOSSystemColor {
-        BLUE(Color.rgb(0, 122, 255), Color.rgb(10, 132, 255)),
-        BROWN(Color.rgb(162, 132, 94), Color.rgb(172, 142, 104)),
-        GRAY(Color.rgb(142, 142, 147), Color.rgb(152, 152, 157)),
-        GREEN(Color.rgb(40, 205, 65), Color.rgb(50, 215, 75)),
-        INIDIGO(Color.rgb(88, 86, 214), Color.rgb(94, 92, 230)),
-        ORANGE(Color.rgb(255, 149, 0), Color.rgb(255, 159, 0)),
-        PINK(Color.rgb(255, 45, 85), Color.rgb(255, 55, 95)),
-        PURPLE(Color.rgb(175, 82, 222), Color.rgb(191, 90, 242)),
-        RED(Color.rgb(255, 59, 48), Color.rgb(255, 69, 58)),
-        TEAL(Color.rgb(85, 190, 240), Color.rgb(90, 200, 245)),
-        YELLOW(Color.rgb(255, 204, 0), Color.rgb(255, 214, 10)),
-
-        BACKGROUND(Color.rgb(236, 234, 234), Color.rgb(31, 28, 29)),
-        CTR_BACKGROUND(Color.rgb(211, 210, 211), Color.rgb(61, 59, 61));
-
-        final Color   colorAqua;
-        final Color   colorDark;
-
-
-        MacOSSystemColor(final Color colorAqua, final Color colorDark) {
-            this.colorAqua = colorAqua;
-            this.colorDark = colorDark;
-        }
-
-        public Color getColorAqua() { return colorAqua; }
-        public Color getColorDark() { return colorDark; }
-
-        public String getAquaStyleClass() { return name() + "-AQUA"; }
-        public String getDarkStyleClass() { return name() + "-DARK"; }
-
-        public boolean isGivenColor(final Color color) {
-            return (colorAqua.equals(color) || colorDark.equals(color));
-        }
-
-        public static final List<MacOSSystemColor> getAsList() { return Arrays.asList(values()); }
-    }
-
-    public enum MacOSAccentColor {
-        MULTI_COLOR(null, MacOSSystemColor.BLUE.colorAqua, Color.web("#b3d7ff"), Color.web("#7daaf0"), MacOSSystemColor.BLUE.colorDark, Color.web("#3f638b"), Color.web("#296e99")),
-        GRAPHITE(-1, MacOSSystemColor.GRAY.colorAqua, Color.web("#e0e0e0"), Color.web("#c4c2c4"), MacOSSystemColor.GRAY.colorDark, Color.web("#696665"), Color.web("#7d7b7a")),
-        RED(0, MacOSSystemColor.RED.colorAqua, Color.web("#f5c3c5"), Color.web("#df878b"), MacOSSystemColor.RED.colorDark, Color.web("#8b5758"), Color.web("#99585a")),
-        ORANGE(1, MacOSSystemColor.ORANGE.colorAqua, Color.web("#fcd9bb"), Color.web("#ecae7d"), MacOSSystemColor.ORANGE.colorDark, Color.web("#886547"), Color.web("#9a7336")),
-        YELLOW(2, MacOSSystemColor.YELLOW.colorAqua, Color.web("#feeebe"), Color.web("#f1d283"), MacOSSystemColor.YELLOW.colorDark, Color.web("#8b7a40"), Color.web("#9b982b")),
-        GREEN(3, MacOSSystemColor.GREEN.colorAqua, Color.web("#d0eac7"), Color.web("#9dcb8f"), MacOSSystemColor.GREEN.colorDark, Color.web("#5c7653"), Color.web("#629450")),
-        BLUE(4, MacOSSystemColor.BLUE.colorAqua, Color.web("#b3d7ff"), Color.web("#7daaf0"), MacOSSystemColor.BLUE.colorDark, Color.web("#3f638b"), Color.web("#296e99")),
-        PURPLE(5, MacOSSystemColor.PURPLE.colorAqua, Color.web("#dfc5df"), Color.web("#b98ab8"), MacOSSystemColor.PURPLE.colorDark, Color.web("#6f566f"), Color.web("#895687")),
-        PINK(6, MacOSSystemColor.PINK.colorAqua, Color.web("#fccae2"), Color.web("#eb93bc"), MacOSSystemColor.PINK.colorDark, Color.web("#87566d"), Color.web("#995582"));
-
-        final Integer key;
-        final Color   colorAqua;
-        final Color   colorAquaHighlight;
-        final Color   colorAquaFocus;
-        final Color   colorDark;
-        final Color   colorDarkHighlight;
-        final Color   colorDarkFocus;
-
-
-        MacOSAccentColor(final Integer key,
-                         final Color colorAqua, final Color colorAquaHighlight, final Color colorAquaFocus,
-                         final Color colorDark, final Color colorDarkHighlight, final Color colorDarkFocus) {
-            this.key                = key;
-            this.colorAqua          = colorAqua;
-            this.colorAquaHighlight = colorAquaHighlight;
-            this.colorAquaFocus     = colorAquaFocus;
-            this.colorDark          = colorDark;
-            this.colorDarkHighlight = colorDarkHighlight;
-            this.colorDarkFocus     = colorDarkFocus;
-        }
-
-        public Integer getKey() { return key; }
-
-        public Color getColorAqua() { return colorAqua; }
-
-        public Color getColorAquaHighlight() { return colorAquaHighlight; }
-
-        public Color getColorAquaFocus() { return colorAquaFocus; }
-
-        public Color getColorDark() { return colorDark; }
-
-        public Color getColorDarkHighlight() { return colorDarkHighlight; }
-
-        public Color getColorDarkFocus() { return colorDarkFocus; }
-
-        public boolean isGivenColor(final Color color) {
-            return (colorAqua.equals(color) || colorDark.equals(color));
-        }
-
-        public static final List<MacOSAccentColor> getAsList() { return Arrays.asList(values()); }
-    }
-
     public static final Map<Integer, Color[]> MACOS_ACCENT_COLOR_MAP = Map.of(-1, new Color[] { MacOSSystemColor.GRAY.colorAqua, MacOSSystemColor.GRAY.colorDark },
                                                                               0, new Color[] { MacOSSystemColor.RED.colorAqua, MacOSSystemColor.RED.colorDark },
                                                                               1, new Color[] { MacOSSystemColor.ORANGE.colorAqua, MacOSSystemColor.ORANGE.colorDark },
@@ -132,8 +40,6 @@ public class Helper {
                                                                               4, new Color[] { MacOSSystemColor.BLUE.colorAqua, MacOSSystemColor.BLUE.colorDark },
                                                                               5, new Color[] { MacOSSystemColor.PURPLE.colorAqua, MacOSSystemColor.PURPLE.colorDark },
                                                                               6, new Color[] { MacOSSystemColor.PINK.colorAqua, MacOSSystemColor.PINK.colorDark });
-
-    private static final String[] DETECT_ALPINE_CMDS = { "/bin/sh", "-c", "cat /etc/os-release | grep 'NAME=' | grep -ic 'Alpine'" };
 
     private static final String   REGQUERY_UTIL      = "reg query ";
     private static final String   REGDWORD_TOKEN     = "REG_DWORD";
@@ -259,28 +165,6 @@ public class Helper {
         }
     }
 
-    public static final OperatingSystem getOperatingSystem() {
-        String os = System.getProperty("os.name").toLowerCase();
-        if (os.indexOf("win") >= 0) {
-            return OperatingSystem.WINDOWS;
-        } else if (os.indexOf("apple") >= 0) {
-            return OperatingSystem.MACOS;
-        } else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0) {
-            try {
-                final ProcessBuilder processBuilder = new ProcessBuilder(DETECT_ALPINE_CMDS);
-                final Process        process        = processBuilder.start();
-                final String         result         = new BufferedReader(new InputStreamReader(process.getInputStream())).lines().collect(Collectors.joining("\n"));
-                return null == result ? OperatingSystem.LINUX : result.equals("1") ? OperatingSystem.ALPINE_LINUX : OperatingSystem.LINUX;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return OperatingSystem.LINUX;
-            }
-        } else if (os.indexOf("sunos") >= 0) {
-            return OperatingSystem.SOLARIS;
-        } else {
-            return OperatingSystem.NOT_FOUND;
-        }
-    }
 
     // ******************** Internal Classes **********************************
     static class StreamReader extends Thread {
