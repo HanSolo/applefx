@@ -54,5 +54,5 @@ public enum MacOSAccentColor {
         return (colorAqua.equals(color) || colorDark.equals(color));
     }
 
-    public static final List<MacOSAccentColor> getAsList() { return Arrays.asList(.values()); }
+    public static final List<MacOSAccentColor> getAsList() { return Arrays.asList(values()); }
 }

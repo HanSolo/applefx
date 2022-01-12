@@ -32,5 +32,5 @@ public enum MacOSSystemColor {
         return (colorAqua.equals(color) || colorDark.equals(color));
     }
 
-    public static final List<MacOSSystemColor> getAsList() { return Arrays.asList(.values()); }
+    public static final List<MacOSSystemColor> getAsList() { return Arrays.asList(values()); }
 }
