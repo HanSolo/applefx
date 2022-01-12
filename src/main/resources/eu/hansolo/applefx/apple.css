@@ -333,21 +333,29 @@
 }
 
 
-.slider {
+.ios-slider {
     -thumb-fill         : white;
-    -track-fill         : rgba(0, 0, 0, 0.3);
+    -track-fill         : rgba(0, 0, 0, 0.1);
     -track-progress-fill: -BLUE-AQUA;
 }
-.slider .track {
+.ios-slider:dark {
+    -thumb-fill         : white;
+    -track-fill         : rgba(255, 255, 255, 0.1);
+    -track-progress-fill: -BLUE-DARK;
+}
+.ios-slider .track {
     -fx-background-color : -track-fill;
     -fx-background-insets: 0;
     -fx-background-radius: 1 1 1 1;
     -fx-padding          : 0.5px;
+    -fx-min-height       : 2px;
+    -fx-max-height       : 2px;
+    -fx-pref-height      : 2px;
 }
-.slider:vertical .track {
+.ios-slider:vertical .track {
     -fx-background-color: -track-fill;
 }
-.slider:balance .track {
+.ios-slider:balance .track {
     -fx-background-color : -track-fill;
     -fx-background-insets: 0;
     -fx-background-radius: 1 1 1 1;
@@ -356,49 +364,49 @@
     -fx-border-width     : 1;
     -fx-border-insets    : -3 0 -3 0;
 }
-.slider:balance:vertical .track {
+.ios-slider:balance:vertical .track {
     -fx-background-color: -track-fill;
     -fx-border-color    : transparent -track-fill transparent -track-fill;
     -fx-border-width    : 1;
     -fx-border-insets   : 0 -3 0 -3;
 }
-.slider .center-line {
+.ios-slider .center-line {
     -fx-stroke    : transparent;
     -fx-stroke-width: 1px;
 }
-.slider:balance .center-line,
-.slider:balance:vertical .center-line {
+.ios-slider:balance .center-line,
+.ios-slider:balance:vertical .center-line {
     -fx-stroke: -track-fill;
 }
-.slider .track-progress {
+.ios-slider .track-progress {
     -fx-background-color : -track-progress-fill;
     -fx-background-insets: 0;
     -fx-background-radius: 1 1 1 1;
-    -fx-padding          : 0.1px;
+    -fx-padding          : 0.5px;
 }
-.slider:vertical .track-progress {
+.ios-slider:vertical .track-progress {
     -fx-background-color: -track-progress-fill;
 }
-.slider .axis {
+.ios-slider .axis {
     -fx-tick-label-fill  : derive(-fx-text-background-color, 30%);
     -fx-tick-length      : 5px;
     -fx-minor-tick-length: 3px;
     -fx-border-color     : null;
 }
-.slider .thumb {
+.ios-slider .thumb {
     -fx-padding          : 14px;
     -fx-background-color : -thumb-fill;
     -fx-background-insets: 0;
     -fx-background-radius: 14px;
     -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.25), 5, 0.0, 0, 2);
 }
-.slider .thumb:hover {
+.ios-slider .thumb:hover {
     -fx-background-color: -thumb-fill;
 }
-.slider:focused .thumb {
+.ios-slider:focused .thumb {
     -fx-background-color: -thumb-fill;
 }
-.slider:pressed .thumb {
+.ios-slider:pressed .thumb {
     -fx-background-color: -thumb-fill;
 }
 
@@ -536,4 +544,99 @@
 }
 .macos-switch:dark .knob {
     -fx-fill: -knob-color;
+}
+
+
+.macos-slider {
+    -thumb-fill         : -GRAY-AQUA;
+    -track-fill         : rgba(0, 0, 0, 0.1);
+    -track-progress-fill: -RED-AQUA;
+    -border-color       : rgba(0, 0, 0, 0.05);
+}
+.macos-slider:dark {
+    -thumb-fill         : -GRAY-DARK;
+    -track-fill         : rgba(255, 255, 255, 0.1);
+    -track-progress-fill: -RED-DARK;
+    -border-color       : rgba(255, 255, 255, 0.05);
+}
+.macos-slider .track {
+    -fx-background-color : -track-fill;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1 1 1 1;
+    -fx-border-width     : 1 0 1 0;
+    -fx-border-style     : solid none solid none;
+    -fx-border-color     : -border-color;
+    -fx-padding          : 0.5px;
+    -fx-min-height       : 2.5px;
+    -fx-max-height       : 2.5px;
+    -fx-pref-height      : 2.5px;
+}
+.macos-slider:vertical .track {
+    -fx-background-color: -track-fill;
+    -fx-border-width    : 0 1 0 1;
+    -fx-border-style    : none solid none solid;
+    -fx-border-color    : -border-color;
+    -fx-min-width       : 2.5px;
+    -fx-max-width       : 2.5px;
+    -fx-pref-width      : 2.5px;
+}
+.macos-slider:balance .track {
+    -fx-background-color : -track-fill;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1 1 1 1;
+    -fx-padding          : 0.5px;
+    -fx-border-color     : transparent -track-fill transparent -track-fill;
+    -fx-border-width     : 1;
+    -fx-border-insets    : -3 0 -3 0;
+}
+.macos-slider:balance:vertical .track {
+    -fx-background-color: -track-fill;
+    -fx-border-color    : transparent -track-fill transparent -track-fill;
+    -fx-border-width    : 1;
+    -fx-border-insets   : 0 -3 0 -3;
+}
+.macos-slider .center-line {
+    -fx-stroke    : transparent;
+    -fx-stroke-width: 1px;
+}
+.macos-slider:balance .center-line,
+.macos-slider:balance:vertical .center-line {
+    -fx-stroke: -track-fill;
+}
+.macos-slider .track-progress {
+    -fx-background-color : -track-progress-fill;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1 1 1 1;
+    -fx-padding          : 0.5px;
+}
+.macos-slider:vertical .track-progress {
+    -fx-background-color: -track-progress-fill;
+}
+.macos-slider .axis {
+    -fx-tick-label-fill  : -track-fill;
+    -fx-tick-length      : 8px;
+    -fx-minor-tick-length: 8px;
+    -fx-border-color     : -border-color;
+}
+.macos-slider .axis .axis-tick-mark,
+.macos-slider .axis .axis-minor-tick-mark {
+    -fx-fill        : null;
+    -fx-stroke      : -track-fill;
+    -fx-stroke-width: 2;
+}
+.macos-slider .thumb {
+    -fx-padding          : 14px;
+    -fx-background-color : -thumb-fill;
+    -fx-background-insets: 0;
+    -fx-background-radius: 14px;
+    -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.25), 5, 0.0, 0, 2);
+}
+.macos-slider .thumb:hover {
+    -fx-background-color: -thumb-fill;
+}
+.macos-slider:focused .thumb {
+    -fx-background-color: -thumb-fill;
+}
+.macos-slider:pressed .thumb {
+    -fx-background-color: -thumb-fill;
 }

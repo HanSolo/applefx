@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2022 by Gerrit Grunwald
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package eu.hansolo.applefx;
 
 import eu.hansolo.toolbox.Helper;
@@ -33,7 +17,7 @@ import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 
-public class IosSliderSkin extends SkinBase<Slider> {
+public class MacosSliderSkin extends SkinBase<Slider> {
     private Slider                  slider;
     private NumberAxis              tickLine       = null;
     private double                  trackToTickGap = 2;
@@ -57,7 +41,7 @@ public class IosSliderSkin extends SkinBase<Slider> {
     private StringConverter<Number> stringConverterWrapper;
 
 
-    public IosSliderSkin(final Slider slider) {
+    public MacosSliderSkin(final Slider slider) {
         super(slider);
         this.slider = slider;
 
@@ -65,32 +49,32 @@ public class IosSliderSkin extends SkinBase<Slider> {
         slider.requestLayout();
         registerChangeListener(slider.minProperty(), e -> {
             if (showTickMarks && tickLine != null) { tickLine.setLowerBound(slider.getMin()); }
-            getSkinnable().requestLayout();
+            slider.requestLayout();
         });
         registerChangeListener(slider.maxProperty(), e -> {
             if (showTickMarks && tickLine != null) { tickLine.setUpperBound(slider.getMax()); }
-            getSkinnable().requestLayout();
+            slider.requestLayout();
         });
         registerChangeListener(slider.valueProperty(), e -> positionThumb(trackClicked));
         registerChangeListener(slider.orientationProperty(), e -> {
             if (showTickMarks && tickLine != null) {
                 boolean isVertical = slider.getOrientation() == Orientation.VERTICAL;
-                tickLine.setSide(isVertical ? Side.RIGHT : (slider.getOrientation() == null) ? Side.RIGHT: Side.BOTTOM);
+                tickLine.setSide(isVertical ? Side.RIGHT : (slider.getOrientation() == null) ? Side.RIGHT : Side.BOTTOM);
             }
-            getSkinnable().requestLayout();
+            slider.requestLayout();
         });
         registerChangeListener(slider.showTickMarksProperty(), e -> setShowTickMarks(slider.isShowTickMarks(), slider.isShowTickLabels()));
         registerChangeListener(slider.showTickLabelsProperty(), e -> setShowTickMarks(slider.isShowTickMarks(), slider.isShowTickLabels()));
         registerChangeListener(slider.majorTickUnitProperty(), e -> {
             if (tickLine != null) {
                 tickLine.setTickUnit(slider.getMajorTickUnit());
-                getSkinnable().requestLayout();
+                slider.requestLayout();
             }
         });
         registerChangeListener(slider.minorTickCountProperty(), e -> {
             if (tickLine != null) {
                 tickLine.setMinorTickCount(Math.max(slider.getMinorTickCount(),0) + 1);
-                getSkinnable().requestLayout();
+                slider.requestLayout();
             }
         });
         registerChangeListener(slider.labelFormatterProperty(), e -> {
@@ -119,8 +103,7 @@ public class IosSliderSkin extends SkinBase<Slider> {
             iosSlider = null;
         }
 
-        stringConverterWrapper = new StringConverter<Number>() {
-            Slider slider = getSkinnable();
+        stringConverterWrapper = new StringConverter<>() {
             @Override public String toString(Number object) {
                 return(object != null) ? slider.getLabelFormatter().toString(object.doubleValue()) : "";
             }
@@ -135,7 +118,7 @@ public class IosSliderSkin extends SkinBase<Slider> {
         thumb = new StackPane() {
             @Override public Object queryAccessibleAttribute(AccessibleAttribute attribute, Object... parameters) {
                 switch (attribute) {
-                    case VALUE -> { return getSkinnable().getValue(); }
+                    case VALUE -> { return slider.getValue(); }
                     default    -> { return super.queryAccessibleAttribute(attribute, parameters); }
                 }
             }
@@ -160,13 +143,13 @@ public class IosSliderSkin extends SkinBase<Slider> {
         }
 
         getChildren().setAll(track, centerLine, trackProgress, thumb);
-        setShowTickMarks(getSkinnable().isShowTickMarks(), getSkinnable().isShowTickLabels());
+        setShowTickMarks(slider.isShowTickMarks(), slider.isShowTickLabels());
 
 
         track.setOnMousePressed(me -> {
             if (!thumb.isPressed()) {
                 trackClicked = true;
-                if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
+                if (slider.getOrientation() == Orientation.HORIZONTAL) {
                     trackPress(me, (me.getX() / trackLength));
                 } else {
                     trackPress(me, (me.getY() / trackLength));
@@ -176,7 +159,7 @@ public class IosSliderSkin extends SkinBase<Slider> {
         });
         track.setOnMouseDragged(me -> {
             if (!thumb.isPressed()) {
-                if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
+                if (slider.getOrientation() == Orientation.HORIZONTAL) {
                     trackPress(me, (me.getX() / trackLength));
                 } else {
                     trackPress(me, (me.getY() / trackLength));
@@ -187,29 +170,27 @@ public class IosSliderSkin extends SkinBase<Slider> {
         thumb.setOnMousePressed(me -> {
             thumbPressed(me, 0.0f);
             dragStart = thumb.localToParent(me.getX(), me.getY());
-            preDragThumbPos = (getSkinnable().getValue() - getSkinnable().getMin()) /
-                              (getSkinnable().getMax() - getSkinnable().getMin());
+            preDragThumbPos = (slider.getValue() - slider.getMin()) /
+                              (slider.getMax() - slider.getMin());
         });
         thumb.setOnMouseReleased(me -> thumbReleased(me));
         thumb.setOnMouseDragged(me -> {
             Point2D cur = thumb.localToParent(me.getX(), me.getY());
-            double dragPos = (getSkinnable().getOrientation() == Orientation.HORIZONTAL)?
+            double dragPos = (slider.getOrientation() == Orientation.HORIZONTAL)?
                              cur.getX() - dragStart.getX() : -(cur.getY() - dragStart.getY());
             thumbDragged(me, preDragThumbPos + dragPos / trackLength);
         });
     }
 
     @Override protected double computeMinWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        final Slider s = getSkinnable();
-        if (s.getOrientation() == Orientation.HORIZONTAL) {
+        if (slider.getOrientation() == Orientation.HORIZONTAL) {
             return (leftInset + minTrackLength() + thumb.minWidth(-1) + rightInset);
         } else {
             return (leftInset + thumb.prefWidth(-1) + rightInset);
         }
     }
     @Override protected double computeMinHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        final Slider s = getSkinnable();
-        if (s.getOrientation() == Orientation.HORIZONTAL) {
+        if (slider.getOrientation() == Orientation.HORIZONTAL) {
             double axisHeight = showTickMarks ? (tickLine.prefHeight(-1) + trackToTickGap) : 0;
             return (topInset + thumb.prefHeight(-1) + axisHeight + bottomInset);
         } else {
@@ -217,8 +198,7 @@ public class IosSliderSkin extends SkinBase<Slider> {
         }
     }
     @Override protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        final Slider s = getSkinnable();
-        if (s.getOrientation() == Orientation.HORIZONTAL) {
+        if (slider.getOrientation() == Orientation.HORIZONTAL) {
             if(showTickMarks) {
                 return Math.max(140, tickLine.prefWidth(-1));
             } else {
@@ -230,8 +210,7 @@ public class IosSliderSkin extends SkinBase<Slider> {
         }
     }
     @Override protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        final Slider s = getSkinnable();
-        if (s.getOrientation() == Orientation.HORIZONTAL) {
+        if (slider.getOrientation() == Orientation.HORIZONTAL) {
             return topInset + Math.max(thumb.prefHeight(-1), track.prefHeight(-1)) +
                    ((showTickMarks) ? (trackToTickGap+tickLine.prefHeight(-1)) : 0)  + bottomInset;
         } else {
@@ -243,15 +222,15 @@ public class IosSliderSkin extends SkinBase<Slider> {
         }
     }
     @Override protected double computeMaxWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
+        if (slider.getOrientation() == Orientation.HORIZONTAL) {
             return Double.MAX_VALUE;
         } else {
-            return getSkinnable().prefWidth(-1);
+            return slider.prefWidth(-1);
         }
     }
     @Override protected double computeMaxHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
-            return getSkinnable().prefHeight(width);
+        if (slider.getOrientation() == Orientation.HORIZONTAL) {
+            return slider.prefHeight(width);
         } else {
             return Double.MAX_VALUE;
         }
@@ -260,7 +239,6 @@ public class IosSliderSkin extends SkinBase<Slider> {
 
     private void setShowTickMarks(final boolean ticksVisible, final boolean labelsVisible) {
         showTickMarks = (ticksVisible || labelsVisible);
-        Slider slider = getSkinnable();
         if (showTickMarks) {
             if (tickLine == null) {
                 tickLine = new NumberAxis();
@@ -290,15 +268,14 @@ public class IosSliderSkin extends SkinBase<Slider> {
             //            tickLine = null;
         }
 
-        getSkinnable().requestLayout();
+        slider.requestLayout();
     }
 
     private void positionThumb(final boolean animate) {
-        Slider s = getSkinnable();
-        if (s.getValue() > s.getMax()) return;// this can happen if we are bound to something
-        final boolean HORIZONTAL = s.getOrientation() == Orientation.HORIZONTAL;
-        final double  END_X      = (HORIZONTAL) ? trackStart + (((trackLength * ((s.getValue() - s.getMin()) / (s.getMax() - s.getMin()))) - thumbWidth/2)) : thumbLeft;
-        final double  END_Y      = (HORIZONTAL) ? thumbTop : snappedTopInset() + trackLength - (trackLength * ((s.getValue() - s.getMin()) / (s.getMax() - s.getMin()))); //  - thumbHeight/2
+        if (slider.getValue() > slider.getMax()) return;// this can happen if we are bound to something
+        final boolean HORIZONTAL = slider.getOrientation() == Orientation.HORIZONTAL;
+        final double  END_X      = (HORIZONTAL) ? trackStart + (((trackLength * ((slider.getValue() - slider.getMin()) / (slider.getMax() - slider.getMin()))) - thumbWidth/2)) : thumbLeft;
+        final double  END_Y      = (HORIZONTAL) ? thumbTop : snappedTopInset() + trackLength - (trackLength * ((slider.getValue() - slider.getMin()) / (slider.getMax() - slider.getMin()))); //  - thumbHeight/2
 
         if (animate) {
             // lets animate the thumb transition
@@ -370,26 +347,27 @@ public class IosSliderSkin extends SkinBase<Slider> {
 
 
     @Override protected void layoutChildren(final double X, final double Y, final double W, final double H) {
-        double value = getSkinnable().getValue();
-        double range = Math.abs(getSkinnable().getMax() - getSkinnable().getMin());
-
-        thumbWidth   = snapSizeX(thumb.prefWidth(-1));
-        thumbHeight  = snapSizeY(thumb.prefHeight(-1));
-        thumb.resize(thumbWidth, thumbHeight);
-
+        double value       = slider.getValue();
+        double range       = Math.abs(slider.getMax() - slider.getMin());
         double trackRadius = track.getBackground() == null ? 0 : track.getBackground().getFills().size() > 0 ?
                                                                  track.getBackground().getFills().get(0).getRadii().getTopLeftHorizontalRadius() : 0;
+        trackProgress.setVisible(!slider.isShowTickMarks());
 
-        if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
+        if (slider.getOrientation() == Orientation.HORIZONTAL) {
+            thumbWidth               = 8;
+            thumbHeight              = 20;
+            thumb.resize(thumbWidth, thumbHeight);
+
             double tickLineHeight    =  (showTickMarks) ? tickLine.prefHeight(-1) : 0;
             double trackHeight       = snapSizeY(track.prefHeight(-1));
             double trackAreaHeight   = Math.max(trackHeight,thumbHeight);
             double totalHeightNeeded = trackAreaHeight  + ((showTickMarks) ? trackToTickGap+tickLineHeight : 0);
             double startY            = Y + ((H - totalHeightNeeded)/2);
-            double trackTop          = (int)(startY + ((trackAreaHeight-trackHeight)/2));
+            double trackTop          = (int)(startY + ((trackAreaHeight - trackHeight) / 2));
+
             trackLength              = snapSizeX(W - thumbWidth);
-            trackStart               = snapPositionX(X + (thumbWidth/2));
-            thumbTop                 = (int)(startY + ((trackAreaHeight-thumbHeight)/2));
+            trackStart               = snapPositionX(X + (thumbWidth / 2));
+            thumbTop                 = (int)(startY + ((trackAreaHeight - thumbHeight) / 2));
 
             positionThumb(false);
             // layout track
@@ -404,12 +382,12 @@ public class IosSliderSkin extends SkinBase<Slider> {
 
             // layout trackProgress
             trackProgress.resizeRelocate((int)(trackStart - trackRadius), trackTop ,
-                                        (int)((trackLength * (value / range)) + trackRadius + trackRadius), trackHeight);
+                                         (int)((trackLength * (value / range)) + trackRadius + trackRadius), trackHeight);
 
             // layout tick line
             if (showTickMarks) {
                 tickLine.setLayoutX(trackStart);
-                tickLine.setLayoutY(trackTop+trackHeight+trackToTickGap);
+                tickLine.setLayoutY(snapPositionY(trackTop + trackHeight * 0.5 - tickLineHeight * 0.5 + 1));
                 tickLine.resize(trackLength, tickLineHeight);
                 tickLine.requestAxisLayout();
             } else {
@@ -420,6 +398,10 @@ public class IosSliderSkin extends SkinBase<Slider> {
                 tickLine = null;
             }
         } else {
+            thumbWidth               = 20;
+            thumbHeight              = 8;
+            thumb.resize(thumbWidth, thumbHeight);
+
             double tickLineWidth    = (showTickMarks) ? tickLine.prefWidth(-1) : 0;
             double trackWidth       = snapSizeX(track.prefWidth(-1));
             double trackAreaWidth   = Math.max(trackWidth,thumbWidth);
@@ -446,9 +428,9 @@ public class IosSliderSkin extends SkinBase<Slider> {
 
             // layout trackProgress
             trackProgress.resizeRelocate(trackLeft,
-                                 (int)(trackStart - trackRadius),
-                                 trackWidth,
-                                 (int)((trackLength * (value / range)) + trackRadius + trackRadius));
+                                         (int)(trackStart - trackRadius),
+                                         trackWidth,
+                                         (int)((trackLength * (value / range)) + trackRadius + trackRadius));
 
             // layout tick line
             if (showTickMarks) {

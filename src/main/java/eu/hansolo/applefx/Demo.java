@@ -65,6 +65,7 @@ public class Demo extends Application {
     private IosSwitch                switch1;
     private MacosButton              macosButton;
     private MacosSwitch              macosSwitch;
+    private MacosSlider              macosSlider;
 
 
     @Override public void init() {
@@ -91,9 +92,11 @@ public class Demo extends Application {
         listView.setCellFactory(p -> new IosEntryCell());
 
         slider = new IosSlider();
+        slider.setDark(true);
 
         balanceSlider = new IosSlider();
         balanceSlider.setBalance(true);
+        balanceSlider.setDark(true);
 
         Button button1 = new Button("Label");
         Button button2 = new Button("Label");
@@ -149,6 +152,12 @@ public class Demo extends Application {
                                         //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
                                         .build();
 
+        macosSlider = new MacosSlider();
+        macosSlider.setDark(true);
+        macosSlider.setBlockIncrement(10);
+        macosSlider.setShowTickMarks(true);
+        macosSlider.setSnapToTicks(true);
+
 
         registerListeners();
     }
@@ -182,7 +191,7 @@ public class Demo extends Application {
     }
 
     @Override public void start(Stage stage) {
-        VBox pane = new VBox(10, listView, slider, balanceSlider, buttonBar1, buttonBar2, plusMinusButton, button, toggleButton, switch1, macosButton, macosSwitch);
+        VBox pane = new VBox(10, listView, slider, balanceSlider, buttonBar1, buttonBar2, plusMinusButton, button, toggleButton, switch1, macosButton, macosSwitch, macosSlider);
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);
         pane.setBackground(new Background(new BackgroundFill(MacOSSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
