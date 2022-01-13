@@ -640,3 +640,73 @@
 .macos-slider:pressed .thumb {
     -fx-background-color: -thumb-fill;
 }
+
+
+.macos-text-field {
+    -fx-control-inner-background: white;
+    -fx-text-fill               : black;
+    -fx-highlight-fill          : derive(-fx-control-inner-background,-20%);
+    -fx-highlight-text-fill     : -fx-text-inner-color;
+    -fx-prompt-text-fill        : derive(-fx-control-inner-background,-30%);
+    -fx-background-color        : linear-gradient(to bottom, rgb(255, 246, 245) 0%, rgb(220, 220, 220) 99%, rgb(224, 223, 223) 100%), -fx-control-inner-background;
+    -fx-background-insets       : 0, 1 1 2 1;
+    -fx-background-radius       : 0, 0;
+    -fx-cursor                  : text;
+    -fx-padding                 : 0.333333em 0.583em 0.333333em 0.583em; /* 4 7 4 7 */
+}
+.macos-text-field:focused {
+    -fx-highlight-fill     : -fx-accent;
+    -fx-highlight-text-fill: white;
+    -fx-background-color   : -fx-focus-color,
+                             -fx-control-inner-background,
+                             -fx-faint-focus-color,
+                             linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-insets  : -0.2, 1, -1.4, 3;
+    -fx-background-radius  : 0, 0, 0;
+    -fx-prompt-text-fill   : transparent;
+}
+
+.macos-text-field:dark {
+    -fx-control-inner-background: rgb(45, 43, 41);
+    -fx-text-fill               : rgb(255, 246, 245);
+    -fx-highlight-fill          : derive(-fx-control-inner-background,+20%);
+    -fx-highlight-text-fill     : -fx-text-inner-color;
+    -fx-prompt-text-fill        : derive(-fx-control-inner-background,+30%);
+    -fx-background-color        : linear-gradient(to bottom, rgb(47, 45, 44) 0%, rgb(41, 38, 37) 1%, rgb(55, 52, 21) 99%, rgb(61, 61, 61) 100%), -fx-control-inner-background;
+    -fx-background-insets       : 0, 2 1 2 1;
+    -fx-background-radius       : 0, 0;
+    -fx-cursor                  : text;
+    -fx-padding                 : 0.333333em 0.583em 0.333333em 0.583em; /* 4 7 4 7 */
+}
+.macos-text-field:dark:focused {
+    -fx-highlight-fill     : -fx-accent;
+    -fx-highlight-text-fill: white;
+    -fx-background-color   : -fx-focus-color,
+    -fx-control-inner-background,
+    -fx-faint-focus-color,
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-insets  : -0.2, 1, -1.4, 3;
+    -fx-background-radius  : 3, 2, 4, 0;
+    -fx-prompt-text-fill   : transparent;
+}
+
+
+.macos-separator:horizontal .line {
+    -fx-border-color : rgb(216, 216, 216) transparent transparent transparent, rgb(216, 216, 216) transparent transparent transparent;
+    -fx-border-insets: 0, 1 0 0 0;
+}
+.macos-separator:vertical .line {
+    -fx-border-color : transparent transparent transparent rgb(216, 216, 216), transparent transparent transparent rgb(216, 216, 216);
+    -fx-border-width : 3, 1;
+    -fx-border-insets: 0, 0 0 0 1;
+}
+
+.macos-separator:dark:horizontal .line {
+    -fx-border-color : rgb(44, 41, 40) transparent transparent transparent, rgb(44, 41, 40) transparent transparent transparent;
+    -fx-border-insets: 0, 1 0 0 0;
+}
+.macos-separator:dark:vertical .line {
+    -fx-border-color : transparent transparent transparent rgb(44, 41, 40), transparent transparent transparent rgb(44, 41, 40);
+    -fx-border-width : 3, 1;
+    -fx-border-insets: 0, 0 0 0 1;
+}

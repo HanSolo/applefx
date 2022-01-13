@@ -25,6 +25,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -119,7 +120,6 @@ public class MacosSwitch extends Region {
 
         initGraphics();
         registerListeners();
-        applySettings();
     }
 
 
@@ -229,7 +229,6 @@ public class MacosSwitch extends Region {
             } // Control specific settings
             else if ("selectedColor".equals(key)) {
                 setSelectedColor(((ObjectProperty<Color>) settings.get(key)).get());
-                System.out.println(getSelectedColor());
             } else if("dark".equals(key)) {
                 setDark(((BooleanProperty) settings.get(key)).get());
             } else if ("showOnOffText".equals(key)) {
@@ -239,7 +238,9 @@ public class MacosSwitch extends Region {
             }
         }
 
-        if (settings.containsKey("selected")) { setSelected(((BooleanProperty) settings.get("selected")).get()); }
+        if (settings.containsKey("selected")) {
+            setSelected(((BooleanProperty) settings.get("selected")).get());
+        }
 
         settings.clear();
         if (null == showing) { return; }

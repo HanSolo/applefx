@@ -26,6 +26,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -67,6 +68,8 @@ public class Demo extends Application {
     private MacosButton              macosButton;
     private MacosSwitch              macosSwitch;
     private MacosSlider              macosSlider;
+    private MacosTextField           macosTextField;
+    private MacosSeparator           macosSeparator;
 
 
     @Override public void init() {
@@ -154,6 +157,7 @@ public class Demo extends Application {
         macosSwitch = MacosSwitchBuilder.create()
                                         .dark(true)
                                         .selectedColor(MacOSSystemColor.BLUE.getColorDark())
+                                        .selected(true)
                                         //.showOnOffText(true)
                                         //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
                                         .build();
@@ -163,6 +167,13 @@ public class Demo extends Application {
         macosSlider.setBlockIncrement(10);
         macosSlider.setShowTickMarks(true);
         macosSlider.setSnapToTicks(true);
+
+        macosTextField = new MacosTextField();
+        macosTextField.setPromptText("prompt text");
+        macosTextField.setDark(true);
+
+        macosSeparator = new MacosSeparator(Orientation.HORIZONTAL);
+        macosSeparator.setDark(true);
 
 
         registerListeners();
@@ -197,7 +208,8 @@ public class Demo extends Application {
     }
 
     @Override public void start(Stage stage) {
-        VBox pane = new VBox(10, listView, slider, balanceSlider, buttonBar1, buttonBar2, plusMinusButton, button, toggleButton, switch1, macosButton, macosSwitch, macosSlider);
+        VBox pane = new VBox(10, listView, slider, balanceSlider, buttonBar1, buttonBar2, plusMinusButton, button, toggleButton, switch1,
+                             macosButton, macosSwitch, macosSlider, macosSeparator, macosTextField);
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);
         pane.setBackground(new Background(new BackgroundFill(MacOSSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));

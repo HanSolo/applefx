@@ -150,7 +150,6 @@ public class IosSwitch extends Region {
 
         initGraphics();
         registerListeners();
-        applySettings();
     }
 
 
