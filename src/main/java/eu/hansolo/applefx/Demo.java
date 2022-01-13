@@ -18,6 +18,7 @@ package eu.hansolo.applefx;
 
 import eu.hansolo.applefx.IosMultiButton.Type;
 import eu.hansolo.applefx.event.MacEvt;
+import eu.hansolo.applefx.tools.Helper;
 import eu.hansolo.applefx.tools.MacOSSystemColor;
 import eu.hansolo.toolbox.evt.Evt;
 import eu.hansolo.toolbox.evt.EvtType;
@@ -69,6 +70,11 @@ public class Demo extends Application {
 
 
     @Override public void init() {
+        System.out.println("Operating System: " + eu.hansolo.toolbox.Helper.getOperatingSystem().getUiString());
+        System.out.println("Architecture    : " + eu.hansolo.toolbox.Helper.getArchitecture());
+        System.out.println("Dark Mode       : " + Helper.isDarkMode());
+
+
         entry1 = createIosEntry("Title 1", "Subtitle 1", createMultiButton(Type.SMALL_DOT, MacOSSystemColor.PURPLE.getColorAqua(), false), createSwitch(MacOSSystemColor.PURPLE.getColorAqua(), false), true, true);
         entry2 = createIosEntry("Title 2", "Subtitle 2", createMultiButton(Type.ADD, MacOSSystemColor.GREEN.getColorAqua(), false), createSwitch(MacOSSystemColor.PINK.getColorAqua(), true), true, false);
         entry3 = createIosEntry("Title 3", "Subtitle 3", createMultiButton(Type.DELETE, MacOSSystemColor.RED.getColorAqua(), false), createSwitch(MacOSSystemColor.GREEN.getColorAqua(), false), false, false);
