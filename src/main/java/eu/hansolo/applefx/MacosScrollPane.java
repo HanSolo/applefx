@@ -5,6 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
+import javafx.collections.ListChangeListener;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
@@ -41,6 +42,14 @@ public class MacosScrollPane extends ScrollPane {
     private void registerListeners() {
         setOnScrollStarted(e -> fadeInScrollBars());
         setOnScrollFinished(e -> fadeOutScrollBars());
+        getChildren().addListener((ListChangeListener<Node>) c -> {
+            for (Node node : lookupAll(".scroll-bar")) {
+                if (node instanceof ScrollBar) {
+                    ScrollBar scrollBar = (ScrollBar) node;
+                    scrollBar.setOpacity(0);
+                }
+            }
+        });
     }
 
     public final boolean isDark() {
