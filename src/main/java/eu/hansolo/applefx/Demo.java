@@ -157,7 +157,7 @@ public class Demo extends Application {
 
         macosSwitch = MacosSwitchBuilder.create()
                                         .dark(true)
-                                        .selectedColor(MacOSSystemColor.BLUE.getColorDark())
+                                        .selectedColor(MacOSSystemColor.PINK.getColorDark())
                                         .selected(true)
                                         //.showOnOffText(true)
                                         //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())

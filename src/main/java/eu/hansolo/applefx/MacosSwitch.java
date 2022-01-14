@@ -96,7 +96,6 @@ public class MacosSwitch extends Region {
     private              BooleanProperty                         showOnOffText;
     private              Timeline                                timeline;
     private              BooleanBinding                          showing;
-    private              ChangeListener<Boolean>                 showingListener;
     private              HashMap<String, Property>               settings;
     private              EventHandler<MouseEvent>                clickedHandler;
 
@@ -112,7 +111,6 @@ public class MacosSwitch extends Region {
         _dark           = false;
         _duration       = 250;
         _showOnOffText  = false;
-        showingListener =  (o, ov, nv) -> { if (nv) { applySettings(); } };
         this.settings   = new HashMap<>(settings);
         timeline        = new Timeline();
         observers       = new ConcurrentHashMap<>();
@@ -185,7 +183,11 @@ public class MacosSwitch extends Region {
 
     private void setupBinding() {
         showing = Bindings.selectBoolean(sceneProperty(), "window", "showing");
-        showing.addListener(showingListener);
+        showing.addListener(o -> {
+            if (showing.get()) {
+                applySettings();
+            }
+        });
     }
 
     private void applySettings() {
@@ -244,7 +246,6 @@ public class MacosSwitch extends Region {
 
         settings.clear();
         if (null == showing) { return; }
-        showing.removeListener(showingListener);
     }
 
     public void dispose() {
