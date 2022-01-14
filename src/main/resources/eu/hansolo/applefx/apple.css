@@ -710,3 +710,168 @@
     -fx-border-width : 3, 1;
     -fx-border-insets: 0, 0 0 0 1;
 }
+
+
+.scroll-bar:horizontal {
+    -fx-background-color : transparent;
+    -fx-background-insets: 0;
+}
+.scroll-bar:vertical {
+    -fx-background-color : transparent;
+    -fx-background-insets: 0;
+}
+.scroll-bar:horizontal:focused {
+    -fx-background-color : transparent;
+    -fx-background-insets: 0;
+}
+.scroll-bar:vertical:focused {
+    -fx-background-color : transparent;
+    -fx-background-insets: 0;
+}
+.scroll-bar > .thumb {
+    -fx-background-color : rgb(180, 180, 180, 0.35);
+    -fx-background-radius: 2em;
+}
+.scroll-bar:horizontal > .thumb {
+    -fx-background-insets: 2 0 2 0;
+}
+.scroll-bar:vertical > .thumb {
+    -fx-background-insets: 0 2 0 2;
+}
+.scroll-bar:horizontal > .thumb:hover {
+    -fx-background-insets: 0;
+}
+.scroll-bar:vertical > .thumb:hover {
+    -fx-background-insets: 0;
+}
+.scroll-bar > .increment-button,
+.scroll-bar > .decrement-button {
+    -fx-background-color: transparent;
+    -fx-color           : transparent;
+    -fx-padding         : 0;
+}
+.scroll-bar:horizontal > .increment-button,
+.scroll-bar:horizontal > .decrement-button {
+    -fx-background-insets: 0;
+}
+.scroll-bar:vertical > .increment-button,
+.scroll-bar:vertical > .decrement-button {
+    -fx-background-insets: 0;
+}
+.scroll-bar > .increment-button > .increment-arrow,
+.scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: transparent;
+}
+.scroll-bar > .increment-button:hover > .increment-arrow,
+.scroll-bar > .decrement-button:hover > .decrement-arrow {
+    -fx-background-color: transparent;
+}
+.scroll-bar > .increment-button:pressed > .increment-arrow,
+.scroll-bar > .decrement-button:pressed > .decrement-arrow {
+    -fx-background-color: transparent;
+}
+.scroll-bar:horizontal > .decrement-button > .decrement-arrow {
+    -fx-padding: 0;
+    -fx-shape  : "";
+    -fx-effect : none;
+}
+.scroll-bar:horizontal > .increment-button > .increment-arrow {
+    -fx-padding: 0;
+    -fx-shape  : "";
+    -fx-effect : none;
+}
+.scroll-bar:vertical > .decrement-button > .decrement-arrow {
+    -fx-padding: 0;
+    -fx-shape  : "";
+    -fx-effect : none;
+}
+.scroll-bar:vertical > .increment-button > .increment-arrow {
+    -fx-padding: 0;
+    -fx-shape  : "";
+    -fx-effect : none;
+}
+
+
+.macos-scroll-pane {
+    -fx-background-color : transparent;
+    -fx-background-insets: 0;
+    -fx-padding          : 0;
+}
+.macos-scroll-pane:focused {
+    -fx-background-color : transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+.macos-scroll-pane {
+    -fx-background-color: transparent;
+}
+.macos-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.macos-scroll-pane > .scroll-bar:horizontal {
+    -fx-background-insets: 0;
+    -fx-padding          : 0;
+}
+.macos-scroll-pane > .scroll-bar:horizontal > .increment-button,
+.macos-scroll-pane > .scroll-bar:horizontal > .decrement-button {
+    -fx-padding: 0;
+}
+.macos-scroll-pane > .scroll-bar:vertical > .increment-button,
+.macos-scroll-pane > .scroll-bar:vertical > .decrement-button {
+    -fx-padding: 0;
+}
+.macos-scroll-pane > .scroll-bar:vertical {
+    -fx-background-insets: 0;
+}
+.macos-scroll-pane > .corner {
+    -fx-background-color : transparent;
+    -fx-background-insets: 0;
+}
+.macos-scroll-pane.edge-to-edge,
+.tab-pane > * > .macos-scroll-pane {
+    -fx-background-color : transparent;
+    -fx-background-insets: 0;
+    -fx-padding          : 0;
+}
+.macos-scroll-pane.edge-to-edge > .scroll-bar,
+.tab-pane > * > .macos-scroll-pane > .scroll-bar,
+.titled-pane > .content > .macos-scroll-pane > .scroll-bar {
+    -fx-background-insets: 0;
+    -fx-padding          : 0;
+}
+.macos-scroll-pane.edge-to-edge > .scroll-bar > .increment-button,
+.macos-scroll-pane.edge-to-edge > .scroll-bar > .decrement-button,
+.tab-pane > * > .macos-scroll-pane > .scroll-bar > .increment-button,
+.tab-pane > * > .macos-scroll-pane > .scroll-bar > .decrement-button,
+.titled-pane > .content > .macos-scroll-pane > .scroll-bar > .increment-button,
+.titled-pane > .content > .macos-scroll-pane > .scroll-bar > .decrement-button {
+    -fx-padding: 0;
+}
+
+.macos-scroll-pane > .scroll-bar,
+.macos-scroll-pane:dark > .scroll-bar {
+    -fx-background-color : transparent;
+}
+.macos-scroll-pane > .scroll-bar:hover {
+    -fx-background-color: rgb(180, 180, 180, 0.2);
+}
+
+.macos-scroll-pane > .scroll-bar > .thumb,
+.macos-scroll-pane:dark > .scroll-bar > .thumb {
+    -fx-background-color : rgb(180, 180, 180, 0.5);
+    -fx-background-radius: 2em;
+}
+.macos-scroll-pane > .scroll-bar:horizontal > .thumb {
+    -fx-background-insets: 2 0 2 0;
+}
+.macos-scroll-pane > .scroll-bar:hover:horizontal > .thumb,
+.macos-scroll-pane > .scroll-bar:horizontal > .thumb:hover {
+    -fx-background-insets: 0;
+}
+.macos-scroll-pane > .scroll-bar:vertical > .thumb {
+    -fx-background-insets: 0 2 0 2 ;
+}
+.macos-scroll-pane > .scroll-bar:hover:vertical > .thumb,
+.macos-scroll-pane > .scroll-bar:vertical > .thumb:hover {
+    -fx-background-insets: 0;
+}

@@ -70,6 +70,7 @@ public class Demo extends Application {
     private MacosSlider              macosSlider;
     private MacosTextField           macosTextField;
     private MacosSeparator           macosSeparator;
+    private MacosScrollPane          macosScrollPane;
 
 
     @Override public void init() {
@@ -175,6 +176,13 @@ public class Demo extends Application {
         macosSeparator = new MacosSeparator(Orientation.HORIZONTAL);
         macosSeparator.setDark(true);
 
+        VBox macosPane = new VBox(10, macosButton, macosSwitch, macosSlider, macosSeparator, macosTextField);
+
+        macosScrollPane = new MacosScrollPane(macosPane);
+        macosScrollPane.setDark(true);
+        macosScrollPane.setFitToWidth(true);
+        macosScrollPane.setFitToHeight(true);
+
 
         registerListeners();
     }
@@ -209,7 +217,8 @@ public class Demo extends Application {
 
     @Override public void start(Stage stage) {
         VBox pane = new VBox(10, listView, slider, balanceSlider, buttonBar1, buttonBar2, plusMinusButton, button, toggleButton, switch1,
-                             macosButton, macosSwitch, macosSlider, macosSeparator, macosTextField);
+                             macosScrollPane);
+
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);
         pane.setBackground(new Background(new BackgroundFill(MacOSSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
