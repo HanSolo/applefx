@@ -750,13 +750,15 @@
 }
 .macos-check-box:dark > .box {
     -fx-border-insets    : 0;
-    -fx-border-width     : 1;
-    -fx-border-style     : solid;
+    -fx-border-width     : 0;
+    -fx-border-style     : none;
     -fx-border-radius    : 3;
-    -fx-border-color     : -GRAY-DARK;
-    -fx-background-radius: 3;
-    -fx-background-color : transparent;
-    -fx-padding          : 1 1 2 2;
+    -fx-border-color     : transparent;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 3, 3;
+    -fx-background-color : linear-gradient(to bottom, rgb(103, 99, 99) 0%, rgb(57, 51, 52) 3%, rgb(57, 51, 52) 97%, rgb(111, 106, 107) 100%),
+                           linear-gradient(to bottom, rgb(82, 76, 76) 0%, rgb(109, 105, 105) 100%);
+    -fx-padding          : 3 3 3 3;
 }
 .macos-check-box:dark > .box > .mark {
     -fx-background-color: null;
@@ -764,12 +766,15 @@
     -fx-shape           : "M-0.25,6.083c0.843-0.758,4.583,4.833,5.75,4.833S14.5-1.5,15.917-0.917c1.292,0.532-8.75,17.083-10.5,17.083C3,16.167-1.083,6.833-0.25,6.083z";
 }
 .macos-check-box:dark:selected > .box {
-    -fx-border-color    : transparent;
+    -fx-background-color: linear-gradient(to bottom, rgb(103, 99, 99) 0%, rgb(57, 51, 52) 3%, rgb(57, 51, 52) 97%, rgb(111, 106, 107) 100%),
+                          linear-gradient(to bottom, rgb(82, 76, 76) 0%, rgb(109, 105, 105) 100%);
+}
+.macos-check-box:dark:selected:focused > .box {
     -fx-background-color: -selection-color-dark;
 }
 .macos-check-box:dark:selected > .box > .mark {
     -fx-background-color: white;
-    -fx-padding         : 5 5 5 5;
+    -fx-padding         : 3 6 6 4;
     -fx-shape           : "M23.895,35.297L31.077,24.09C31.818,22.935 33.357,22.598 34.512,23.338C35.668,24.079 36.005,25.618 35.264,26.773L26.297,40.767C25.8,41.542 24.944,41.949 24.085,41.909C23.383,41.902 22.689,41.6 22.203,41.02L16.809,34.583C15.927,33.532 16.066,31.962 17.118,31.081C18.169,30.199 19.739,30.337 20.62,31.389L23.895,35.297Z";
 }
 .macos-check-box:dark:indeterminate > .box {
