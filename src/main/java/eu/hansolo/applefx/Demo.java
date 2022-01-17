@@ -67,6 +67,7 @@ public class Demo extends Application {
     private IosSwitch                switch1;
     private MacosButton              macosButton;
     private MacosSwitch              macosSwitch;
+    private MacosCheckBox            macosCheckBox;
     private MacosSlider              macosSlider;
     private MacosTextField           macosTextField;
     private MacosSeparator           macosSeparator;
@@ -163,6 +164,9 @@ public class Demo extends Application {
                                         //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
                                         .build();
 
+        macosCheckBox = new MacosCheckBox("Check me");
+        macosCheckBox.setDark(true);
+
         macosSlider = new MacosSlider();
         macosSlider.setDark(true);
         macosSlider.setBlockIncrement(10);
@@ -176,7 +180,7 @@ public class Demo extends Application {
         macosSeparator = new MacosSeparator(Orientation.HORIZONTAL);
         macosSeparator.setDark(true);
 
-        VBox macosPane = new VBox(10, macosButton, macosSwitch, macosSlider, macosSeparator, macosTextField);
+        VBox macosPane = new VBox(10, macosButton, macosSwitch, macosCheckBox, macosSlider, macosSeparator, macosTextField);
 
         macosScrollPane = new MacosScrollPane(macosPane);
         macosScrollPane.setDark(true);
