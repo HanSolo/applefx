@@ -59,7 +59,7 @@ public class IosButton extends Label {
     }
 
     private void initGraphics() {
-        getStyleClass().addAll("apple", "ios-button");
+        getStyleClass().add("ios-button");
         setPrefSize(100, 25);
     }
 

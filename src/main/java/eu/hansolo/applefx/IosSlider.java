@@ -46,7 +46,7 @@ public class IosSlider extends Slider {
 
 
     private void init() {
-        getStyleClass().addAll("apple", "ios-slider");
+        getStyleClass().add("ios-slider");
         _dark = false;
     }
 

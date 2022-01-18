@@ -19,6 +19,7 @@ public class MacosSlider extends Slider {
     private              BooleanProperty dark;
 
 
+    // ******************** Constructors **************************************
     public MacosSlider() {
         super();
         init();
@@ -29,12 +30,14 @@ public class MacosSlider extends Slider {
     }
 
 
+    // ******************** Initialization ************************************
     private void init() {
-        getStyleClass().addAll("apple", "macos-slider");
+        getStyleClass().add("macos-slider");
         _dark = false;
     }
 
 
+    // ******************** Methods *******************************************
     public boolean getBalance() { return balance.get(); }
     public void setBalance(final boolean balance) { this.balance.set(balance); }
     public BooleanProperty balanceProperty() { return balance; }

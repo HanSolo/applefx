@@ -137,7 +137,7 @@ public class IosMultiButton extends Region {
             }
         }
 
-        getStyleClass().addAll("apple", "ios-multi-button");
+        getStyleClass().add("ios-multi-button");
 
         circle = new Circle(PREFERRED_HEIGHT * 0.5);
         circle.getStyleClass().add("circle");

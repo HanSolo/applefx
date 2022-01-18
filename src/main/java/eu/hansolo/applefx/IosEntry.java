@@ -196,7 +196,7 @@ public class IosEntry extends Region {
             }
         }
 
-        getStyleClass().addAll("apple", "ios-entry");
+        getStyleClass().add("ios-entry");
         
         titleLabel = new Label(getTitle());
         titleLabel.getStyleClass().add("title");

@@ -37,6 +37,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
@@ -68,6 +69,10 @@ public class Demo extends Application {
     private MacosButton              macosButton;
     private MacosSwitch              macosSwitch;
     private MacosCheckBox            macosCheckBox;
+    private MacosWindowButton        macosWindowButtonClose;
+    private MacosWindowButton        macosWindowButtonMinimize;
+    private MacosWindowButton        macosWindowButtonMaximize;
+    private MacosProgress            macosProgress;
     private MacosSlider              macosSlider;
     private MacosTextField           macosTextField;
     private MacosSeparator           macosSeparator;
@@ -98,7 +103,7 @@ public class Demo extends Application {
         entries.addAll(entry1, entry2, entry3, entry4, entry5, entry6, entry7, entry8, entry9);
 
         listView = new IosListView(entries);
-        listView.setPrefSize(400, 500);
+        listView.setPrefSize(400, 300);
         listView.setPlaceholder(new Label("No entries loaded"));
         listView.setCellFactory(p -> new IosEntryCell());
 
@@ -167,6 +172,25 @@ public class Demo extends Application {
         macosCheckBox = new MacosCheckBox("Check me");
         macosCheckBox.setDark(true);
 
+        macosWindowButtonClose    = new MacosWindowButton(WindowButtonType.CLOSE, WindowButtonSize.LARGE);
+        macosWindowButtonMinimize = new MacosWindowButton(WindowButtonType.MINIMIZE, WindowButtonSize.LARGE);
+        macosWindowButtonMaximize = new MacosWindowButton(WindowButtonType.MAXIMIZE, WindowButtonSize.LARGE);
+
+        HBox macosWindowButtonBox = new HBox(5, macosWindowButtonClose, macosWindowButtonMinimize, macosWindowButtonMaximize);
+        macosWindowButtonBox.setOnMouseEntered(e -> {
+            macosWindowButtonClose.setHovered(true);
+            macosWindowButtonMinimize.setHovered(true);
+            macosWindowButtonMaximize.setHovered(true);
+        });
+        macosWindowButtonBox.setOnMouseExited(e -> {
+            macosWindowButtonClose.setHovered(false);
+            macosWindowButtonMinimize.setHovered(false);
+            macosWindowButtonMaximize.setHovered(false);
+        });
+
+        macosProgress = new MacosProgress(0.3);
+        macosProgress.setPrefSize(32, 32);
+
         macosSlider = new MacosSlider();
         macosSlider.setDark(true);
         macosSlider.setBlockIncrement(10);
@@ -180,7 +204,7 @@ public class Demo extends Application {
         macosSeparator = new MacosSeparator(Orientation.HORIZONTAL);
         macosSeparator.setDark(true);
 
-        VBox macosPane = new VBox(10, macosButton, macosSwitch, macosCheckBox, macosSlider, macosSeparator, macosTextField);
+        VBox macosPane = new VBox(10, macosButton, macosSwitch, macosCheckBox, macosWindowButtonBox, macosProgress, macosSlider, macosSeparator, macosTextField);
 
         macosScrollPane = new MacosScrollPane(macosPane);
         macosScrollPane.setDark(true);

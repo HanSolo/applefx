@@ -21,6 +21,7 @@ public class MacosScrollPane extends ScrollPane {
     private              SequentialTransition fadeOutSequence;
 
 
+    // ******************** Constructors **************************************
     public MacosScrollPane() {
         super();
         init();
@@ -31,8 +32,9 @@ public class MacosScrollPane extends ScrollPane {
     }
 
 
+    // ******************** Initialization ************************************
     private void init() {
-        getStyleClass().addAll("apple", "macos-scroll-pane");
+        getStyleClass().add("macos-scroll-pane");
         _dark           = false;
         fadeInSequence  = new SequentialTransition();
         fadeOutSequence = new SequentialTransition();
@@ -52,6 +54,8 @@ public class MacosScrollPane extends ScrollPane {
         });
     }
 
+
+    // ******************** Methods *******************************************
     public final boolean isDark() {
         return null == dark ? _dark : dark.get();
     }

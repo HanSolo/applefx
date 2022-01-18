@@ -45,7 +45,7 @@ public class IosRoundToggleButton extends ToggleButton {
 
 
     private void initGraphics() {
-        getStyleClass().addAll("apple", "ios-round-toggle-button");
+        getStyleClass().add("ios-round-toggle-button");
 
         Node graphics = getGraphic();
         if (null != graphics) { graphics.getStyleClass().add("graphics"); }

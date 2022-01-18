@@ -18,44 +18,85 @@
     font-family: "SF Pro";
     src: url('fonts/SF-Pro-Display-Regular.ttf');
 }
+@font-face {
+    font-family: "SF Pro";
+    src: url('fonts/SF-Pro-Display-Medium.ttf');
+}
+@font-face {
+    font-family: "SF Pro";
+    src: url('fonts/SF-Pro-Display-Bold.ttf');
+}
 
 /********** Apple General *********/
-.apple {
-    -BLUE-AQUA    : rgb(0, 122, 255);
-    -BLUE-DARK    : rgb(10, 132, 255);
-    -BROWN-AQUA   : rgb(162, 132, 94);
-    -BROWN-DARK   : rgb(172, 142, 104);
-    -GRAY-AQUA    : rgb(142, 142, 147);
-    -GRAY-DARK    : rgb(152, 152, 157);
-    -GREEN-AQUA   : rgb(40, 205, 65);
-    -GREEN-DARK   : rgb(50, 215, 75);
-    -INIDIGO-AQUA : rgb(88, 86, 214);
-    -INDIGO-DARK  : rgb(94, 92, 230);
-    -ORANGE-AQUA  : rgb(255, 149, 0);
-    -ORANGE-DARK  : rgb(255, 159, 0);
-    -PINK-AQUA    : rgb(255, 45, 85);
-    -PINK-DARK    : rgb(255, 55, 95);
-    -PURPLE-AQUA  : rgb(175, 82, 222);
-    -PURPLE-DARK  : rgb(191, 90, 242);
-    -RED-AQUA     : rgb(255, 59, 48);
-    -RED-DARK     : rgb(255, 69, 58);
-    -TEAL-AQUA    : rgb(85, 190, 240);
-    -TEAL-DARK    : rgb(90, 200, 245);
-    -YELLOW-AQUA  : rgb(255, 204, 0);
-    -YELLOW-DARK  : rgb(255, 214, 10);
-    -WHITE        : rgb(255, 255, 255);
-    -CUSTOM-GRAY  : rgb(229, 239, 244);
-    -LIGHT-GRAY   : rgb(229 ,229, 234);
-    -LIGHT-GRAY2  : rgb(209, 209, 214);
-    -MID-GRAY     : rgb(199, 199, 204);
-    -GRAY         : rgb(142, 142, 147);
-    -DARK-GRAY    : rgb(102, 102, 102);
-    -BLACK        : rgb(0, 0, 0);
+.root * {
+    -WINDOW-BUTTON-RED                : rgb(256, 96, 88);
+    -WINDOW-BUTTON-YELLOW             : rgb(255, 188, 53);
+    -WINDOW-BUTTON-GREEN              : rgb(0, 200, 68);
+    -WINDOW-BUTTON-LIGHT-GRAY         : rgb(206, 203, 202);
+    -WINDOW-BUTTON-GRAY               : rgb(83, 83, 83);
+    -WINDOW-BUTTON-DARK-GRAY          : rgb(52, 53, 53);
 
-    -LIGHT-BACKGROUND     : rgb(236, 234, 234);
-    -LIGHT-CTRL-BACKGROUND: rgb(211, 210, 211);
-    -DARK-BACKGROUND      : rgb(31, 28, 29);
-    -DARK-CTRL-BACKGROUND : rgb(61, 59, 61);
+    -BLUE-AQUA                        : rgb(0, 122, 255);
+    -BLUE-DARK                        : rgb(10, 132, 255);
+    -BROWN-AQUA                       : rgb(162, 132, 94);
+    -BROWN-DARK                       : rgb(172, 142, 104);
+    -GRAY-AQUA                        : rgb(142, 142, 147);
+    -GRAY-DARK                        : rgb(152, 152, 157);
+    -GREEN-AQUA                       : rgb(40, 205, 65);
+    -GREEN-DARK                       : rgb(50, 215, 75);
+    -INIDIGO-AQUA                     : rgb(88, 86, 214);
+    -INDIGO-DARK                      : rgb(94, 92, 230);
+    -ORANGE-AQUA                      : rgb(255, 149, 0);
+    -ORANGE-DARK                      : rgb(255, 159, 0);
+    -PINK-AQUA                        : rgb(255, 45, 85);
+    -PINK-DARK                        : rgb(255, 55, 95);
+    -PURPLE-AQUA                      : rgb(175, 82, 222);
+    -PURPLE-DARK                      : rgb(191, 90, 242);
+    -RED-AQUA                         : rgb(255, 59, 48);
+    -RED-DARK                         : rgb(255, 69, 58);
+    -TEAL-AQUA                        : rgb(85, 190, 240);
+    -TEAL-DARK                        : rgb(90, 200, 245);
+    -YELLOW-AQUA                      : rgb(255, 204, 0);
+    -YELLOW-DARK                      : rgb(255, 214, 10);
+    -BACKGROUND-AQUA                  : rgb(255, 255, 255);
+    -BACKGROUND-DARK                  : rgb(32, 32, 34);
+    -TEXT-AQUA                        : rgb(0, 0, 0);
+    -TEXT-DARK                        : rgb(255, 255, 255);
+    -TEXT-SELECTED-AQUA               : rgb(255, 255, 255);
+    -TEXT-SELECTED-DARK               : rgb(255, 255, 255);
+    -PANE-BACKGROUND-AQUA             : rgb(226, 227, 229);
+    -PANE-BACKGROUND-DARK             : rgb(50, 58, 68);
+    -CONTROL-BACKGROUND-AQUA          : rgb(246, 246, 246);
+    -CONTROL-BACKGROUND-DARK          : rgb(89, 85, 85);
+    -CONTROL-BORDER-AQUA              : rgb(230, 230, 230);
+    -CONTROL-BORDER-DARK              : rgb(93, 95, 98);
+    -CONTROL-SELECTED-BACKGROUND-AQUA : rgb(106, 106, 106);
+    -CONTROL-SELECTED-BACKGROUND-DARK : rgb(199, 200, 203);
+    -WHITE                            : rgb(255, 255, 255);
+    -BLACK                            : rgb(0, 0, 0);
+
+    -LIGHT-BACKGROUND                 : rgb(236, 234, 234);
+    -LIGHT-CTRL-BACKGROUND            : rgb(211, 210, 211);
+    -DARK-BACKGROUND                  : rgb(31, 28, 29);
+    -DARK-CTRL-BACKGROUND             : rgb(61, 59, 61);
+
+
+    /* VARIABLE DEFINITIONS */
+    -accent-color                 : -BLUE-AQUA;
+    -background-color             : -BACKGROUND-AQUA;
+    -pane-background-color        : -PANE-BACKGROUND-AQUA;
+    -text-color                   : -TEXT-AQUA;
+    -text-selected-color          : -TEXT-SELECTED-AQUA;
+    -control-background-color     : -CONTROL-BACKGROUND-AQUA;
+    -control-border-color         : -CONTROL-BORDER-AQUA;
+
+    -accent-color-dark            : -BLUE-DARK;
+    -background-color-dark        : -BACKGROUND-DARK;
+    -pane-background-color-dark   : -PANE-BACKGROUND-DARK;
+    -text-color-dark              : -TEXT-DARK;
+    -text-selected-color-dark     : -TEXT-SELECTED-DARK;
+    -control-background-color-dark: -CONTROL-BACKGROUND-DARK;
+    -control-border-color-dark    : -CONTROL-BORDER-DARK;
 }
 
 
@@ -457,34 +498,25 @@
 
 
 /* Button */
-.macos-button {
-    -fx-font-family            : 'SF Pro';
-    -selection-color           : -BLUE-AQUA;
-    -disabled-color            : #5e5c58;
-    -disabled-text-color       : #a6a6a7;
-    -dark-control-background   : #5e5e5f;
-    -text-color                : #dddddd;
-    -light-control-background  : #ffffff;
-    -light-text-color          : #2a2a2a;
-    -light-disabled-color      : #f5f5f5;
-    -light-disabled-text-color : #b7b7b7;
-    -fx-pref-height            : 15;
-    -fx-background-color       : -light-control-background;
-    -fx-background-insets      : 0 0 -1 0, 0, 1, 2;
+.macos-button,
+.macos-button:focused {
+    -fx-pref-height            : 20;
+    -fx-background-insets      : 0 0 0 0, 1 1 1 1;
+    -fx-background-color       : -LIGHT-CTRL-BACKGROUND, -WHITE;
     -fx-background-radius      : 5px;
-    -fx-padding                : 2 5 2 5;
-    -fx-text-fill              : -light-text-color;
+    -fx-padding                : 2 10 2 10;
+    -fx-text-fill              : -text-color;
     -fx-alignment              : CENTER;
     -fx-content-display        : LEFT;
     -fx-font-family            : 'SF Pro';
-    -fx-font-size              : 12px;
+    -fx-font-size              : 13px;
 }
 .macos-button:armed {
-    -fx-pref-height      : 16;
-    -fx-background-color : -selection-color;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-pref-height      : 20;
+    -fx-background-color : derive(-accent-color, 30%), -accent-color;
+    -fx-background-insets: 0 0 0 0, 1 0 0 0;
     -fx-background-radius: 5px;
-    -fx-padding          : 2 5 2 5;
+    -fx-padding          : 2 10 2 10;
     -fx-text-fill        : -text-color;
     -fx-alignment        : CENTER;
     -fx-content-display  : LEFT;
@@ -495,24 +527,24 @@
 }
 
 .macos-button:dark {
-    -fx-pref-height      : 15;
-    -fx-background-color : -dark-control-background;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-pref-height      : 20;
+    -fx-background-color : derive(-control-background-color-dark, 30%), -control-background-color-dark;
+    -fx-background-insets: 0 0 0 0, 1 0 0 0;
     -fx-background-radius: 5px;
-    -fx-padding          : 2 5 2 5;
-    -fx-text-fill        : -text-color;
+    -fx-padding          : 2 10 2 10;
+    -fx-text-fill        : -text-color-dark;
     -fx-alignment        : CENTER;
     -fx-content-display  : LEFT;
     -fx-font-family      : 'SF Pro';
-    -fx-font-size        : 12px;
+    -fx-font-size        : 13px;
 }
 .macos-button:dark:armed {
-    -fx-pref-height      : 16;
-    -fx-background-color : -selection-color;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-pref-height      : 20;
+    -fx-background-color : derive(-accent-color, 30%), -accent-color;
+    -fx-background-insets: 0 0 0 0, 1 0 0 0;
     -fx-background-radius: 5px;
-    -fx-padding          : 2 5 2 5;
-    -fx-text-fill        : -text-color;
+    -fx-padding          : 2 10 2 10;
+    -fx-text-fill        : -text-color-dark;
     -fx-alignment        : CENTER;
     -fx-content-display  : LEFT;
 }
@@ -524,8 +556,7 @@
 
 /* Switch */
 .macos-switch {
-    -selected-color: -BLUE-AQUA;
-    -knob-color    : -WHITE;
+    -knob-color: -WHITE;
 }
 .macos-switch .background-area {
     -fx-fill: -LIGHT-CTRL-BACKGROUND;
@@ -558,16 +589,11 @@
 
 /* Slider */
 .macos-slider {
-    -thumb-fill         : -GRAY-AQUA;
-    -track-fill         : rgba(0, 0, 0, 0.1);
-    -track-progress-fill: -RED-AQUA;
-    -border-color       : rgba(0, 0, 0, 0.05);
-}
-.macos-slider:dark {
-    -thumb-fill         : -GRAY-DARK;
-    -track-fill         : rgba(255, 255, 255, 0.1);
-    -track-progress-fill: -RED-DARK;
-    -border-color       : rgba(255, 255, 255, 0.05);
+    -thumb-color         : -WHITE;
+    -thumb-border-color  : -LIGHT-CTRL-BACKGROUND;
+    -track-fill          : rgba(0, 0, 0, 0.1);
+    -track-progress-fill : -RED-AQUA;
+    -border-color        : rgba(0, 0, 0, 0.05);
 }
 .macos-slider .track {
     -fx-background-color : -track-fill;
@@ -634,52 +660,63 @@
     -fx-stroke      : -track-fill;
     -fx-stroke-width: 2;
 }
-.macos-slider .thumb {
-    -fx-padding          : 14px;
-    -fx-background-color : -thumb-fill;
-    -fx-background-insets: 0;
-    -fx-background-radius: 14px;
-    -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.25), 5, 0.0, 0, 2);
-}
-.macos-slider .thumb:hover {
-    -fx-background-color: -thumb-fill;
-}
-.macos-slider:focused .thumb {
-    -fx-background-color: -thumb-fill;
-}
+.macos-slider .thumb,
+.macos-slider .thumb:hover,
+.macos-slider:focused .thumb,
 .macos-slider:pressed .thumb {
-    -fx-background-color: -thumb-fill;
+    -fx-padding          : 14px;
+    -fx-background-insets: -1 -1 -1 -1, 0 0 0 0;
+    -fx-background-color : -thumb-border-color, -thumb-color;
+    -fx-background-radius: 14px;
+    -fx-effect           : none; /*dropshadow(two-pass-box, rgba(0, 0, 0, 0.25), 5, 0.0, 0, 2);*/
+}
+
+.macos-slider:dark {
+    -thumb-color        : -GRAY-DARK;
+    -thumb-border-color : -GRAY-DARK;
+    -track-fill         : rgba(255, 255, 255, 0.1);
+    -track-progress-fill: -RED-DARK;
+    -border-color       : rgba(255, 255, 255, 0.05);
+}
+.macos-slider:dark .thumb,
+.macos-slider:dark .thumb:hover,
+.macos-slider:dark:focused .thumb,
+.macos-slider:dark:pressed .thumb {
+    -fx-padding          : 14px;
+    -fx-background-insets: 0, 1;
+    -fx-background-color : -thumb-border-color, -thumb-color;
+    -fx-background-radius: 14px;
+    -fx-effect           : none; /*dropshadow(two-pass-box, rgba(0, 0, 0, 0.25), 5, 0.0, 0, 2);*/
 }
 
 
 /* TextField */
 .macos-text-field {
     -fx-control-inner-background: white;
+    -fx-focus-color             : -accent-color;
     -fx-text-fill               : black;
     -fx-highlight-fill          : derive(-fx-control-inner-background,-20%);
     -fx-highlight-text-fill     : -fx-text-inner-color;
     -fx-prompt-text-fill        : derive(-fx-control-inner-background,-30%);
-    -fx-background-color        : linear-gradient(to bottom, rgb(255, 246, 245) 0%, rgb(220, 220, 220) 99%, rgb(224, 223, 223) 100%), -fx-control-inner-background;
-    -fx-background-insets       : 0, 1 1 2 1;
+    -fx-background-color        : linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 0%, rgba(255, 255, 255, 0.29) 1%, rgba(255, 255, 255, 0.29) 99%, rgba(0, 0, 0, 0.25) 100%), -fx-control-inner-background;
+    -fx-background-insets       : 0, 1;
     -fx-background-radius       : 0, 0;
     -fx-cursor                  : text;
-    -fx-padding                 : 0.333333em 0.583em 0.333333em 0.583em; /* 4 7 4 7 */
+    -fx-padding                 : 4 7 4 7;
 }
 .macos-text-field:focused {
-    -fx-highlight-fill     : -fx-accent;
+    -fx-faint-focus-color  : transparent;
+    -fx-highlight-fill     : -accent-color;
     -fx-highlight-text-fill: white;
-    -fx-background-color   : -fx-focus-color,
-                             -fx-control-inner-background,
-                             -fx-faint-focus-color,
-                             linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
-    -fx-background-insets  : -0.2, 1, -1.4, 3;
+    -fx-background-color   : -fx-focus-color, -fx-control-inner-background, -fx-faint-focus-color, linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-insets  : -0.5, 1, -1.4, 3;
     -fx-background-radius  : 0, 0, 0;
     -fx-prompt-text-fill   : transparent;
 }
 
 .macos-text-field:dark {
-    -fx-control-inner-background: rgb(45, 43, 41);
-    -fx-text-fill               : rgb(255, 246, 245);
+    -fx-control-inner-background: -control-background-color-dark;
+    -fx-text-fill               : -text-color-dark;
     -fx-highlight-fill          : derive(-fx-control-inner-background,+20%);
     -fx-highlight-text-fill     : -fx-text-inner-color;
     -fx-prompt-text-fill        : derive(-fx-control-inner-background,+30%);
@@ -690,12 +727,9 @@
     -fx-padding                 : 0.333333em 0.583em 0.333333em 0.583em; /* 4 7 4 7 */
 }
 .macos-text-field:dark:focused {
-    -fx-highlight-fill     : -fx-accent;
-    -fx-highlight-text-fill: white;
-    -fx-background-color   : -fx-focus-color,
-    -fx-control-inner-background,
-    -fx-faint-focus-color,
-    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-highlight-fill     : -accent-color;
+    -fx-highlight-text-fill: -text-color-dark;
+    -fx-background-color   : -fx-focus-color, -fx-control-inner-background, -fx-faint-focus-color, linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets  : -0.2, 1, -1.4, 3;
     -fx-background-radius  : 3, 2, 4, 0;
     -fx-prompt-text-fill   : transparent;
@@ -703,13 +737,13 @@
 
 
 /* CheckBox */
-.macos-check-box {
-    -selection-color     : -BLUE-AQUA;
-    -selection-color-dark: -BLUE-DARK;
-    -fx-label-padding    : 0 0 0 5;
-    -fx-text-fill        : black;
+.macos-check-box,
+.macos-check-box:focused {
+    -fx-label-padding   : 0 0 0 5;
+    -fx-text-fill       : -text-color;
 }
-.macos-check-box > .box {
+.macos-check-box > .box,
+.macos-check-box:focused > .box {
     -fx-border-insets    : 0;
     -fx-border-width     : 1;
     -fx-border-style     : solid;
@@ -717,38 +751,39 @@
     -fx-border-color     : -GRAY-AQUA;
     -fx-background-radius: 3;
     -fx-background-color : transparent;
-    -fx-padding          : 1 1 2 2;
+    -fx-padding          : 2 2 3 3;
 }
 .macos-check-box > .box > .mark {
     -fx-background-color: null;
-    -fx-padding         : 5 5 6 6;
+    -fx-padding         : 4 4 4 4;
     -fx-shape           : "M-0.25,6.083c0.843-0.758,4.583,4.833,5.75,4.833S14.5-1.5,15.917-0.917c1.292,0.532-8.75,17.083-10.5,17.083C3,16.167-1.083,6.833-0.25,6.083z";
 }
 .macos-check-box:selected > .box {
     -fx-border-color    : transparent;
-    -fx-background-color: -selection-color;
+    -fx-background-color: -accent-color;
 }
 .macos-check-box:selected > .box > .mark {
-    -fx-background-color: white;
-    -fx-padding         : 5 5 5 5;
+    -fx-background-color: -TEXT-SELECTED-AQUA;
+    -fx-padding         : 4 4 4 4;
     -fx-shape           : "M23.895,35.297L31.077,24.09C31.818,22.935 33.357,22.598 34.512,23.338C35.668,24.079 36.005,25.618 35.264,26.773L26.297,40.767C25.8,41.542 24.944,41.949 24.085,41.909C23.383,41.902 22.689,41.6 22.203,41.02L16.809,34.583C15.927,33.532 16.066,31.962 17.118,31.081C18.169,30.199 19.739,30.337 20.62,31.389L23.895,35.297Z";
 }
 .macos-check-box:indeterminate > .box {
     -fx-border-color    : transparent;
-    -fx-background-color: -selection-color;
+    -fx-background-color: -accent-color;
 }
 .macos-check-box:indeterminate  > .box > .mark {
-    -fx-background-color: white;
+    -fx-background-color: -TEXT-SELECTED-AQUA;
     -fx-shape           : "M0,-0.5H7V1.5H0Z";
     -fx-scale-shape     : false;
-    -fx-padding         : 5 5 5 5;
+    -fx-padding         : 4 4 4 4;
 }
 
 .macos-check-box:dark {
     -fx-label-padding: 0 0 0 5;
-    -fx-text-fill    : white;
+    -fx-text-fill    : -text-color-dark;
 }
-.macos-check-box:dark > .box {
+.macos-check-box:dark > .box,
+.macos-check-box:dark:focused > .box {
     -fx-border-insets    : 0;
     -fx-border-width     : 0;
     -fx-border-style     : none;
@@ -757,8 +792,8 @@
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 3;
     -fx-background-color : linear-gradient(to bottom, rgb(103, 99, 99) 0%, rgb(57, 51, 52) 3%, rgb(57, 51, 52) 97%, rgb(111, 106, 107) 100%),
-                           linear-gradient(to bottom, rgb(82, 76, 76) 0%, rgb(109, 105, 105) 100%);
-    -fx-padding          : 3 3 3 3;
+    linear-gradient(to bottom, rgb(82, 76, 76) 0%, rgb(109, 105, 105) 100%);
+    -fx-padding          : 2 2 3 3;
 }
 .macos-check-box:dark > .box > .mark {
     -fx-background-color: null;
@@ -767,22 +802,28 @@
 }
 .macos-check-box:dark:selected > .box {
     -fx-background-color: linear-gradient(to bottom, rgb(103, 99, 99) 0%, rgb(57, 51, 52) 3%, rgb(57, 51, 52) 97%, rgb(111, 106, 107) 100%),
-                          linear-gradient(to bottom, rgb(82, 76, 76) 0%, rgb(109, 105, 105) 100%);
+    linear-gradient(to bottom, rgb(82, 76, 76) 0%, rgb(109, 105, 105) 100%);
+    -fx-padding         : 3 3 4 4;
 }
 .macos-check-box:dark:selected:focused > .box {
-    -fx-background-color: -selection-color-dark;
+    -fx-background-color: -accent-color-dark;
 }
 .macos-check-box:dark:selected > .box > .mark {
-    -fx-background-color: white;
-    -fx-padding         : 3 6 6 4;
-    -fx-shape           : "M23.895,35.297L31.077,24.09C31.818,22.935 33.357,22.598 34.512,23.338C35.668,24.079 36.005,25.618 35.264,26.773L26.297,40.767C25.8,41.542 24.944,41.949 24.085,41.909C23.383,41.902 22.689,41.6 22.203,41.02L16.809,34.583C15.927,33.532 16.066,31.962 17.118,31.081C18.169,30.199 19.739,30.337 20.62,31.389L23.895,35.297Z";
+    -fx-background-insets: 0, 0;
+    -fx-background-color : transparent, -text-color-dark;
+    -fx-padding          : 4 4 4 4;
+    -fx-shape            : "M23.895,35.297L31.077,24.09C31.818,22.935 33.357,22.598 34.512,23.338C35.668,24.079 36.005,25.618 35.264,26.773L26.297,40.767C25.8,41.542 24.944,41.949 24.085,41.909C23.383,41.902 22.689,41.6 22.203,41.02L16.809,34.583C15.927,33.532 16.066,31.962 17.118,31.081C18.169,30.199 19.739,30.337 20.62,31.389L23.895,35.297Z";
 }
 .macos-check-box:dark:indeterminate > .box {
     -fx-border-color    : transparent;
-    -fx-background-color: -selection-color-dark;
+    -fx-background-color: -accent-color-dark;
+}
+.macos-check-box:dark:indeterminate:focused > .box {
+    -fx-border-color    : transparent;
+    -fx-background-color: -accent-color-dark;
 }
 .macos-check-box:dark:indeterminate  > .box > .mark {
-    -fx-background-color: white;
+    -fx-background-color: -TEXT-SELECTED-DARK;
     -fx-shape           : "M0,-0.5H7V1.5H0Z";
     -fx-scale-shape     : false;
     -fx-padding         : 5 5 5 5;
@@ -975,4 +1016,102 @@
 .macos-scroll-pane > .scroll-bar:hover:vertical > .thumb,
 .macos-scroll-pane > .scroll-bar:vertical > .thumb:hover {
     -fx-background-insets: 0;
+}
+
+
+/* Window Button */
+.macos-window-button {
+}
+
+.macos-window-button .circle {
+    -fx-stroke-width: 0.5px;
+}
+
+.macos-window-button:close .circle,
+.macos-window-button:close:hovered .circle {
+    -fx-fill  : -WINDOW-BUTTON-RED;
+    -fx-stroke: derive(-WINDOW-BUTTON-RED, -10%);
+}
+.macos-window-button:close:pressed .circle {
+    -fx-fill  : derive(-WINDOW-BUTTON-RED, -20%);
+    -fx-stroke: derive(-WINDOW-BUTTON-RED, -30%);
+}
+
+.macos-window-button:minimize .circle,
+.macos-window-button:minimize:hovered .circle {
+    -fx-fill  : -WINDOW-BUTTON-YELLOW;
+    -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, -10%);
+}
+.macos-window-button:minimize:pressed .circle {
+    -fx-fill  : derive(-WINDOW-BUTTON-YELLOW, -20%);
+    -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, -30%);
+}
+
+.macos-window-button:zoom .circle,
+.macos-window-button:zoom:hovered .circle {
+    -fx-fill  : -WINDOW-BUTTON-GREEN;
+    -fx-stroke: derive(-WINDOW-BUTTON-GREEN, -10%);
+}
+.macos-window-button:zoom:pressed .circle {
+    -fx-fill  : derive(-WINDOW-BUTTON-GREEN, -20%);
+    -fx-stroke: derive(-WINDOW-BUTTON-GREEN, -30%);
+}
+
+.macos-window-button:disabled:close .circle,
+.macos-window-button:disabled:minimize .circle,
+.macos-window-button:disabled:zoom .circle {
+    -fx-fill  : -WINDOW-BUTTON-GRAY;
+    -fx-stroke: transparent;
+}
+
+.macos-window-button:close .symbol,
+.macos-window-button:minimize .symbol,
+.macos-window-button:zoom .symbol {
+    -fx-background-color: transparent;
+}
+
+.macos-window-button:hovered:close .symbol {
+    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-border-color    : -WINDOW-BUTTON-DARK-GRAY;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M6.001,5.429l2.554,-2.555l0.571,0.571l-2.555,2.554l2.55,2.55l-0.572,0.572l-2.55,-2.55l-2.554,2.555l-0.571,-0.571l2.555,-2.554l-2.55,-2.55l0.572,-0.572l2.55,2.55Z";
+}
+.macos-window-button:hovered:minimize .symbol {
+    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M2.0,5.5l8,0l0,1l-8,0l0,-1Z";
+}
+.macos-window-button:hovered:zoom .symbol {
+    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M2.696,2.582l4.545,0.656l-3.889,3.889l-0.656,-4.545ZM9.533,9.418l-0.656,-4.545l-3.889,3.889l4.545,0.656Z";
+}
+
+.macos-window-button:hovered:close .symbol-small {
+    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-border-color    : -WINDOW-BUTTON-DARK-GRAY;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M4.508,4.065L6.426,2.147L6.854,2.576L4.936,4.493L6.85,6.406L6.421,6.835L4.507,4.922L2.59,6.839L2.162,6.411L4.079,4.494L2.166,2.58L2.595,2.151L4.508,4.065Z";
+}
+.macos-window-button:hovered:minimize .symbol-small {
+    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M1.4934,4.118 l6.029,0 l0,0.751 l-6.029,0 l0,-1.4934Z";
+}
+.macos-window-button:hovered:zoom .symbol-small {
+    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M7.159,7.059L6.667,3.648L3.748,6.566L7.159,7.059ZM2.028,1.928L5.439,2.42L2.521,5.339L2.028,1.928Z";
+}
+
+
+/* Progress */
+.macos-progress {
+    -progress-fill  : -LIGHT-CTRL-BACKGROUND;
+    -progress-stroke: -LIGHT-CTRL-BACKGROUND;
+}
+
+.macos-progress:dark {
+    -progress-fill  : -CONTROL-BACKGROUND-DARK;
+    -progress-stroke: -CONTROL-BACKGROUND-DARK;
 }

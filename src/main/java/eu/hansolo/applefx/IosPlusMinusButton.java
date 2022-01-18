@@ -97,7 +97,7 @@ public class IosPlusMinusButton extends Region {
             }
         }
 
-        getStyleClass().addAll("apple", "ios-plus-minus-button");
+        getStyleClass().add("ios-plus-minus-button");
 
         Rectangle minusSign = new Rectangle(15.5, 1.5);
         minusSign.getStyleClass().setAll("minus-sign");

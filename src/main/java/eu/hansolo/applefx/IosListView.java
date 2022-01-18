@@ -42,7 +42,7 @@ public class IosListView extends ListView<IosEntry> implements EvtObserver<MacEv
         super(entries);
         timeline = new Timeline();
         getStylesheets().add(IosListView.class.getResource("apple.css").toExternalForm());
-        getStyleClass().addAll("apple", "ios-list-view");
+        getStyleClass().add("ios-list-view");
 
         registerListeners();
     }

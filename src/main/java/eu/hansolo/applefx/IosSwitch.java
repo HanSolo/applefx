@@ -164,7 +164,7 @@ public class IosSwitch extends Region {
             }
         }
 
-        getStyleClass().addAll("apple", "ios-switch");
+        getStyleClass().add("ios-switch");
 
         dropShadow = new DropShadow(BlurType.GAUSSIAN, Color.rgb(0, 0, 0, 0.25), 10.0, 0.0, 0, 5);
 

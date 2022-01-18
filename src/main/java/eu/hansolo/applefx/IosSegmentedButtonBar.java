@@ -36,7 +36,7 @@ public class IosSegmentedButtonBar extends HBox {
     public IosSegmentedButtonBar(final Node... children) {
         super();
         getChildren().addAll(children);
-        getStyleClass().addAll("apple", "ios-segmented-button-bar");
+        getStyleClass().add("ios-segmented-button-bar");
         adjustStyles();
 
         registerListeners();

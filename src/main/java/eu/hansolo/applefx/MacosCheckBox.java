@@ -12,6 +12,7 @@ public class MacosCheckBox extends CheckBox {
     private              BooleanProperty dark;
 
 
+    // ******************** Constructors **************************************
     public MacosCheckBox() {
         super();
         init();
@@ -22,12 +23,14 @@ public class MacosCheckBox extends CheckBox {
     }
 
 
+    // ******************** Initialization ************************************
     private void init() {
-        getStyleClass().addAll("apple", "macos-check-box");
+        getStyleClass().add("macos-check-box");
         _dark = false;
     }
 
 
+    // ******************** Methods *******************************************
     public final boolean isDark() {
         return null == dark ? _dark : dark.get();
     }

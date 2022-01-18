@@ -12,6 +12,7 @@ public class MacosTextField extends TextField {
     private              BooleanProperty dark;
 
 
+    // ******************** Constructors **************************************
     public MacosTextField() {
         super();
         init();
@@ -22,12 +23,14 @@ public class MacosTextField extends TextField {
     }
 
 
+    // ******************** Initialization ************************************
     private void init() {
-        getStyleClass().addAll("apple", "macos-text-field");
+        getStyleClass().add("macos-text-field");
         _dark = false;
     }
 
 
+    // ******************** Methods *******************************************
     public final boolean isDark() {
         return null == dark ? _dark : dark.get();
     }

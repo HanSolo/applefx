@@ -132,7 +132,7 @@ public class MacosSwitch extends Region {
             }
         }
 
-        getStyleClass().addAll("apple", "macos-switch");
+        getStyleClass().add("macos-switch");
 
         backgroundArea = new Rectangle();
         backgroundArea.getStyleClass().addAll("background-area");

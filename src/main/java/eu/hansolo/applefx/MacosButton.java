@@ -29,6 +29,7 @@ public class MacosButton extends Button {
     private              BooleanProperty dark;
 
 
+    // ******************** Constructors **************************************
     public MacosButton() {
         super();
         init();
@@ -43,12 +44,14 @@ public class MacosButton extends Button {
     }
 
 
+    // ******************** Initialization ************************************
     private void init() {
-        getStyleClass().addAll("apple", "macos-button");
+        getStyleClass().add("macos-button");
         _dark = false;
     }
 
 
+    // ******************** Methods *******************************************
     public final boolean isDark() {
         return null == dark ? _dark : dark.get();
     }

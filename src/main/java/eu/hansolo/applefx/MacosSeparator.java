@@ -13,6 +13,7 @@ public class MacosSeparator extends Separator {
     private              BooleanProperty dark;
 
 
+    // ******************** Constructors **************************************
     public MacosSeparator() {
         super();
         init();
@@ -23,12 +24,14 @@ public class MacosSeparator extends Separator {
     }
 
 
+    // ******************** Initialization ************************************
     private void init() {
-        getStyleClass().addAll("apple", "macos-separator");
+        getStyleClass().add("macos-separator");
         _dark = false;
     }
 
 
+    // ******************** Methods *******************************************
     public final boolean isDark() {
         return null == dark ? _dark : dark.get();
     }
