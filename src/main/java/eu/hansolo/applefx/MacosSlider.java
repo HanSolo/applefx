@@ -7,7 +7,7 @@ import javafx.scene.control.Skin;
 import javafx.scene.control.Slider;
 
 
-public class MacosSlider extends Slider {
+public class MacosSlider extends Slider implements MacosControl {
     private static final PseudoClass     BALANCE_PSEUDO_CLASS = PseudoClass.getPseudoClass("balance");
     private static final PseudoClass     DARK_PSEUDO_CLASS    = PseudoClass.getPseudoClass("dark");
     private              BooleanProperty balance              = new BooleanPropertyBase(false) {
@@ -42,18 +42,18 @@ public class MacosSlider extends Slider {
     public void setBalance(final boolean balance) { this.balance.set(balance); }
     public BooleanProperty balanceProperty() { return balance; }
 
-    public final boolean isDark() {
+    @Override public final boolean isDark() {
         return null == dark ? _dark : dark.get();
     }
-    public final void setDark(final boolean dark) {
+    @Override public final void setDark(final boolean dark) {
         if (null == this.dark) {
             _dark = dark;
             pseudoClassStateChanged(DARK_PSEUDO_CLASS, dark);
         } else {
-            darkProperty().set(dark);
+            this.dark.set(dark);
         }
     }
-    public final BooleanProperty darkProperty() {
+    @Override public final BooleanProperty darkProperty() {
         if (null == dark) {
             dark = new BooleanPropertyBase() {
                 @Override protected void invalidated() {

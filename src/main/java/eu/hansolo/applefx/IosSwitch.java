@@ -18,7 +18,7 @@ package eu.hansolo.applefx;
 
 import eu.hansolo.applefx.event.MacEvt;
 import eu.hansolo.applefx.tools.Helper;
-import eu.hansolo.applefx.tools.MacOSSystemColor;
+import eu.hansolo.applefx.tools.MacosSystemColor;
 import eu.hansolo.toolbox.evt.EvtObserver;
 import eu.hansolo.toolbox.evt.EvtType;
 import javafx.animation.AnimationTimer;
@@ -72,7 +72,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class IosSwitch extends Region {
     public static final  double                                  MIN_DURATION           = 10;
     public static final  double                                  MAX_DURATION           = 500;
-    public static final  Color                                   DEFAULT_SELECTED_COLOR = MacOSSystemColor.GREEN.getColorAqua();
+    public static final  Color                                   DEFAULT_SELECTED_COLOR = MacosSystemColor.GREEN.getColorAqua();
     private static final double                                  PREFERRED_WIDTH        = 38;
     private static final double                                  PREFERRED_HEIGHT       = 23;
     private static final double                                  MINIMUM_WIDTH          = 20;

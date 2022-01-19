@@ -19,7 +19,7 @@ package eu.hansolo.applefx;
 import eu.hansolo.applefx.IosMultiButton.Type;
 import eu.hansolo.applefx.event.MacEvt;
 import eu.hansolo.applefx.tools.Helper;
-import eu.hansolo.applefx.tools.MacOSSystemColor;
+import eu.hansolo.applefx.tools.MacosSystemColor;
 import eu.hansolo.toolbox.evt.Evt;
 import eu.hansolo.toolbox.evt.EvtType;
 import javafx.application.Application;
@@ -85,14 +85,14 @@ public class Demo extends Application {
         System.out.println("Dark Mode       : " + Helper.isDarkMode());
 
 
-        entry1 = createIosEntry("Title 1", "Subtitle 1", createMultiButton(Type.SMALL_DOT, MacOSSystemColor.PURPLE.getColorAqua(), false), createSwitch(MacOSSystemColor.PURPLE.getColorAqua(), false), true, true);
-        entry2 = createIosEntry("Title 2", "Subtitle 2", createMultiButton(Type.ADD, MacOSSystemColor.GREEN.getColorAqua(), false), createSwitch(MacOSSystemColor.PINK.getColorAqua(), true), true, false);
-        entry3 = createIosEntry("Title 3", "Subtitle 3", createMultiButton(Type.DELETE, MacOSSystemColor.RED.getColorAqua(), false), createSwitch(MacOSSystemColor.GREEN.getColorAqua(), false), false, false);
-        entry4 = createIosEntry("Title 4", "Subtitle 4", createMultiButton(Type.DOT, MacOSSystemColor.ORANGE.getColorAqua(), false), createMultiButton(Type.CHECKBOX, MacOSSystemColor.GREEN.getColorAqua(), true), false, true);
-        entry5 = createIosEntry("Title 5", "Subtitle 5", createMultiButton(Type.INFO, MacOSSystemColor.BLUE.getColorAqua(), false), createMultiButton(Type.CHECKBOX, MacOSSystemColor.GREEN.getColorAqua(), false), false, false);
-        entry6 = createIosEntry("Title 6", "Subtitle 6", createMultiButton(Type.PLUS, MacOSSystemColor.ORANGE.getColorAqua(), false), createMultiButton(Type.ADD, MacOSSystemColor.GREEN.getColorAqua(), false), false, false);
-        entry7 = createIosEntry("Title 7", "Subtitle 7", null, createMultiButton(Type.DELETE, MacOSSystemColor.GREEN.getColorAqua(), false), false, false);
-        entry8 = createIosEntry("Title 8", "Subtitle 8", createMultiButton(Type.DOT, MacOSSystemColor.GREEN.getColorAqua(), false), createMultiButton(Type.CHECK_MARK, MacOSSystemColor.BLUE.getColorAqua(), true), false, false);
+        entry1 = createIosEntry("Title 1", "Subtitle 1", createMultiButton(Type.SMALL_DOT, MacosSystemColor.PURPLE.getColorAqua(), false), createSwitch(MacosSystemColor.PURPLE.getColorAqua(), false), true, true);
+        entry2 = createIosEntry("Title 2", "Subtitle 2", createMultiButton(Type.ADD, MacosSystemColor.GREEN.getColorAqua(), false), createSwitch(MacosSystemColor.PINK.getColorAqua(), true), true, false);
+        entry3 = createIosEntry("Title 3", "Subtitle 3", createMultiButton(Type.DELETE, MacosSystemColor.RED.getColorAqua(), false), createSwitch(MacosSystemColor.GREEN.getColorAqua(), false), false, false);
+        entry4 = createIosEntry("Title 4", "Subtitle 4", createMultiButton(Type.DOT, MacosSystemColor.ORANGE.getColorAqua(), false), createMultiButton(Type.CHECKBOX, MacosSystemColor.GREEN.getColorAqua(), true), false, true);
+        entry5 = createIosEntry("Title 5", "Subtitle 5", createMultiButton(Type.INFO, MacosSystemColor.BLUE.getColorAqua(), false), createMultiButton(Type.CHECKBOX, MacosSystemColor.GREEN.getColorAqua(), false), false, false);
+        entry6 = createIosEntry("Title 6", "Subtitle 6", createMultiButton(Type.PLUS, MacosSystemColor.ORANGE.getColorAqua(), false), createMultiButton(Type.ADD, MacosSystemColor.GREEN.getColorAqua(), false), false, false);
+        entry7 = createIosEntry("Title 7", "Subtitle 7", null, createMultiButton(Type.DELETE, MacosSystemColor.GREEN.getColorAqua(), false), false, false);
+        entry8 = createIosEntry("Title 8", "Subtitle 8", createMultiButton(Type.DOT, MacosSystemColor.GREEN.getColorAqua(), false), createMultiButton(Type.CHECK_MARK, MacosSystemColor.BLUE.getColorAqua(), true), false, false);
         entry9 = createIosEntry("Title 9", "Subtitle 9", null, createMultiButton(Type.FORWARD, Color.rgb(0, 0, 0, 0.2), true), false, false);
 
         entry1.setActionLabel("Press");
@@ -156,14 +156,14 @@ public class Demo extends Application {
         toggleButton.setGraphic(wifiDisabled);
         toggleButton.setInactive(true);
 
-        switch1 = createSwitch(MacOSSystemColor.PINK.getColorAqua(), false);
+        switch1 = createSwitch(MacosSystemColor.PINK.getColorAqua(), false);
 
         macosButton = new MacosButton("Test");
         macosButton.setDark(true);
 
         macosSwitch = MacosSwitchBuilder.create()
                                         .dark(true)
-                                        .selectedColor(MacOSSystemColor.PINK.getColorDark())
+                                        .selectedColor(MacosSystemColor.PINK.getColorDark())
                                         .selected(true)
                                         //.showOnOffText(true)
                                         //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
@@ -172,9 +172,9 @@ public class Demo extends Application {
         macosCheckBox = new MacosCheckBox("Check me");
         macosCheckBox.setDark(true);
 
-        macosWindowButtonClose    = new MacosWindowButton(WindowButtonType.CLOSE, WindowButtonSize.LARGE);
-        macosWindowButtonMinimize = new MacosWindowButton(WindowButtonType.MINIMIZE, WindowButtonSize.LARGE);
-        macosWindowButtonMaximize = new MacosWindowButton(WindowButtonType.MAXIMIZE, WindowButtonSize.LARGE);
+        macosWindowButtonClose    = new MacosWindowButton(MacosButtonType.CLOSE, MacosButtonSize.LARGE);
+        macosWindowButtonMinimize = new MacosWindowButton(MacosButtonType.MINIMIZE, MacosButtonSize.LARGE);
+        macosWindowButtonMaximize = new MacosWindowButton(MacosButtonType.MAXIMIZE, MacosButtonSize.LARGE);
 
         HBox macosWindowButtonBox = new HBox(5, macosWindowButtonClose, macosWindowButtonMinimize, macosWindowButtonMaximize);
         macosWindowButtonBox.setOnMouseEntered(e -> {
@@ -249,7 +249,7 @@ public class Demo extends Application {
 
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);
-        pane.setBackground(new Background(new BackgroundFill(MacOSSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         Scene scene = new Scene(pane);
 

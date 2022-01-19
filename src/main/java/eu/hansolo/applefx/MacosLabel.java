@@ -3,33 +3,37 @@ package eu.hansolo.applefx;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.css.PseudoClass;
-import javafx.geometry.Orientation;
-import javafx.scene.control.Control;
-import javafx.scene.control.Separator;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 
-public class MacosSeparator extends Separator implements MacosControl {
+public class MacosLabel extends Label implements MacosControl {
     private static final PseudoClass     DARK_PSEUDO_CLASS = PseudoClass.getPseudoClass("dark");
     private              boolean         _dark;
     private              BooleanProperty dark;
 
 
     // ******************** Constructors **************************************
-    public MacosSeparator() {
+    public MacosLabel() {
         super();
         init();
     }
-    public MacosSeparator(final Orientation orientation) {
-        super(orientation);
+    public MacosLabel(final String text) {
+        super(text);
+        init();
+    }
+    public MacosLabel(final String text, final Node graphic) {
+        super(text, graphic);
         init();
     }
 
 
     // ******************** Initialization ************************************
     private void init() {
-        getStyleClass().add("macos-separator");
+        getStyleClass().add("macos-label");
         _dark = false;
     }
+
 
 
     // ******************** Methods *******************************************
@@ -50,14 +54,10 @@ public class MacosSeparator extends Separator implements MacosControl {
                 @Override protected void invalidated() {
                     pseudoClassStateChanged(DARK_PSEUDO_CLASS, get());
                 }
-                @Override public Object getBean() { return MacosSeparator.this; }
+                @Override public Object getBean() { return MacosLabel.this; }
                 @Override public String getName() { return "dark"; }
             };
         }
         return dark;
     }
-
-
-    // ******************** Style related *************************************
-    @Override public String getUserAgentStylesheet() { return MacosSeparator.class.getResource("apple.css").toExternalForm(); }
 }

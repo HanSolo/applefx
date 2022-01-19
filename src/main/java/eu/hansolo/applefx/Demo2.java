@@ -1,23 +1,17 @@
 package eu.hansolo.applefx;
 
-import eu.hansolo.applefx.IosMultiButton.Type;
-import eu.hansolo.applefx.event.MacEvt;
 import eu.hansolo.applefx.tools.Helper;
-import eu.hansolo.applefx.tools.MacOSSystemColor;
-import eu.hansolo.toolbox.evt.Evt;
-import eu.hansolo.toolbox.evt.EvtType;
+import eu.hansolo.applefx.tools.MacosSystemColor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -56,7 +50,7 @@ public class Demo2 extends Application {
         macosButton = new MacosButton("Test");
 
         macosSwitch = MacosSwitchBuilder.create()
-                                        .selectedColor(MacOSSystemColor.PINK.getColorDark())
+                                        .selectedColor(MacosSystemColor.PINK.getColorDark())
                                         .selected(true)
                                         //.showOnOffText(true)
                                         //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
@@ -64,11 +58,11 @@ public class Demo2 extends Application {
 
         macosCheckBox = new MacosCheckBox("Check me");
 
-        macosWindowButtonClose    = new MacosWindowButton(WindowButtonType.CLOSE, WindowButtonSize.LARGE);
-        macosWindowButtonMinimize = new MacosWindowButton(WindowButtonType.MINIMIZE, WindowButtonSize.LARGE);
-        macosWindowButtonMaximize = new MacosWindowButton(WindowButtonType.MAXIMIZE, WindowButtonSize.LARGE);
+        macosWindowButtonClose    = new MacosWindowButton(MacosButtonType.CLOSE, MacosButtonSize.LARGE);
+        macosWindowButtonMinimize = new MacosWindowButton(MacosButtonType.MINIMIZE, MacosButtonSize.LARGE);
+        macosWindowButtonMaximize = new MacosWindowButton(MacosButtonType.MAXIMIZE, MacosButtonSize.LARGE);
 
-        HBox macosWindowButtonBox = new HBox(5, macosWindowButtonClose, macosWindowButtonMinimize, macosWindowButtonMaximize);
+        HBox macosWindowButtonBox = new HBox(8, macosWindowButtonClose, macosWindowButtonMinimize, macosWindowButtonMaximize);
         macosWindowButtonBox.setOnMouseEntered(e -> {
             macosWindowButtonClose.setHovered(true);
             macosWindowButtonMinimize.setHovered(true);
@@ -106,7 +100,7 @@ public class Demo2 extends Application {
 
         macosSwitchDark = MacosSwitchBuilder.create()
                                             .dark(true)
-                                            .selectedColor(MacOSSystemColor.PINK.getColorDark())
+                                            .selectedColor(MacosSystemColor.PINK.getColorDark())
                                             .selected(true)
                                             //.showOnOffText(true)
                                             //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
@@ -115,11 +109,14 @@ public class Demo2 extends Application {
         macosCheckBoxDark = new MacosCheckBox("Check me");
         macosCheckBoxDark.setDark(true);
 
-        macosWindowButtonCloseDark    = new MacosWindowButton(WindowButtonType.CLOSE, WindowButtonSize.LARGE);
-        macosWindowButtonMinimizeDark = new MacosWindowButton(WindowButtonType.MINIMIZE, WindowButtonSize.LARGE);
-        macosWindowButtonMaximizeDark = new MacosWindowButton(WindowButtonType.MAXIMIZE, WindowButtonSize.LARGE);
+        macosWindowButtonCloseDark    = new MacosWindowButton(MacosButtonType.CLOSE, MacosButtonSize.LARGE);
+        macosWindowButtonCloseDark.setDark(true);
+        macosWindowButtonMinimizeDark = new MacosWindowButton(MacosButtonType.MINIMIZE, MacosButtonSize.LARGE);
+        macosWindowButtonMinimizeDark.setDark(true);
+        macosWindowButtonMaximizeDark = new MacosWindowButton(MacosButtonType.MAXIMIZE, MacosButtonSize.LARGE);
+        macosWindowButtonMaximizeDark.setDark(true);
 
-        HBox macosWindowButtonBoxDark = new HBox(5, macosWindowButtonCloseDark, macosWindowButtonMinimizeDark, macosWindowButtonMaximizeDark);
+        HBox macosWindowButtonBoxDark = new HBox(8, macosWindowButtonCloseDark, macosWindowButtonMinimizeDark, macosWindowButtonMaximizeDark);
         macosWindowButtonBoxDark.setOnMouseEntered(e -> {
             macosWindowButtonCloseDark.setHovered(true);
             macosWindowButtonMinimizeDark.setHovered(true);
@@ -167,18 +164,18 @@ public class Demo2 extends Application {
         VBox pane = new VBox(10, macosScrollPane);
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);
-        pane.setBackground(new Background(new BackgroundFill(MacOSSystemColor.BACKGROUND.getColorAqua(), CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.getColorAqua(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         VBox paneDark = new VBox(10, macosScrollPaneDark);
         paneDark.setPadding(new Insets(20));
         paneDark.setAlignment(Pos.CENTER);
-        paneDark.setBackground(new Background(new BackgroundFill(MacOSSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
+        paneDark.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         HBox mainPane = new HBox(pane, paneDark);
 
         mainPane.setPadding(new Insets(20));
         mainPane.setAlignment(Pos.CENTER);
-        mainPane.setBackground(new Background(new BackgroundFill(MacOSSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
+        mainPane.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         Scene scene = new Scene(mainPane);
 
@@ -189,33 +186,6 @@ public class Demo2 extends Application {
 
     @Override public void stop() {
         System.exit(0);
-    }
-
-    private IosEntry createIosEntry(final String TITLE, final String SUB_TITLE, final Node LEFT_NODE, final Node RIGHT_NODE, final boolean HAS_ACTION, final boolean HAS_DELETE) {
-        IosEntry entry = new IosEntry(LEFT_NODE, TITLE, SUB_TITLE, RIGHT_NODE);
-        entry.setHasAction(HAS_ACTION);
-        entry.setHasDelete(HAS_DELETE);
-        return entry;
-    }
-
-    private IosSwitch createSwitch(final Color SELECTED_COLOR, final boolean SHOW_ON_OFF_TEXT) {
-        IosSwitch iosSwitch = IosSwitchBuilder.create()
-                                              .minSize(51, 31)
-                                              .maxSize(51, 31)
-                                              .prefSize(51, 31)
-                                              .showOnOffText(SHOW_ON_OFF_TEXT)
-                                              .selectedColor(null == SELECTED_COLOR ? IosSwitch.DEFAULT_SELECTED_COLOR : SELECTED_COLOR)
-                                              .build();
-        return  iosSwitch;
-    }
-
-    private IosMultiButton createMultiButton(final Type MULTI_BUTTON_TYPE, final Color SELECTED_COLOR, final boolean SELECTED) {
-        IosMultiButton iosMultiButton = IosMultiButtonBuilder.create()
-                                                             .type(MULTI_BUTTON_TYPE)
-                                                             .selectedColor(SELECTED_COLOR)
-                                                             .selected(SELECTED)
-                                                             .build();
-        return iosMultiButton;
     }
 
     public static void main(String[] args) {

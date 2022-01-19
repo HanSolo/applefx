@@ -18,6 +18,7 @@ package eu.hansolo.applefx.tools;
 
 import eu.hansolo.toolbox.OperatingSystem;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
@@ -25,21 +26,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static eu.hansolo.toolbox.Helper.getOperatingSystem;
 
 
 public class Helper {
-    public static final Map<Integer, Color[]> MACOS_ACCENT_COLOR_MAP = Map.of(-1, new Color[] { MacOSSystemColor.GRAY.colorAqua, MacOSSystemColor.GRAY.colorDark },
-                                                                              0, new Color[] { MacOSSystemColor.RED.colorAqua, MacOSSystemColor.RED.colorDark },
-                                                                              1, new Color[] { MacOSSystemColor.ORANGE.colorAqua, MacOSSystemColor.ORANGE.colorDark },
-                                                                              2, new Color[] { MacOSSystemColor.YELLOW.colorAqua, MacOSSystemColor.YELLOW.colorDark },
-                                                                              3, new Color[] { MacOSSystemColor.GREEN.colorAqua, MacOSSystemColor.GREEN.colorDark },
-                                                                              4, new Color[] { MacOSSystemColor.BLUE.colorAqua, MacOSSystemColor.BLUE.colorDark },
-                                                                              5, new Color[] { MacOSSystemColor.PURPLE.colorAqua, MacOSSystemColor.PURPLE.colorDark },
-                                                                              6, new Color[] { MacOSSystemColor.PINK.colorAqua, MacOSSystemColor.PINK.colorDark });
+    public static final Map<Integer, Color[]> MACOS_ACCENT_COLOR_MAP = Map.of(-1, new Color[] { MacosSystemColor.GRAY.colorAqua, MacosSystemColor.GRAY.colorDark },
+                                                                              0, new Color[]  { MacosSystemColor.RED.colorAqua, MacosSystemColor.RED.colorDark },
+                                                                              1, new Color[]  { MacosSystemColor.ORANGE.colorAqua, MacosSystemColor.ORANGE.colorDark },
+                                                                              2, new Color[]  { MacosSystemColor.YELLOW.colorAqua, MacosSystemColor.YELLOW.colorDark },
+                                                                              3, new Color[]  { MacosSystemColor.GREEN.colorAqua, MacosSystemColor.GREEN.colorDark },
+                                                                              4, new Color[]  { MacosSystemColor.BLUE.colorAqua, MacosSystemColor.BLUE.colorDark },
+                                                                              5, new Color[]  { MacosSystemColor.PURPLE.colorAqua, MacosSystemColor.PURPLE.colorDark },
+                                                                              6, new Color[]  { MacosSystemColor.PINK.colorAqua, MacosSystemColor.PINK.colorDark });
 
     private static final String   REGQUERY_UTIL      = "reg query ";
     private static final String   REGDWORD_TOKEN     = "REG_DWORD";
@@ -117,8 +120,8 @@ public class Helper {
         }
     }
 
-    public static MacOSAccentColor getMacOSAccentColor() {
-        if (OperatingSystem.MACOS != getOperatingSystem()) { return MacOSAccentColor.MULTI_COLOR; }
+    public static MacosAccentColor getMacosAccentColor() {
+        if (OperatingSystem.MACOS != getOperatingSystem()) { return MacosAccentColor.MULTI_COLOR; }
         final boolean isDarkMode = isMacOsDarkMode();
         try {
             Integer           colorKey    = null;
@@ -133,16 +136,16 @@ public class Helper {
             int rc = process.waitFor();  // Wait for the process to complete
             if (0 == rc) {
                 Integer key = colorKey;
-                return MacOSAccentColor.getAsList().stream().filter(macOSAccentColor -> macOSAccentColor.key == key).findFirst().orElse(MacOSAccentColor.MULTI_COLOR);
+                return MacosAccentColor.getAsList().stream().filter(macOSAccentColor -> macOSAccentColor.key == key).findFirst().orElse(MacosAccentColor.MULTI_COLOR);
             } else {
-                return MacOSAccentColor.MULTI_COLOR;
+                return MacosAccentColor.MULTI_COLOR;
             }
         } catch (IOException | InterruptedException e) {
-            return MacOSAccentColor.MULTI_COLOR;
+            return MacosAccentColor.MULTI_COLOR;
         }
     }
-    public static Color getMacOSAccentColorAsColor() {
-        if (OperatingSystem.MACOS != getOperatingSystem()) { return MacOSAccentColor.MULTI_COLOR.getColorAqua(); }
+    public static Color getMacosAccentColorAsColor() {
+        if (OperatingSystem.MACOS != getOperatingSystem()) { return MacosAccentColor.MULTI_COLOR.getColorAqua(); }
         final boolean isDarkMode = isMacOsDarkMode();
         try {
             Integer           colorKey    = null;
@@ -164,6 +167,19 @@ public class Helper {
             return isDarkMode ? MACOS_ACCENT_COLOR_MAP.get(4)[1] : MACOS_ACCENT_COLOR_MAP.get(4)[0];
         }
     }
+
+    public static List<Node> getAllNodes(Parent root) {
+        List<Node> nodes = new ArrayList<Node>();
+        addAllDescendents(root, nodes);
+        return nodes;
+    }
+    private static void addAllDescendents(Parent parent, List<Node> nodes) {
+        for (Node node : parent.getChildrenUnmodifiable()) {
+            nodes.add(node);
+            if (node instanceof Parent) { addAllDescendents((Parent)node, nodes); }
+        }
+    }
+
 
 
     // ******************** Internal Classes **********************************

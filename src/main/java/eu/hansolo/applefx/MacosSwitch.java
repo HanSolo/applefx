@@ -18,14 +18,14 @@ package eu.hansolo.applefx;
 
 import eu.hansolo.applefx.event.MacEvt;
 import eu.hansolo.applefx.tools.Helper;
-import eu.hansolo.applefx.tools.MacOSSystemColor;
+import eu.hansolo.applefx.tools.MacosAccentColor;
+import eu.hansolo.applefx.tools.MacosSystemColor;
 import eu.hansolo.toolbox.evt.EvtObserver;
 import eu.hansolo.toolbox.evt.EvtType;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.beans.DefaultProperty;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -35,7 +35,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.DoublePropertyBase;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
 import javafx.css.PseudoClass;
@@ -62,10 +61,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 @DefaultProperty("children")
-public class MacosSwitch extends Region {
+public class MacosSwitch extends Region implements MacosControl {
     public static final  double                                  MIN_DURATION           = 10;
     public static final  double                                  MAX_DURATION           = 500;
-    public static final  Color                                   DEFAULT_SELECTED_COLOR = MacOSSystemColor.BLUE.getColorAqua();
+    public static final  Color                                   DEFAULT_ACCENT_COLOR   = MacosAccentColor.BLUE.getColorAqua();
     private static final double                                  PREFERRED_WIDTH        = 38;
     private static final double                                  PREFERRED_HEIGHT       = 25;
     private static final double                                  MINIMUM_WIDTH          = 38;
@@ -77,7 +76,7 @@ public class MacosSwitch extends Region {
     private static final PseudoClass                             DARK_PSEUDO_CLASS      = PseudoClass.getPseudoClass("dark");
     private final        MacEvt                                  selectedEvt            = new MacEvt(MacosSwitch.this, MacEvt.SELECTED);
     private final        MacEvt                                  deselectedEvt          = new MacEvt(MacosSwitch.this, MacEvt.DESELECTED);
-    private final        StyleableProperty<Color>                selectedColor;
+    private final        StyleableProperty<Color>                accentColor;
     private              Map<EvtType, List<EvtObserver<MacEvt>>> observers;
     private              boolean                                 _dark;
     private              BooleanProperty                         dark;
@@ -107,7 +106,7 @@ public class MacosSwitch extends Region {
     }
     public MacosSwitch(final Map<String, Property> settings) {
         _selected       = false;
-        selectedColor   = FACTORY.createStyleableColorProperty(MacosSwitch.this, "selectedColor", "-selected-color", s -> s.selectedColor, DEFAULT_SELECTED_COLOR);
+        accentColor     = FACTORY.createStyleableColorProperty(MacosSwitch.this, "accentColor", "-accent-color", s -> s.accentColor, DEFAULT_ACCENT_COLOR);
         _dark           = false;
         _duration       = 250;
         _showOnOffText  = false;
@@ -137,7 +136,7 @@ public class MacosSwitch extends Region {
         backgroundArea = new Rectangle();
         backgroundArea.getStyleClass().addAll("background-area");
         if (isSelected()) {
-            backgroundArea.setFill(getSelectedColor());
+            backgroundArea.setFill(getAccentColor());
         }
 
         one = new Rectangle();
@@ -230,7 +229,7 @@ public class MacosSwitch extends Region {
                 setPadding(((ObjectProperty<Insets>) settings.get(key)).get());
             } // Control specific settings
             else if ("selectedColor".equals(key)) {
-                setSelectedColor(((ObjectProperty<Color>) settings.get(key)).get());
+                setAccentColor(((ObjectProperty<Color>) settings.get(key)).get());
             } else if("dark".equals(key)) {
                 setDark(((BooleanProperty) settings.get(key)).get());
             } else if ("showOnOffText".equals(key)) {
@@ -299,22 +298,23 @@ public class MacosSwitch extends Region {
         return selected;
     }
 
-    public Color getSelectedColor() { return selectedColor.getValue(); }
-    public void setSelectedColor(final Color color) { selectedColor.setValue(color); }
-    public ObjectProperty<Color> selectedColorProperty() { return (ObjectProperty<Color>) selectedColor; }
+    public Color getAccentColor() { return accentColor.getValue(); }
+    public void setAccentColor(final Color color) { this.accentColor.setValue(color); }
+    public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.setValue(isDark() ? accentColor.getColorDark() : accentColor.getColorAqua()); }
+    public ObjectProperty<Color> accentColorProperty() { return (ObjectProperty<Color>) accentColor; }
 
-    public final boolean isDark() {
+    @Override public final boolean isDark() {
         return null == dark ? _dark : dark.get();
     }
-    public final void setDark(final boolean dark) {
+    @Override public final void setDark(final boolean dark) {
         if (null == this.dark) {
             _dark = dark;
             pseudoClassStateChanged(DARK_PSEUDO_CLASS, dark);
         } else {
-            darkProperty().set(dark);
+            this.dark.set(dark);
         }
     }
-    public final BooleanProperty darkProperty() {
+    @Override public final BooleanProperty darkProperty() {
         if (null == dark) {
             dark = new BooleanPropertyBase() {
                 @Override protected void invalidated() {
@@ -374,8 +374,8 @@ public class MacosSwitch extends Region {
 
 
     private void animateToSelect() {
-        KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacOSSystemColor.CTR_BACKGROUND.getColorDark() : MacOSSystemColor.CTR_BACKGROUND.getColorAqua(), Interpolator.EASE_BOTH);
-        KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), getSelectedColor(), Interpolator.EASE_BOTH);
+        KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.getColorDark() : MacosSystemColor.CTR_BACKGROUND.getColorAqua(), Interpolator.EASE_BOTH);
+        KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
         KeyValue kvKnobXStart          = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMinX() + height * 0.1, Interpolator.EASE_BOTH);
         KeyValue kvKnobXEnd            = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMaxX() - height * 0.9, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityStart     = new KeyValue(one.opacityProperty(), 0, Interpolator.EASE_BOTH);
@@ -391,8 +391,8 @@ public class MacosSwitch extends Region {
         timeline.play();
     }
     private void animateToDeselect() {
-        KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), getSelectedColor(), Interpolator.EASE_BOTH);
-        KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacOSSystemColor.CTR_BACKGROUND.getColorDark() : MacOSSystemColor.CTR_BACKGROUND.getColorAqua(), Interpolator.EASE_BOTH);
+        KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
+        KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.getColorDark() : MacosSystemColor.CTR_BACKGROUND.getColorAqua(), Interpolator.EASE_BOTH);
         KeyValue kvKnobXStart          = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMaxX() - height * 0.9, Interpolator.EASE_BOTH);
         KeyValue kvKnobXEnd            = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMinX() + height * 0.1, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityStart     = new KeyValue(one.opacityProperty(), one.getOpacity(), Interpolator.EASE_BOTH);

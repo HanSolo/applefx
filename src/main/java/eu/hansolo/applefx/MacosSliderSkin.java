@@ -17,7 +17,7 @@ import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 
-public class MacosSliderSkin extends SkinBase<Slider> {
+public class MacosSliderSkin extends SkinBase<MacosSlider> {
     private Slider                  slider;
     private NumberAxis              tickLine       = null;
     private double                  trackToTickGap = 2;
@@ -41,7 +41,7 @@ public class MacosSliderSkin extends SkinBase<Slider> {
     private StringConverter<Number> stringConverterWrapper;
 
 
-    public MacosSliderSkin(final Slider slider) {
+    public MacosSliderSkin(final MacosSlider slider) {
         super(slider);
         this.slider = slider;
 
@@ -90,18 +90,14 @@ public class MacosSliderSkin extends SkinBase<Slider> {
         registerChangeListener(slider.snapToTicksProperty(), e -> slider.adjustValue(slider.getValue()));
 
 
-        if (slider instanceof IosSlider) {
-            IosSlider iosSlider = (IosSlider) slider;
-            registerChangeListener(iosSlider.balanceProperty(), e -> {
-                IosSlider sldr = (IosSlider) slider;
-                boolean isBalance = sldr.getBalance();
-                trackProgress.setVisible(!isBalance);
-                centerLine.setVisible(isBalance);
-                if (isBalance) { sldr.setValue(sldr.getRange() * 0.5); }
-                sldr = null;
-            });
-            iosSlider = null;
-        }
+        registerChangeListener(slider.balanceProperty(), e -> {
+            MacosSlider sldr = slider;
+            boolean isBalance = sldr.getBalance();
+            trackProgress.setVisible(!isBalance);
+            centerLine.setVisible(isBalance);
+            if (isBalance) { sldr.setValue(sldr.getRange() * 0.5); }
+            sldr = null;
+        });
 
         stringConverterWrapper = new StringConverter<>() {
             @Override public String toString(Number object) {
@@ -134,13 +130,12 @@ public class MacosSliderSkin extends SkinBase<Slider> {
 
         trackProgress = new StackPane();
         trackProgress.getStyleClass().setAll("track-progress");
-        if (getSkinnable() instanceof IosSlider) {
-            IosSlider iosSlider = (IosSlider) getSkinnable();
-            boolean isBalance = iosSlider.getBalance();
-            trackProgress.setVisible(!isBalance);
-            if (isBalance) { iosSlider.setValue(iosSlider.getRange() * 0.5); }
-            iosSlider = null;
-        }
+
+        MacosSlider sldr = getSkinnable();
+        boolean isBalance = sldr.getBalance();
+        trackProgress.setVisible(!isBalance);
+        if (isBalance) { sldr.setValue(sldr.getRange() * 0.5); }
+        sldr = null;
 
         getChildren().setAll(track, centerLine, trackProgress, thumb);
         setShowTickMarks(slider.isShowTickMarks(), slider.isShowTickLabels());

@@ -13,25 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 @font-face {
-    font-family: "SF Pro";
+    font-family: 'SF Pro Display';
     src: url('fonts/SF-Pro-Display-Regular.ttf');
 }
 @font-face {
-    font-family: "SF Pro";
+    font-family: 'SF Pro Display Thin';
+    src: url('fonts/SF-Pro-Display-Thin.ttf');
+}
+@font-face {
+    font-family: 'SF Pro Display Light';
+    src: url('fonts/SF-Pro-Display-Light.ttf');
+}
+@font-face {
+    font-family: 'SF Pro Display Medium';
     src: url('fonts/SF-Pro-Display-Medium.ttf');
 }
 @font-face {
-    font-family: "SF Pro";
+    font-family: 'SF Pro Display Bold';
     src: url('fonts/SF-Pro-Display-Bold.ttf');
 }
 
 /********** Apple General *********/
 .root * {
-    -WINDOW-BUTTON-RED                : rgb(256, 96, 88);
+    -WINDOW-BUTTON-RED                : rgb(255, 84, 77);
     -WINDOW-BUTTON-YELLOW             : rgb(255, 188, 53);
-    -WINDOW-BUTTON-GREEN              : rgb(0, 200, 68);
+    -WINDOW-BUTTON-GREEN              : rgb(38, 193, 56);
     -WINDOW-BUTTON-LIGHT-GRAY         : rgb(206, 203, 202);
     -WINDOW-BUTTON-GRAY               : rgb(83, 83, 83);
     -WINDOW-BUTTON-DARK-GRAY          : rgb(52, 53, 53);
@@ -75,6 +82,9 @@
     -WHITE                            : rgb(255, 255, 255);
     -BLACK                            : rgb(0, 0, 0);
 
+    -HEADER-BACKGROUND                : rgb(228, 226, 226);
+    -HEADER-BACKGROUND-DARK           : rgb(47, 46, 47);
+
     -LIGHT-BACKGROUND                 : rgb(236, 234, 234);
     -LIGHT-CTRL-BACKGROUND            : rgb(211, 210, 211);
     -DARK-BACKGROUND                  : rgb(31, 28, 29);
@@ -108,7 +118,7 @@
     -fx-alignment        : center;
     -fx-font-size        : 14px;
     -fx-text-fill        : -BLUE-AQUA;
-    -fx-font-family      : 'SF Pro';
+    -fx-font-family      : 'SF Pro Regular';
 }
 .ios-button:pressed {
     -fx-background-color: -BLUE-AQUA;
@@ -178,7 +188,7 @@
     -add-color      : -GREEN-AQUA;
     -delete-color   : -RED-AQUA;
     -symbol-color   : rgb(255, 255, 255);
-    -selected-color : -BLUE-AQUA;
+    -accent-color : -BLUE-AQUA;
 }
 .ios-multi-button .circle {
     -fx-stroke: -circle-color;
@@ -189,7 +199,7 @@
 }
 .ios-multi-button:checkbox:selected .circle {
     -fx-stroke: transparent;
-    -fx-fill  : -selected-color;
+    -fx-fill  : -accent-color;
 }
 .ios-multi-button:checkbox:selected .icon {
     -fx-background-color: -symbol-color;
@@ -221,7 +231,7 @@
     -fx-fill  : transparent;
 }
 .ios-multi-button:dot .icon {
-    -fx-background-color: -selected-color;
+    -fx-background-color: -accent-color;
     -fx-scale-shape     : false;
     -fx-shape           : "M3,11a8,8 0 1,0 16,0a8,8 0 1,0 -16,0Z";
 }
@@ -230,7 +240,7 @@
     -fx-fill  : transparent;
 }
 .ios-multi-button:smalldot .icon {
-    -fx-background-color: -selected-color;
+    -fx-background-color: -accent-color;
     -fx-scale-shape     : false;
     -fx-shape           : "M7,11a4,4 0 1,0 8,0a4,4 0 1,0 -8,0";
 }
@@ -239,7 +249,7 @@
     -fx-fill  : transparent;
 }
 .ios-multi-button:info .icon {
-    -fx-background-color: -selected-color;
+    -fx-background-color: -accent-color;
     -fx-scale-shape     : false;
     -fx-shape           : "M11,28c-6.075,0 -11,-4.925 -11,-11c0,-6.075 4.925,-11 11,-11c6.075,0 11,4.925 11,11c0,6.075 -4.925,11 -11,11Zm0,-1c5.523,0 10,-4.477 10,-10c0,-5.523 -4.477,-10 -10,-10c-5.523,0 -10,4.477 -10,10c0,5.523 4.477,10 10,10Zm-2,-12.5l3,0l0,8l1,0l0,0.5l-4,0l0,-0.5l1,0l0,-7.5l-1,0l0,-0.5Zm1.75,-1.5c-0.69,0 -1.25,-0.56 -1.25,-1.25c0,-0.69 0.56,-1.25 1.25,-1.25c0.69,0 1.25,0.56 1.25,1.25c0,0.69 -0.56,1.25 -1.25,1.25Z";
 }
@@ -248,7 +258,7 @@
     -fx-fill  : transparent;
 }
 .ios-multi-button:plus .icon {
-    -fx-background-color: -selected-color;
+    -fx-background-color: -accent-color;
     -fx-scale-shape     : false;
     -fx-shape           : "M11,22c-6.075,0 -11,-4.925 -11,-11c0,-6.075 4.925,-11 11,-11c6.075,0 11,4.925 11,11c0,6.075 -4.925,11 -11,11Zm0,-1c5.523,0 10,-4.477 10,-10c0,-5.523 -4.477,-10 -10,-10c-5.523,0 -10,4.477 -10,10c0,5.523 4.477,10 10,10Zm-0.5,-10.5l0,-5l1,0l0,5l5,0l0,1l-5,0l0,5l-1,0l0,-5l-5,0l0,-1l5,0Z";
 }
@@ -263,7 +273,7 @@
     -fx-shape           : "M13.753,3.867L11.633,3.868L11.278,14.122L7.743,14.12L7.743,16.24L13.402,16.245L13.753,3.867Z";
 }
 .ios-multi-button:checkmark:selected .icon {
-    -fx-background-color: -selected-color;
+    -fx-background-color: -accent-color;
     -fx-rotate          : 45;
     -fx-scale-shape     : false;
     -fx-shape           : "M13.753,3.867L11.633,3.868L11.278,14.122L7.743,14.12L7.743,16.24L13.402,16.245L13.753,3.867Z";
@@ -273,7 +283,7 @@
     -fx-fill  : transparent;
 }
 .ios-multi-button:forward .icon {
-    -fx-background-color: -selected-color;
+    -fx-background-color: -accent-color;
     -fx-scale-shape     : false;
     -fx-shape           : "M1.333,13l6.667,-6.5l-6.667,-6.5l-1.333,1.3l5.333,5.2l-5.333,5.2l1.333,1.3Z";
 }
@@ -299,7 +309,7 @@
 /* Ios RoundToggleButton */
 .ios-round-toggle-button,
 .ios-round-toggle-button:focused {
-    -selected-color      : -BLUE-AQUA;
+    -accent-color        : -BLUE-AQUA;
     -fx-background-color : rgba(255, 255, 255, 0.5);
     -fx-background-radius: 54px;
 }
@@ -315,7 +325,7 @@
 }
 .ios-round-toggle-button:selected,
 .ios-round-toggle-button:selected:focused {
-    -fx-background-color : -selected-color;
+    -fx-background-color : -accent-color;
     -fx-background-radius: 54px;
 }
 .ios-round-toggle-button:selected .graphics,
@@ -459,7 +469,7 @@
 .ios-switch {
     -background-color : rgb(229, 229, 229);
     -dark-main-color  : rgb(0, 0, 0);
-    -selected-color   : -GREEN-AQUA;
+    -accent-color     : -GREEN-AQUA;
     -knob-color       : rgb(255, 255, 255);
 }
 .ios-switch .background-area {
@@ -508,7 +518,7 @@
     -fx-text-fill              : -text-color;
     -fx-alignment              : CENTER;
     -fx-content-display        : LEFT;
-    -fx-font-family            : 'SF Pro';
+    -fx-font-family            : 'SF Pro Regular';
     -fx-font-size              : 13px;
 }
 .macos-button:armed {
@@ -535,12 +545,12 @@
     -fx-text-fill        : -text-color-dark;
     -fx-alignment        : CENTER;
     -fx-content-display  : LEFT;
-    -fx-font-family      : 'SF Pro';
+    -fx-font-family      : 'SF Pro Regular';
     -fx-font-size        : 13px;
 }
 .macos-button:dark:armed {
     -fx-pref-height      : 20;
-    -fx-background-color : derive(-accent-color, 30%), -accent-color;
+    -fx-background-color : derive(-accent-color-dark, 30%), -accent-color-dark;
     -fx-background-insets: 0 0 0 0, 1 0 0 0;
     -fx-background-radius: 5px;
     -fx-padding          : 2 10 2 10;
@@ -692,13 +702,14 @@
 
 /* TextField */
 .macos-text-field {
-    -fx-control-inner-background: white;
+    -fx-control-inner-background: rgb(242, 242, 242);
     -fx-focus-color             : -accent-color;
     -fx-text-fill               : black;
     -fx-highlight-fill          : derive(-fx-control-inner-background,-20%);
     -fx-highlight-text-fill     : -fx-text-inner-color;
     -fx-prompt-text-fill        : derive(-fx-control-inner-background,-30%);
-    -fx-background-color        : linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 0%, rgba(255, 255, 255, 0.29) 1%, rgba(255, 255, 255, 0.29) 99%, rgba(0, 0, 0, 0.25) 100%), -fx-control-inner-background;
+    /*-fx-background-color        : linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 0%, rgba(255, 255, 255, 0.29) 1%, rgba(255, 255, 255, 0.29) 99%, rgba(0, 0, 0, 0.25) 100%), -fx-control-inner-background;*/
+    -fx-background-color        : rgb(229, 229, 229), -fx-control-inner-background;
     -fx-background-insets       : 0, 1;
     -fx-background-radius       : 0, 0;
     -fx-cursor                  : text;
@@ -716,6 +727,7 @@
 
 .macos-text-field:dark {
     -fx-control-inner-background: -control-background-color-dark;
+    -fx-focus-color             : -accent-color-dark;
     -fx-text-fill               : -text-color-dark;
     -fx-highlight-fill          : derive(-fx-control-inner-background,+20%);
     -fx-highlight-text-fill     : -fx-text-inner-color;
@@ -727,7 +739,7 @@
     -fx-padding                 : 0.333333em 0.583em 0.333333em 0.583em; /* 4 7 4 7 */
 }
 .macos-text-field:dark:focused {
-    -fx-highlight-fill     : -accent-color;
+    -fx-highlight-fill     : -accent-color-dark;
     -fx-highlight-text-fill: -text-color-dark;
     -fx-background-color   : -fx-focus-color, -fx-control-inner-background, -fx-faint-focus-color, linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets  : -0.2, 1, -1.4, 3;
@@ -739,8 +751,11 @@
 /* CheckBox */
 .macos-check-box,
 .macos-check-box:focused {
-    -fx-label-padding   : 0 0 0 5;
-    -fx-text-fill       : -text-color;
+    -box-fill        : -accent-color;
+    -fx-label-padding: 0 0 0 5;
+    -fx-text-fill    : -text-color;
+    -fx-font-family  : 'SF Pro Regular';
+    -fx-font-size    : 13px;
 }
 .macos-check-box > .box,
 .macos-check-box:focused > .box {
@@ -760,7 +775,7 @@
 }
 .macos-check-box:selected > .box {
     -fx-border-color    : transparent;
-    -fx-background-color: -accent-color;
+    -fx-background-color: -box-fill;
 }
 .macos-check-box:selected > .box > .mark {
     -fx-background-color: -TEXT-SELECTED-AQUA;
@@ -769,7 +784,7 @@
 }
 .macos-check-box:indeterminate > .box {
     -fx-border-color    : transparent;
-    -fx-background-color: -accent-color;
+    -fx-background-color: -box-fill;
 }
 .macos-check-box:indeterminate  > .box > .mark {
     -fx-background-color: -TEXT-SELECTED-AQUA;
@@ -779,8 +794,9 @@
 }
 
 .macos-check-box:dark {
-    -fx-label-padding: 0 0 0 5;
-    -fx-text-fill    : -text-color-dark;
+    -box-fill         : -accent-color-dark;
+    -fx-label-padding : 0 0 0 5;
+    -fx-text-fill     : -text-color-dark;
 }
 .macos-check-box:dark > .box,
 .macos-check-box:dark:focused > .box {
@@ -806,7 +822,7 @@
     -fx-padding         : 3 3 4 4;
 }
 .macos-check-box:dark:selected:focused > .box {
-    -fx-background-color: -accent-color-dark;
+    -fx-background-color: -box-fill;
 }
 .macos-check-box:dark:selected > .box > .mark {
     -fx-background-insets: 0, 0;
@@ -816,7 +832,7 @@
 }
 .macos-check-box:dark:indeterminate > .box {
     -fx-border-color    : transparent;
-    -fx-background-color: -accent-color-dark;
+    -fx-background-color: -box-fill;
 }
 .macos-check-box:dark:indeterminate:focused > .box {
     -fx-border-color    : transparent;
@@ -827,6 +843,76 @@
     -fx-shape           : "M0,-0.5H7V1.5H0Z";
     -fx-scale-shape     : false;
     -fx-padding         : 5 5 5 5;
+}
+
+
+/* RadioButton */
+.macos-radio-button {
+    -dot-fill        : -accent-color;
+    -fx-label-padding: 0 0 0 5;
+    -fx-text-fill    : -text-color;
+    -fx-font-family  : 'SF Pro Regular';
+    -fx-font-size    : 13px;
+}
+.macos-radio-button > .radio {
+    -fx-background-color : rgb(206, 206, 206), white;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 1.0em;
+    -fx-padding          : 4;
+    -fx-text-fill        : -text-color;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+}
+.macos-radio-button:focused > .radio {
+    -fx-background-color : rgb(242, 242, 242);
+    -fx-background-insets: 0;
+    -fx-background-radius: 1em;
+}
+.macos-radio-button > .radio > .dot {
+    -fx-background-color : transparent;
+    -fx-background-radius: 1em;
+    -fx-padding          : 3;
+}
+.macos-radio-button:selected > .radio {
+    -fx-background-color: -dot-fill;
+}
+.macos-radio-button:selected > .radio > .dot {
+    -fx-background-color : -TEXT-SELECTED-AQUA;
+    -fx-background-insets: 0;
+}
+
+.macos-radio-button:dark {
+    -dot-fill        : -accent-color-dark;
+    -fx-label-padding: 0 0 0 5;
+    -fx-text-fill    : -text-color-dark;
+    -fx-font-family  : 'SF Pro Regular';
+    -fx-font-size    : 13px;
+}
+.macos-radio-button:dark > .radio {
+    -fx-background-color : rgb(94, 91, 90), linear-gradient(to bottom, rgb(72, 70, 70) 0%, rgb(101, 100, 99) 100%);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 1.0em;
+    -fx-padding          : 4;
+    -fx-text-fill        : -text-color;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+}
+.macos-radio-button:dark:focused > .radio {
+    -fx-background-color : derive(rgb(94, 91, 90), +20%), linear-gradient(to bottom, derive(rgb(72, 70, 70), 20%) 0%, derive(rgb(101, 100, 99), 20%) 100%);
+    -fx-background-insets: 0;
+    -fx-background-radius: 1em;
+}
+.macos-radio-button:dark > .radio > .dot {
+    -fx-background-color : transparent;
+    -fx-background-radius: 1em;
+    -fx-padding          : 3;
+}
+.macos-radio-button:dark:selected > .radio {
+    -fx-background-color: -dot-fill;
+}
+.macos-radio-button:dark:selected > .radio > .dot {
+    -fx-background-color : -TEXT-SELECTED-AQUA;
+    -fx-background-insets: 0;
 }
 
 
@@ -1037,6 +1123,16 @@
     -fx-stroke: derive(-WINDOW-BUTTON-RED, -30%);
 }
 
+.macos-window-button:dark:close .circle,
+.macos-window-button:dark:close:hovered .circle {
+    -fx-fill  : -WINDOW-BUTTON-RED;
+    -fx-stroke: derive(-WINDOW-BUTTON-RED, +10%);
+}
+.macos-window-button:dark:close:pressed .circle {
+    -fx-fill  : derive(-WINDOW-BUTTON-RED, +40%);
+    -fx-stroke: derive(-WINDOW-BUTTON-RED, +50%);
+}
+
 .macos-window-button:minimize .circle,
 .macos-window-button:minimize:hovered .circle {
     -fx-fill  : -WINDOW-BUTTON-YELLOW;
@@ -1047,26 +1143,53 @@
     -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, -30%);
 }
 
-.macos-window-button:zoom .circle,
-.macos-window-button:zoom:hovered .circle {
+.macos-window-button:dark:minimize .circle,
+.macos-window-button:dark:minimize:hovered .circle {
+    -fx-fill  : -WINDOW-BUTTON-YELLOW;
+    -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, +10%);
+}
+.macos-window-button:dark:minimize:pressed .circle {
+    -fx-fill  : derive(-WINDOW-BUTTON-YELLOW, +40%);
+    -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, +50%);
+}
+
+.macos-window-button:maximize .circle,
+.macos-window-button:maximize:hovered .circle {
     -fx-fill  : -WINDOW-BUTTON-GREEN;
     -fx-stroke: derive(-WINDOW-BUTTON-GREEN, -10%);
 }
-.macos-window-button:zoom:pressed .circle {
+.macos-window-button:maximize:pressed .circle {
     -fx-fill  : derive(-WINDOW-BUTTON-GREEN, -20%);
     -fx-stroke: derive(-WINDOW-BUTTON-GREEN, -30%);
 }
 
+.macos-window-button:dark:maximize .circle,
+.macos-window-button:dark:maximize:hovered .circle {
+    -fx-fill  : -WINDOW-BUTTON-GREEN;
+    -fx-stroke: derive(-WINDOW-BUTTON-GREEN, +10%);
+}
+.macos-window-button:dark:maximize:pressed .circle {
+    -fx-fill  : derive(-WINDOW-BUTTON-GREEN, +40%);
+    -fx-stroke: derive(-WINDOW-BUTTON-GREEN, +50%);
+}
+
 .macos-window-button:disabled:close .circle,
 .macos-window-button:disabled:minimize .circle,
-.macos-window-button:disabled:zoom .circle {
+.macos-window-button:disabled:maximize .circle {
+    -fx-fill  : -WINDOW-BUTTON-LIGHT-GRAY;
+    -fx-stroke: transparent;
+}
+
+.macos-window-button:dark:disabled:close .circle,
+.macos-window-button:dark:disabled:minimize .circle,
+.macos-window-button:dark:disabled:maximize .circle {
     -fx-fill  : -WINDOW-BUTTON-GRAY;
     -fx-stroke: transparent;
 }
 
 .macos-window-button:close .symbol,
 .macos-window-button:minimize .symbol,
-.macos-window-button:zoom .symbol {
+.macos-window-button:maximize .symbol {
     -fx-background-color: transparent;
 }
 
@@ -1081,7 +1204,7 @@
     -fx-scale-shape     : false;
     -fx-shape           : "M2.0,5.5l8,0l0,1l-8,0l0,-1Z";
 }
-.macos-window-button:hovered:zoom .symbol {
+.macos-window-button:hovered:maximize .symbol {
     -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
     -fx-scale-shape     : false;
     -fx-shape           : "M2.696,2.582l4.545,0.656l-3.889,3.889l-0.656,-4.545ZM9.533,9.418l-0.656,-4.545l-3.889,3.889l4.545,0.656Z";
@@ -1091,14 +1214,14 @@
     -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
     -fx-border-color    : -WINDOW-BUTTON-DARK-GRAY;
     -fx-scale-shape     : false;
-    -fx-shape           : "M4.508,4.065L6.426,2.147L6.854,2.576L4.936,4.493L6.85,6.406L6.421,6.835L4.507,4.922L2.59,6.839L2.162,6.411L4.079,4.494L2.166,2.58L2.595,2.151L4.508,4.065Z";
+    -fx-shape           : "M6.25,5.352l-2.368,-2.367l-0.897,0.897l2.367,2.368l-2.367,2.368l0.897,0.897l2.368,-2.367l2.368,2.367l0.897,-0.897l-2.367,-2.368l2.367,-2.368l-0.897,-0.897l-2.368,2.367Z";
 }
 .macos-window-button:hovered:minimize .symbol-small {
     -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
     -fx-scale-shape     : false;
-    -fx-shape           : "M1.4934,4.118 l6.029,0 l0,0.751 l-6.029,0 l0,-1.4934Z";
+    -fx-shape           : "M1,2h8v2h-8v-2Z";
 }
-.macos-window-button:hovered:zoom .symbol-small {
+.macos-window-button:hovered:maximize .symbol-small {
     -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
     -fx-scale-shape     : false;
     -fx-shape           : "M7.159,7.059L6.667,3.648L3.748,6.566L7.159,7.059ZM2.028,1.928L5.439,2.42L2.521,5.339L2.028,1.928Z";
@@ -1114,4 +1237,57 @@
 .macos-progress:dark {
     -progress-fill  : -CONTROL-BACKGROUND-DARK;
     -progress-stroke: -CONTROL-BACKGROUND-DARK;
+}
+
+
+/* Label */
+.macos-label {
+    -fx-alignment: center-left;
+    -fx-font     : normal normal 13 'SF Pro Display';
+    -fx-text-fill: -text-color;
+}
+
+.macos-label:dark {
+    -fx-alignment: center-left;
+    -fx-font     : normal normal 13 'SF Pro Regular';
+    -fx-text-fill: -text-color-dark;
+}
+
+
+/* Window Header */
+.macos-header {
+    -fx-background-insets: 0 0 0 0, 0.5 0.5 0.5 0.5, 1 1 1 1, 1.5 1 0.5 1;
+    -fx-background-radius: 10 10 0 0, 9.75 9.75 0 0, 9.5 9.5 0 0, 9 9 0 0 ;
+    -fx-background-color : rgb(229, 229, 229), rgb(197, 197, 197), rgb(243, 242, 242), -HEADER-BACKGROUND;
+}
+.macos-header .macos-label {
+    -fx-font-family: 'SF Pro Display Bold';
+    -fx-font-size  : 1em;
+}
+.macos-header:focus-lost {
+    -fx-background-color : rgb(229, 229, 229), rgb(197, 197, 197), rgb(243, 242, 242), rgb(231, 230, 230);
+}
+.macos-header:focus-lost .macos-label {
+    -fx-font-family: 'SF Pro Display Bold';
+    -fx-font-size  : 1em;
+    -fx-text-fill  : rgb(166, 164, 164);
+}
+.macos-header:dark {
+    -fx-background-color: rgb(2, 2, 2), rgb(108, 105, 106), rgb(122, 121, 121), -HEADER-BACKGROUND-DARK;
+}
+.macos-header:dark:focus-lost {
+    -fx-background-color: rgb(2, 2, 2), rgb(108, 105, 106), rgb(122, 121, 121), rgb(40, 37, 37);
+}
+.macos-header:dark:focus-lost .macos-label {
+    -fx-text-fill: rgb(103, 100, 100);
+}
+
+/* Windows content pane */
+.macos-content-pane {
+    -fx-background-radius: 0 0 10 10, 0 0 10 10;
+    -fx-background-insets: 0, 0 1 1 1;
+    -fx-background-color : rgb(197, 197, 197), white;
+}
+.macos-content-pane:dark {
+    -fx-background-color: rgb(76, 77, 78), rgb(32, 28, 28);
 }

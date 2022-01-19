@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 
 
-public class MacosProgress extends Region {
+public class MacosProgress extends Region implements MacosControl {
     private static final double                                  PREFERRED_WIDTH        = 16;
     private static final double                                  PREFERRED_HEIGHT       = 16;
     private static final double                                  MINIMUM_WIDTH          = 5;
@@ -132,18 +132,18 @@ public class MacosProgress extends Region {
     @Override protected double computeMaxWidth(final double height) { return MAXIMUM_WIDTH; }
     @Override protected double computeMaxHeight(final double width) { return MAXIMUM_HEIGHT; }
 
-    public final boolean isDark() {
+    @Override public final boolean isDark() {
         return null == dark ? _dark : dark.get();
     }
-    public final void setDark(final boolean dark) {
+    @Override public final void setDark(final boolean dark) {
         if (null == this.dark) {
             _dark = dark;
             pseudoClassStateChanged(DARK_PSEUDO_CLASS, dark);
         } else {
-            darkProperty().set(dark);
+            this.dark.set(dark);
         }
     }
-    public final BooleanProperty darkProperty() {
+    @Override public final BooleanProperty darkProperty() {
         if (null == dark) {
             dark = new BooleanPropertyBase() {
                 @Override protected void invalidated() {

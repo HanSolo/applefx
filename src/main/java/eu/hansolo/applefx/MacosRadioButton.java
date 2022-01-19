@@ -7,10 +7,10 @@ import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.css.PseudoClass;
-import javafx.scene.control.TextField;
+import javafx.scene.control.RadioButton;
 
 
-public class MacosTextField extends TextField implements MacosControl {
+public class MacosRadioButton extends RadioButton implements MacosControl {
     private static final PseudoClass                      DARK_PSEUDO_CLASS = PseudoClass.getPseudoClass("dark");
     private              boolean                          _dark;
     private              BooleanProperty                  dark;
@@ -19,11 +19,11 @@ public class MacosTextField extends TextField implements MacosControl {
 
 
     // ******************** Constructors **************************************
-    public MacosTextField() {
+    public MacosRadioButton() {
         super();
         init();
     }
-    public MacosTextField(final String text) {
+    public MacosRadioButton(final String text) {
         super(text);
         init();
     }
@@ -31,7 +31,7 @@ public class MacosTextField extends TextField implements MacosControl {
 
     // ******************** Initialization ************************************
     private void init() {
-        getStyleClass().add("macos-text-field");
+        getStyleClass().add("macos-radio-button");
         _dark        = false;
         _accentColor = Helper.getMacosAccentColor();
     }
@@ -55,7 +55,7 @@ public class MacosTextField extends TextField implements MacosControl {
                 @Override protected void invalidated() {
                     pseudoClassStateChanged(DARK_PSEUDO_CLASS, get());
                 }
-                @Override public Object getBean() { return MacosTextField.this; }
+                @Override public Object getBean() { return MacosRadioButton.this; }
                 @Override public String getName() { return "dark"; }
             };
         }
@@ -66,7 +66,7 @@ public class MacosTextField extends TextField implements MacosControl {
     public void setAccentColor(final MacosAccentColor accentColor) {
         if (null == this.accentColor) {
             _accentColor = accentColor;
-            setStyle(isDark() ? new StringBuilder("-fx-focus-color: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-fx-focus-color: ").append(accentColor.getDarkStyleClass()).append(";").toString());
+            setStyle(isDark() ? new StringBuilder("-dot-fill: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-dot-fill: ").append(accentColor.getDarkStyleClass()).append(";").toString());
         } else {
             this.accentColor.set(accentColor);
         }
@@ -74,8 +74,8 @@ public class MacosTextField extends TextField implements MacosControl {
     public ObjectProperty<MacosAccentColor> accentColorProperty() {
         if (null == accentColor) {
             accentColor = new ObjectPropertyBase<>(_accentColor) {
-                @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-fx-focus-color: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-fx-focus-color: ").append(get().getDarkStyleClass()).append(";").toString()); }
-                @Override public Object getBean() { return MacosTextField.this; }
+                @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-dot-fill: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-dot-fill: ").append(get().getDarkStyleClass()).append(";").toString()); }
+                @Override public Object getBean() { return MacosRadioButton.this; }
                 @Override public String getName() { return "accentColor"; }
             };
             _accentColor = null;
@@ -85,5 +85,5 @@ public class MacosTextField extends TextField implements MacosControl {
 
 
     // ******************** Style related *************************************
-    @Override public String getUserAgentStylesheet() { return MacosTextField.class.getResource("apple.css").toExternalForm(); }
+    @Override public String getUserAgentStylesheet() { return MacosRadioButton.class.getResource("apple.css").toExternalForm(); }
 }
