@@ -18,7 +18,7 @@ public class ResizeHelper {
 
 
     // ******************** Methods *******************************************
-    public static void addResizeListener(Stage stage) {
+    public static void addResizeListener(final Stage stage) {
         ResizeListener resizeListener = new ResizeListener(stage);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_MOVED, resizeListener);
         stage.getScene().addEventHandler(MouseEvent.MOUSE_PRESSED, resizeListener);

@@ -16,7 +16,7 @@
 
 package eu.hansolo.applefx.tools;
 
-import eu.hansolo.toolbox.OperatingSystem;
+import eu.hansolo.jdktools.OperatingSystem;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;

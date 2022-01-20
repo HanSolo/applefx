@@ -42,8 +42,9 @@ dependencies {
     implementation "org.openjfx:javafx-graphics:${javafxVersion}:${platform}"
     implementation "org.openjfx:javafx-controls:${javafxVersion}:${platform}"
     implementation "org.openjfx:javafx-swing:${javafxVersion}:${platform}"
-    implementation "eu.hansolo:toolbox:17.0.9"
-    implementation "eu.hansolo:toolboxfx:17.0.19"
+    implementation "eu.hansolo:jdktools:17.0.2"
+    implementation "eu.hansolo:toolbox:17.0.11"
+    implementation "eu.hansolo:toolboxfx:17.0.21"
 }
 
 
@@ -82,6 +83,16 @@ jar {
 // start the from gradle
 task Demo(type: JavaExec) {
     main = "eu.hansolo.applefx.Launcher"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task Demo2(type: JavaExec) {
+    main = "eu.hansolo.applefx.Launcher2"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task Demo3(type: JavaExec) {
+    main = "eu.hansolo.applefx.Launcher3"
     classpath = sourceSets.main.runtimeClasspath
 }
 

@@ -66,17 +66,6 @@ public class Demo extends Application {
     private SVGPath                  wifiDisabled;
     private IosRoundToggleButton     toggleButton;
     private IosSwitch                switch1;
-    private MacosButton              macosButton;
-    private MacosSwitch              macosSwitch;
-    private MacosCheckBox            macosCheckBox;
-    private MacosWindowButton        macosWindowButtonClose;
-    private MacosWindowButton        macosWindowButtonMinimize;
-    private MacosWindowButton        macosWindowButtonMaximize;
-    private MacosProgress            macosProgress;
-    private MacosSlider              macosSlider;
-    private MacosTextField           macosTextField;
-    private MacosSeparator           macosSeparator;
-    private MacosScrollPane          macosScrollPane;
 
 
     @Override public void init() {
@@ -158,60 +147,6 @@ public class Demo extends Application {
 
         switch1 = createSwitch(MacosSystemColor.PINK.getColorAqua(), false);
 
-        macosButton = new MacosButton("Test");
-        macosButton.setDark(true);
-
-        macosSwitch = MacosSwitchBuilder.create()
-                                        .dark(true)
-                                        .selectedColor(MacosSystemColor.PINK.getColorDark())
-                                        .selected(true)
-                                        //.showOnOffText(true)
-                                        //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
-                                        .build();
-
-        macosCheckBox = new MacosCheckBox("Check me");
-        macosCheckBox.setDark(true);
-
-        macosWindowButtonClose    = new MacosWindowButton(MacosButtonType.CLOSE, MacosButtonSize.LARGE);
-        macosWindowButtonMinimize = new MacosWindowButton(MacosButtonType.MINIMIZE, MacosButtonSize.LARGE);
-        macosWindowButtonMaximize = new MacosWindowButton(MacosButtonType.MAXIMIZE, MacosButtonSize.LARGE);
-
-        HBox macosWindowButtonBox = new HBox(5, macosWindowButtonClose, macosWindowButtonMinimize, macosWindowButtonMaximize);
-        macosWindowButtonBox.setOnMouseEntered(e -> {
-            macosWindowButtonClose.setHovered(true);
-            macosWindowButtonMinimize.setHovered(true);
-            macosWindowButtonMaximize.setHovered(true);
-        });
-        macosWindowButtonBox.setOnMouseExited(e -> {
-            macosWindowButtonClose.setHovered(false);
-            macosWindowButtonMinimize.setHovered(false);
-            macosWindowButtonMaximize.setHovered(false);
-        });
-
-        macosProgress = new MacosProgress(0.3);
-        macosProgress.setPrefSize(32, 32);
-
-        macosSlider = new MacosSlider();
-        macosSlider.setDark(true);
-        macosSlider.setBlockIncrement(10);
-        macosSlider.setShowTickMarks(true);
-        macosSlider.setSnapToTicks(true);
-
-        macosTextField = new MacosTextField();
-        macosTextField.setPromptText("prompt text");
-        macosTextField.setDark(true);
-
-        macosSeparator = new MacosSeparator(Orientation.HORIZONTAL);
-        macosSeparator.setDark(true);
-
-        VBox macosPane = new VBox(10, macosButton, macosSwitch, macosCheckBox, macosWindowButtonBox, macosProgress, macosSlider, macosSeparator, macosTextField);
-
-        macosScrollPane = new MacosScrollPane(macosPane);
-        macosScrollPane.setDark(true);
-        macosScrollPane.setFitToWidth(true);
-        macosScrollPane.setFitToHeight(true);
-
-
         registerListeners();
     }
 
@@ -244,8 +179,7 @@ public class Demo extends Application {
     }
 
     @Override public void start(Stage stage) {
-        VBox pane = new VBox(10, listView, slider, balanceSlider, buttonBar1, buttonBar2, plusMinusButton, button, toggleButton, switch1,
-                             macosScrollPane);
+        VBox pane = new VBox(10, listView, slider, balanceSlider, buttonBar1, buttonBar2, plusMinusButton, button, toggleButton, switch1);
 
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);

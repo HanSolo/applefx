@@ -11,6 +11,7 @@ module eu.hansolo.applefx {
     requires transitive javafx.swing;
 
     // 3rd party
+    requires transitive eu.hansolo.jdktools;
     requires transitive eu.hansolo.toolbox;
     requires transitive eu.hansolo.toolboxfx;
 
