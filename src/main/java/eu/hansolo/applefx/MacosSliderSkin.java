@@ -349,8 +349,8 @@ public class MacosSliderSkin extends SkinBase<MacosSlider> {
         trackProgress.setVisible(!slider.isShowTickMarks());
 
         if (slider.getOrientation() == Orientation.HORIZONTAL) {
-            thumbWidth               = 8;
-            thumbHeight              = 20;
+            thumbWidth               = slider.isShowTickMarks() ? 9 : 20.5;
+            thumbHeight              = 20.5;
             thumb.resize(thumbWidth, thumbHeight);
 
             double tickLineHeight    =  (showTickMarks) ? tickLine.prefHeight(-1) : 0;

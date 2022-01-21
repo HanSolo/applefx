@@ -23,15 +23,16 @@ import eu.hansolo.toolbox.evt.type.ChangeEvt;
 
 
 public class MacEvt extends ChangeEvt {
-    public static final EvtType<MacEvt> ANY          = new EvtType<>(ChangeEvt.ANY, "ANY");
-    public static final EvtType<MacEvt> SELECTED     = new EvtType<>(MacEvt.ANY, "SELECTED");
-    public static final EvtType<MacEvt> DESELECTED   = new EvtType<>(MacEvt.ANY, "DESELECTED");
-    public static final EvtType<MacEvt> DELETE_ENTRY = new EvtType<>(MacEvt.ANY, "DELETE_ENTRY");
-    public static final EvtType<MacEvt> ADD_ENTRY    = new EvtType<>(MacEvt.ANY, "ADD_ENTRY");
-    public static final EvtType<MacEvt> PRESSED      = new EvtType<>(MacEvt.ANY, "PRESSED");
-    public static final EvtType<MacEvt> RELEASED     = new EvtType<>(MacEvt.ANY, "RELEASED");
-    public static final EvtType<MacEvt> INCREASE     = new EvtType<>(MacEvt.ANY, "INCREASE");
-    public static final EvtType<MacEvt> DECREASE     = new EvtType<>(MacEvt.ANY, "DECREASE");
+    public static final EvtType<MacEvt> ANY                = new EvtType<>(ChangeEvt.ANY, "ANY");
+    public static final EvtType<MacEvt> SELECTED           = new EvtType<>(MacEvt.ANY, "SELECTED");
+    public static final EvtType<MacEvt> DESELECTED         = new EvtType<>(MacEvt.ANY, "DESELECTED");
+    public static final EvtType<MacEvt> DELETE_ENTRY       = new EvtType<>(MacEvt.ANY, "DELETE_ENTRY");
+    public static final EvtType<MacEvt> ADD_ENTRY          = new EvtType<>(MacEvt.ANY, "ADD_ENTRY");
+    public static final EvtType<MacEvt> PRESSED            = new EvtType<>(MacEvt.ANY, "PRESSED");
+    public static final EvtType<MacEvt> RELEASED           = new EvtType<>(MacEvt.ANY, "RELEASED");
+    public static final EvtType<MacEvt> INCREASE           = new EvtType<>(MacEvt.ANY, "INCREASE");
+    public static final EvtType<MacEvt> DECREASE           = new EvtType<>(MacEvt.ANY, "DECREASE");
+    public static final EvtType<MacEvt> APPEARANCE_CHANGED = new EvtType<>(MacEvt.ANY, "APPEARANCE_CHANGED");
 
 
     // ******************** Constructors **************************************

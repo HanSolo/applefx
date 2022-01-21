@@ -1,28 +1,31 @@
 package eu.hansolo.applefx;
 
 import eu.hansolo.applefx.tools.Helper;
-import eu.hansolo.applefx.tools.MacosAccentColor;
-import eu.hansolo.applefx.tools.MacosSystemColor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.List;
+
 
 public class Demo3 extends Application {
-    private MacosWindow      macosWindow;
-    private MacosButton      macosButton;
-    private MacosSwitch      macosSwitch;
-    private MacosCheckBox    macosCheckBox;
-    private MacosTextField   macosTextField;
-    private MacosRadioButton macosRadioButton1;
-    private MacosRadioButton macosRadioButton2;
+    private MacosWindow           macosWindow;
+    private MacosButton           macosButton;
+    private MacosSwitch           macosSwitch;
+    private MacosCheckBox         macosCheckBox;
+    private MacosTextField        macosTextField;
+    private MacosRadioButton      macosRadioButton1;
+    private MacosRadioButton      macosRadioButton2;
+    private MacosSlider           macosSlider1;
+    private MacosSlider           macosSlider2;
+    private MacosComboBox<String> macosComboBox;
 
 
     @Override public void init() {
@@ -35,25 +38,28 @@ public class Demo3 extends Application {
         macosTextField    = new MacosTextField();
         macosRadioButton1 = new MacosRadioButton("Select me");
         macosRadioButton2 = new MacosRadioButton("Select me");
+        macosSlider1       = new MacosSlider(0, 100, 50);
+        macosSlider1.setShowTickMarks(true);
+        macosSlider2       = new MacosSlider(0, 100, 50);
+        macosComboBox      = new MacosComboBox<>();
+        macosComboBox.getItems().setAll(List.of("Neo", "Anton", "Lilli", "Sandra", "Gerrit"));
 
         ToggleGroup toggleGroup = new ToggleGroup();
         toggleGroup.getToggles().addAll(macosRadioButton1, macosRadioButton2);
     }
 
-    private void registerListeners() {
-
-    }
+    private void registerListeners() { }
 
     @Override public void start(Stage stage) {
         VBox radioBox   = new VBox(10, macosRadioButton1, macosRadioButton2);
         radioBox.setAlignment(Pos.CENTER);
-        VBox controlBox = new VBox(20, macosButton, macosSwitch, macosCheckBox, macosTextField, radioBox);
+        VBox controlBox = new VBox(20, macosButton, macosSwitch, macosCheckBox, macosTextField, radioBox, macosSlider1, macosSlider2, macosComboBox);
         controlBox.setAlignment(Pos.CENTER);
         controlBox.setPadding(new Insets(10));
 
         StackPane pane = new StackPane(controlBox);
         pane.setPadding(new Insets(10));
-        pane.setPrefSize(400, 300);
+        pane.setPrefSize(400, 500);
         pane.setPadding(new Insets(0));
 
         macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor());
@@ -66,6 +72,7 @@ public class Demo3 extends Application {
         stage.show();
 
         //macosWindow.setAccentColor(MacosAccentColor.GREEN);
+        registerListeners();
     }
 
     @Override public void stop() {

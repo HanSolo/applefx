@@ -49,7 +49,6 @@ public class Helper {
     private static final String   DARK_THEME_CMD     = REGQUERY_UTIL + "\"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"" + " /v AppsUseLightTheme";
 
 
-
     public static final int ANIMATION_DURATION = 75;
 
     public static final void enableNode(final Node node, final boolean enable) {
@@ -179,7 +178,6 @@ public class Helper {
             if (node instanceof Parent) { addAllDescendents((Parent)node, nodes); }
         }
     }
-
 
 
     // ******************** Internal Classes **********************************

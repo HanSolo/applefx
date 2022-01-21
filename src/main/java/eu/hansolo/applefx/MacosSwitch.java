@@ -80,6 +80,7 @@ public class MacosSwitch extends Region implements MacosControl {
     private              Map<EvtType, List<EvtObserver<MacEvt>>> observers;
     private              boolean                                 _dark;
     private              BooleanProperty                         dark;
+    private              BooleanProperty                         windowFocusLost;
     private              double                                  width;
     private              double                                  height;
     private              Rectangle                               backgroundArea;
@@ -108,12 +109,28 @@ public class MacosSwitch extends Region implements MacosControl {
         _selected       = false;
         accentColor     = FACTORY.createStyleableColorProperty(MacosSwitch.this, "accentColor", "-accent-color", s -> s.accentColor, DEFAULT_ACCENT_COLOR);
         _dark           = false;
+        windowFocusLost = new BooleanPropertyBase() {
+            @Override protected void invalidated() {
+                if (isSelected()) {
+                    if (isDark()) {
+                        backgroundArea.setFill(get() ? Color.rgb(106, 105, 104) : getAccentColor());
+                    } else {
+                        backgroundArea.setFill(get() ? Color.rgb(179, 179, 179) : getAccentColor());
+                    }
+                }
+            }
+            @Override public Object getBean() { return MacosSwitch.this; }
+            @Override public String getName() { return "windowFocusLost"; }
+        };
         _duration       = 250;
         _showOnOffText  = false;
         this.settings   = new HashMap<>(settings);
         timeline        = new Timeline();
         observers       = new ConcurrentHashMap<>();
-        clickedHandler  = e -> setSelected(!isSelected());
+        clickedHandler  = e -> {
+            setSelected(!isSelected());
+            if (windowFocusLost.get()) { windowFocusLost.set(false); }
+        };
 
         initGraphics();
         registerListeners();
@@ -369,6 +386,10 @@ public class MacosSwitch extends Region implements MacosControl {
         }
         return showOnOffText;
     }
+
+    public boolean isWindowFocusLost() { return windowFocusLost.get(); }
+    public void setWindowFocusLost(final boolean windowFocusLost) { this.windowFocusLost.set(windowFocusLost); }
+    public BooleanProperty windowFocusLostProperty() { return windowFocusLost; }
 
     protected HashMap<String, Property> getSettings() { return settings; }
 

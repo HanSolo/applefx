@@ -78,6 +78,6 @@ public class MacosSlider extends Slider implements MacosControl {
 
     // ******************** Style related *************************************
     @Override public String getUserAgentStylesheet() {
-        return IosSlider.class.getResource("apple.css").toExternalForm();
+        return MacosSlider.class.getResource("apple.css").toExternalForm();
     }
 }

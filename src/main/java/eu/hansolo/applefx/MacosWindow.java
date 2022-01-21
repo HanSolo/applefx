@@ -3,7 +3,13 @@ package eu.hansolo.applefx;
 import eu.hansolo.applefx.tools.Helper;
 import eu.hansolo.applefx.tools.MacosAccentColor;
 import eu.hansolo.applefx.tools.ResizeHelper;
+import eu.hansolo.jdktools.OperatingSystem;
+import eu.hansolo.toolbox.evt.EvtType;
+import eu.hansolo.toolboxfx.evt.type.BoundsEvt;
+import eu.hansolo.toolboxfx.geom.Bounds;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.ObjectProperty;
@@ -28,31 +34,42 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static eu.hansolo.toolbox.Helper.getOperatingSystem;
+
 
 public class MacosWindow extends Region implements MacosControl {
-    public static final  double                           OFFSET                  = 40;
-    private static final double                           HEADER_HEIGHT           = 30;
-    private static final DropShadow                       HEADER_SHADOW           = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.1), 1, 0.0, 0, 1);
-    private static final DropShadow                       STAGE_SHADOW_FOCUSED    = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.5), 45.0, 0.0, 0.0, 15);
-    private static final DropShadow                       STAGE_SHADOW            = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.35), 20.0, 0.0, 0.0, 10);
-    private static final PseudoClass                      DARK_PSEUDO_CLASS       = PseudoClass.getPseudoClass("dark");
-    private static final PseudoClass                      FOCUS_LOST_PSEUDO_CLASS = PseudoClass.getPseudoClass("focus-lost");
-    private              BooleanProperty                  dark;
-    private              ObjectProperty<MacosAccentColor> accentColor;
-    private              Stage                            stage;
-    private              MacosWindowButton                closeButton;
-    private              MacosWindowButton                minimizeButton;
-    private              MacosWindowButton                maximizeButton;
-    private              HBox                             buttonBox;
-    private              HBox                             headerBox;
-    private              AnchorPane                       headerPane;
-    private              MacosLabel                       headerText;
-    private              AnchorPane                       contentPane;
-    private              BorderPane                       mainPane;
-    private              Parent                           content;
+    public static final  double                                  OFFSET                         = 40;
+    private static final double                                  HEADER_HEIGHT                  = 30;
+    private static final DropShadow                              HEADER_SHADOW                  = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.1), 1, 0.0, 0, 1);
+    private static final DropShadow                              STAGE_SHADOW_FOCUSED           = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.5), 45.0, 0.0, 0.0, 15);
+    private static final DropShadow                              STAGE_SHADOW                   = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.35), 20.0, 0.0, 0.0, 10);
+    private static final PseudoClass                             DARK_PSEUDO_CLASS              = PseudoClass.getPseudoClass("dark");
+    private static final PseudoClass                             WINDOW_FOCUS_LOST_PSEUDO_CLASS = PseudoClass.getPseudoClass("window-focus-lost");
+    private              BooleanBinding                          showing;
+    private              WatchService                            watchService;
+    private              BooleanProperty                         dark;
+    private              ObjectProperty<MacosAccentColor>        accentColor;
+    private              Stage                                   stage;
+    private              MacosWindowButton                       closeButton;
+    private              MacosWindowButton                       minimizeButton;
+    private              MacosWindowButton                       maximizeButton;
+    private              HBox                                    buttonBox;
+    private              HBox                                    headerBox;
+    private              AnchorPane                              headerPane;
+    private              MacosLabel                              headerText;
+    private              AnchorPane                              contentPane;
+    private              BorderPane                              mainPane;
+    private              Parent                                  content;
 
 
     // ******************** Constructors **************************************
@@ -201,10 +218,40 @@ public class MacosWindow extends Region implements MacosControl {
         });
         stage.focusedProperty().addListener((o, ov, nv) -> {
             setEffect(nv ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
-            headerPane.pseudoClassStateChanged(FOCUS_LOST_PSEUDO_CLASS, !nv);
+            headerPane.pseudoClassStateChanged(WINDOW_FOCUS_LOST_PSEUDO_CLASS, !nv);
+            setAllWindowFocusLost(!nv);
             closeButton.setDisable(!nv);
             minimizeButton.setDisable(!nv);
             maximizeButton.setDisable(!nv);
+        });
+
+        if (null != getScene()) {
+            setupBinding();
+        } else {
+            sceneProperty().addListener((o1, ov1, nv1) -> {
+                if (null == nv1) { return; }
+                if (null != getScene().getWindow()) {
+                    setupBinding();
+                } else {
+                    sceneProperty().get().windowProperty().addListener((o2, ov2, nv2) -> {
+                        if (null == nv2) { return; }
+                        setupBinding();
+                    });
+                }
+            });
+        }
+    }
+
+    private void setupBinding() {
+        showing = Bindings.createBooleanBinding(() -> {
+            if (getScene() != null && getScene().getWindow() != null) {
+                return getScene().getWindow().isShowing();
+            } else {
+                return false;
+            }
+        }, sceneProperty(), getScene().windowProperty(), getScene().getWindow().showingProperty());
+        showing.addListener(o -> {
+            if (showing.get()) { watchForAppearanceChanged(); }
         });
     }
 
@@ -217,6 +264,16 @@ public class MacosWindow extends Region implements MacosControl {
     public MacosAccentColor getAccentColor() { return accentColor.get(); }
     public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
     public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
+
+    public void dispose() {
+        if (null != watchService) {
+            try {
+                watchService.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private void enableDarkMode(final boolean enable) {
         headerPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
@@ -234,6 +291,40 @@ public class MacosWindow extends Region implements MacosControl {
         allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setAccentColor(isDark() ? accentColor.getColorDark() : accentColor.getColorAqua()));
         allNodes.stream().filter(node -> node instanceof MacosCheckBox).map(node -> (MacosCheckBox) node).forEach(macosCheckBox -> macosCheckBox.setAccentColor(accentColor));
         allNodes.stream().filter(node -> node instanceof MacosRadioButton).map(node -> (MacosRadioButton) node).forEach(macosRadioButton -> macosRadioButton.setAccentColor(accentColor));
+    }
+
+    private void setAllWindowFocusLost(final boolean windowFocusLost) {
+        List<Node> allNodes = Helper.getAllNodes(contentPane);
+        allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.pseudoClassStateChanged(WINDOW_FOCUS_LOST_PSEUDO_CLASS, windowFocusLost));
+        allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setWindowFocusLost(windowFocusLost));
+    }
+
+    private void watchForAppearanceChanged() {
+        if (OperatingSystem.MACOS != getOperatingSystem()) { return; }
+        final Path path = FileSystems.getDefault().getPath(System.getProperty("user.home"), "/Library/Preferences/");
+        new Thread(() -> {
+            try {
+                watchService = FileSystems.getDefault().newWatchService();
+                try {
+                    path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
+                    WatchKey key;
+                    while ((key = watchService.take()) != null) {
+                        for (WatchEvent<?> event : key.pollEvents()) {
+                            final Path changed = (Path) event.context();
+                            if (changed.endsWith(".GlobalPreferences.plist")) {
+                                setDark(Helper.isDarkMode());
+                                setAccentColor(Helper.getMacosAccentColor());
+                            }
+                        }
+                        key.reset();
+                    }
+                } finally {
+                    watchService.close();
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
 
