@@ -31,7 +31,6 @@ public class MacosComboBox<T> extends ComboBox<T> implements MacosControl {
 
     // ******************** Initialization ************************************
     private void init() {
-        //getStyleClass().add("macos-combo-box");
         this.dark        = new BooleanPropertyBase(Helper.isDarkMode()) {
             @Override protected void invalidated() { pseudoClassStateChanged(DARK_PSEUDO_CLASS, get()); }
             @Override public Object getBean() { return MacosComboBox.this; }

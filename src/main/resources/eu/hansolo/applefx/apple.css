@@ -82,8 +82,11 @@
     -WHITE                            : rgb(255, 255, 255);
     -BLACK                            : rgb(0, 0, 0);
 
-    -HEADER-BACKGROUND                : rgb(228, 226, 226);
+    -HEADER-BACKGROUND                : rgb(240, 237, 237);
     -HEADER-BACKGROUND-DARK           : rgb(47, 46, 47);
+
+    -HEADER-HEIGHT-STANDARD           : 26.25;
+    -HEADER-HEIGHT-DOUBLE             : 52.5;
 
     -LIGHT-BACKGROUND                 : rgb(236, 234, 234);
     -LIGHT-CTRL-BACKGROUND            : rgb(211, 210, 211);
@@ -110,6 +113,8 @@
     -text-selected-color-dark     : -TEXT-SELECTED-DARK;
     -control-background-color-dark: -CONTROL-BACKGROUND-DARK;
     -control-border-color-dark    : -CONTROL-BORDER-DARK;
+
+    -header-height                : -HEADER-HEIGHT-STANDARD;
 }
 
 
@@ -1178,41 +1183,49 @@
 }
 
 .macos-window-button:close .circle,
-.macos-window-button:close:hovered .circle {
+.macos-window-button:close:hovered .circle,
+.macos-window-button:disabled:close:hovered .circle {
     -fx-fill  : -WINDOW-BUTTON-RED;
     -fx-stroke: derive(-WINDOW-BUTTON-RED, -10%);
 }
-.macos-window-button:close:pressed .circle {
+.macos-window-button:close:pressed .circle,
+.macos-window-button:disabled:close:pressed .circle {
     -fx-fill  : derive(-WINDOW-BUTTON-RED, -20%);
     -fx-stroke: derive(-WINDOW-BUTTON-RED, -30%);
 }
 
 .macos-window-button:dark:close .circle,
-.macos-window-button:dark:close:hovered .circle {
+.macos-window-button:dark:close:hovered .circle,
+.macos-window-button:disabled:dark:close:hovered .circle {
     -fx-fill  : -WINDOW-BUTTON-RED;
     -fx-stroke: derive(-WINDOW-BUTTON-RED, +10%);
 }
-.macos-window-button:dark:close:pressed .circle {
+.macos-window-button:dark:close:pressed .circle,
+.macos-window-button:disabled:dark:close:pressed .circle {
     -fx-fill  : derive(-WINDOW-BUTTON-RED, +40%);
     -fx-stroke: derive(-WINDOW-BUTTON-RED, +50%);
 }
 
 .macos-window-button:minimize .circle,
-.macos-window-button:minimize:hovered .circle {
+.macos-window-button:minimize:hovered .circle,
+.macos-window-button:disabled:minimize:hovered .circle {
     -fx-fill  : -WINDOW-BUTTON-YELLOW;
     -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, -10%);
 }
-.macos-window-button:minimize:pressed .circle {
+.macos-window-button:minimize:pressed .circle,
+.macos-window-button:disabled:minimize:pressed .circle {
     -fx-fill  : derive(-WINDOW-BUTTON-YELLOW, -20%);
     -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, -30%);
 }
 
 .macos-window-button:dark:minimize .circle,
-.macos-window-button:dark:minimize:hovered .circle {
+.macos-window-button:dark:minimize:hovered .circle,
+.macos-window-button:disabled:dark:minimize:hovered .circle {
     -fx-fill  : -WINDOW-BUTTON-YELLOW;
     -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, +10%);
 }
-.macos-window-button:dark:minimize:pressed .circle {
+.macos-window-button:dark:minimize:pressed .circle,
+.macos-window-button:disabled:dark:minimize:pressed .circle {
     -fx-fill  : derive(-WINDOW-BUTTON-YELLOW, +40%);
     -fx-stroke: derive(-WINDOW-BUTTON-YELLOW, +50%);
 }
@@ -1241,7 +1254,7 @@
 .macos-window-button:disabled:minimize .circle,
 .macos-window-button:disabled:maximize .circle {
     -fx-fill  : -WINDOW-BUTTON-LIGHT-GRAY;
-    -fx-stroke: transparent;
+    -fx-stroke: rgb(167, 165, 165);
 }
 
 .macos-window-button:dark:disabled:close .circle,
@@ -1320,9 +1333,13 @@
 
 /* Window Header */
 .macos-header {
-    -fx-background-insets: 0 0 0 0, 0.5 0.5 0.5 0.5, 1 1 1 1, 1.5 1 0.5 1;
-    -fx-background-radius: 10 10 0 0, 9.75 9.75 0 0, 9.5 9.5 0 0, 9 9 0 0 ;
-    -fx-background-color : rgb(229, 229, 229), rgb(197, 197, 197), rgb(243, 242, 242), -HEADER-BACKGROUND;
+    -fx-min-height       : -header-height;
+    -fx-max-height       : -header-height;
+    -fx-pref-height      : -header-height;
+    -fx-background-insets: 0 0 0 0, 0.5 0.5 0 0.5, 1 1 0 1, 1.5 1 0 1;
+    -fx-background-radius: 10 10 0 0, 9.5 9.5 0 0, 9.5 9.5 0 0, 8.5 8.5 0 0 ;
+    -fx-background-color : rgb(200, 200, 200), rgb(245, 244, 244), rgb(236, 234, 234), -HEADER-BACKGROUND;
+    -fx-effect           : dropshadow(gaussian, rgba(0,0,0,0.45), 1, 0, 0, 1.5);
 }
 .macos-header .macos-label {
     -fx-font-family: 'SF Pro Display Bold';
@@ -1337,7 +1354,7 @@
     -fx-text-fill  : rgb(166, 164, 164);
 }
 .macos-header:dark {
-    -fx-background-color: rgb(2, 2, 2), rgb(108, 105, 106), rgb(122, 121, 121), -HEADER-BACKGROUND-DARK;
+    -fx-background-color: rgb(2, 2, 2), rgb(133, 131, 132), linear-gradient(to bottom, rgb(117, 115, 115) 0%, rgb(99, 98, 98) 20%, rgb(99, 98, 98) 100%), -HEADER-BACKGROUND-DARK;
 }
 .macos-header:dark:window-focus-lost {
     -fx-background-color: rgb(2, 2, 2), rgb(108, 105, 106), rgb(122, 121, 121), rgb(40, 37, 37);
@@ -1348,12 +1365,12 @@
 
 /* Windows content pane */
 .macos-content-pane {
-    -fx-background-radius: 0 0 10 10, 0 0 10 10;
-    -fx-background-insets: 0, 0 1 1 1;
-    -fx-background-color : rgb(197, 197, 197), white;
+    -fx-background-radius: 0 0 10 10, 0 0 9.5 9.5, 0 0 9.5 9.5;
+    -fx-background-insets: 0 0 0 0, 0 0.5 0.5 0.5, 0 1 1 1;
+    -fx-background-color : rgba(2, 2, 2, 0.1), rgb(237, 239, 239), rgb(235, 233, 233);
 }
 .macos-content-pane:dark {
-    -fx-background-color: rgb(76, 77, 78), rgb(32, 28, 28);
+    -fx-background-color: rgb(2, 2, 2), rgb(84, 82, 81), rgb(32, 28, 28);
 }
 
 
@@ -1445,11 +1462,11 @@
 
 .combo-box-popup > .list-view {
     -fx-background-color : -HEADER-BACKGROUND-DARK;
-    -fx-padding          : 1px;
+    -fx-padding          : 0;
     -fx-background-insets: 0;
     -fx-background-radius: 5;
     -fx-border-radius    : 5;
-    -fx-border-insets    : -1;
+    -fx-border-insets    : 0;
     -fx-border-color     : #585858;
     -fx-effect           : dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 8);
 }
@@ -1554,7 +1571,7 @@
 }
 
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .macos-combo-box-cell:dark {
-    -fx-background-color: -HEADER-BACKGROUND-DARK;
+    -fx-background-color: derive(-HEADER-BACKGROUND-DARK, -5%);
 }
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .macos-combo-box-cell:dark:filled:hover {
     -fx-background-color : -HEADER-BACKGROUND-DARK, -accent-color-dark;

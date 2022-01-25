@@ -1,5 +1,6 @@
 package eu.hansolo.applefx;
 
+import eu.hansolo.applefx.MacosWindow.HeaderHeight;
 import eu.hansolo.applefx.tools.Helper;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -63,6 +64,7 @@ public class Demo3 extends Application {
         pane.setPadding(new Insets(0));
 
         macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor());
+        //macosWindow.setHeaderHeight(HeaderHeight.DOUBLE);
 
         Scene scene = new Scene(macosWindow);
 

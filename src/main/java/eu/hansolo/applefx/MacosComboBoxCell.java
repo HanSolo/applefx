@@ -20,13 +20,12 @@ public class MacosComboBoxCell<T> extends ListCell<T> implements MacosControl {
     private static final PseudoClass                      DARK_PSEUDO_CLASS = PseudoClass.getPseudoClass("dark");
     private              BooleanProperty                  dark;
     private              ObjectProperty<MacosAccentColor> accentColor;
-    private              MacosComboBox<T>                 comboBox;
 
 
     // ******************** Constructors **************************************
     public MacosComboBoxCell(final MacosComboBox<T> comboBox) {
         getStyleClass().add("macos-combo-box-cell");
-        this.dark        = dark = new BooleanPropertyBase(Helper.isDarkMode()) {
+        this.dark        = new BooleanPropertyBase(Helper.isDarkMode()) {
             @Override protected void invalidated() {
                 pseudoClassStateChanged(DARK_PSEUDO_CLASS, get());
             }
@@ -38,11 +37,12 @@ public class MacosComboBoxCell<T> extends ListCell<T> implements MacosControl {
             @Override public Object getBean() { return MacosComboBoxCell.this; }
             @Override public String getName() { return "accentColor"; }
         };
-        this.comboBox    = comboBox;
         setGraphicTextGap(5);
         setContentDisplay(ContentDisplay.LEFT);
-        this.dark.bind(comboBox.darkProperty());
+
+        comboBox.darkProperty().addListener((o, ov, nv) -> this.dark.set(nv));
         this.accentColor.bind(comboBox.accentColorProperty());
+        pseudoClassStateChanged(DARK_PSEUDO_CLASS, comboBox.isDark());
     }
 
 

@@ -14,7 +14,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
+import javafx.css.CssMetaData;
 import javafx.css.PseudoClass;
+import javafx.css.Styleable;
+import javafx.css.StyleableObjectProperty;
+import javafx.css.StyleableProperty;
+import javafx.css.StyleablePropertyFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -48,28 +53,46 @@ import static eu.hansolo.toolbox.Helper.getOperatingSystem;
 
 
 public class MacosWindow extends Region implements MacosControl {
-    public static final  double                                  OFFSET                         = 40;
-    private static final double                                  HEADER_HEIGHT                  = 30;
-    private static final DropShadow                              HEADER_SHADOW                  = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.1), 1, 0.0, 0, 1);
-    private static final DropShadow                              STAGE_SHADOW_FOCUSED           = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.5), 45.0, 0.0, 0.0, 15);
-    private static final DropShadow                              STAGE_SHADOW                   = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.35), 20.0, 0.0, 0.0, 10);
-    private static final PseudoClass                             DARK_PSEUDO_CLASS              = PseudoClass.getPseudoClass("dark");
-    private static final PseudoClass                             WINDOW_FOCUS_LOST_PSEUDO_CLASS = PseudoClass.getPseudoClass("window-focus-lost");
-    private              BooleanBinding                          showing;
-    private              WatchService                            watchService;
-    private              BooleanProperty                         dark;
-    private              ObjectProperty<MacosAccentColor>        accentColor;
-    private              Stage                                   stage;
-    private              MacosWindowButton                       closeButton;
-    private              MacosWindowButton                       minimizeButton;
-    private              MacosWindowButton                       maximizeButton;
-    private              HBox                                    buttonBox;
-    private              HBox                                    headerBox;
-    private              AnchorPane                              headerPane;
-    private              MacosLabel                              headerText;
-    private              AnchorPane                              contentPane;
-    private              BorderPane                              mainPane;
-    private              Parent                                  content;
+    public enum HeaderHeight {
+        STANDARD(26.25),
+        DOUBLE(52.5);
+
+        private final double height;
+
+
+        HeaderHeight(final double height) {
+            this.height = height;
+        }
+
+
+        public double getHeight() { return height; }
+    }
+
+
+    public static final  double                                OFFSET                         = 40;
+    private static final DropShadow                            HEADER_SHADOW                  = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.1), 1, 0.0, 0, 1);
+    private static final DropShadow                            STAGE_SHADOW_FOCUSED           = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.5), 45.0, 0.0, 0.0, 15);
+    private static final DropShadow                            STAGE_SHADOW                   = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.35), 20.0, 0.0, 0.0, 10);
+    private static final PseudoClass                           DARK_PSEUDO_CLASS              = PseudoClass.getPseudoClass("dark");
+    private static final PseudoClass                           WINDOW_FOCUS_LOST_PSEUDO_CLASS = PseudoClass.getPseudoClass("window-focus-lost");
+    private static final StyleablePropertyFactory<MacosWindow> FACTORY                        = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
+    private static final CssMetaData                           HEADER_HEIGHT                  = FACTORY.createSizeCssMetaData("-header-height", s -> s.headerHeight, HeaderHeight.STANDARD.getHeight(), false);
+    private              BooleanBinding                        showing;
+    private              WatchService                          watchService;
+    private              BooleanProperty                       dark;
+    private              ObjectProperty<MacosAccentColor>      accentColor;
+    private              StyleableProperty<Number>             headerHeight;
+    private              Stage                                 stage;
+    private              MacosWindowButton                     closeButton;
+    private              MacosWindowButton                     minimizeButton;
+    private              MacosWindowButton                     maximizeButton;
+    private              HBox                                  buttonBox;
+    private              HBox                                  headerBox;
+    private              AnchorPane                            headerPane;
+    private              MacosLabel                            headerText;
+    private              AnchorPane                            contentPane;
+    private              BorderPane                            mainPane;
+    private              Parent                                content;
 
 
     // ******************** Constructors **************************************
@@ -85,18 +108,24 @@ public class MacosWindow extends Region implements MacosControl {
     public MacosWindow(final Stage stage, final Parent content, final boolean darkMode, final MacosAccentColor accentColor) {
         if (null == stage) { throw new IllegalArgumentException("stage cannot be null"); }
         if (null == content) { throw new IllegalArgumentException("content cannot be null"); }
-        this.stage       = stage;
-        this.content     = content;
-        this.dark        = new BooleanPropertyBase(darkMode) {
+        this.stage        = stage;
+        this.content      = content;
+        this.dark         = new BooleanPropertyBase(darkMode) {
             @Override protected void invalidated() { pseudoClassStateChanged(DARK_PSEUDO_CLASS, get()); }
             @Override public Object getBean() { return MacosWindow.this; }
             @Override public String getName() { return "dark"; }
         };
-        this.accentColor = new ObjectPropertyBase<>(accentColor) {
+        this.accentColor  = new ObjectPropertyBase<>(accentColor) {
                 @Override protected void invalidated() { setAllAccentColors(get()); }
                 @Override public Object getBean() { return MacosWindow.this; }
                 @Override public String getName() { return "accentColor"; }
             };
+        this.headerHeight = new StyleableObjectProperty<>() {
+            @Override protected void invalidated() { headerPane.setStyle("-header-height: " + get() + ";"); }
+            @Override public Object getBean() { return MacosWindow.this; }
+            @Override public String getName() { return "headerHeight"; }
+            @Override public CssMetaData<? extends Styleable, Number> getCssMetaData() { return HEADER_HEIGHT; }
+        };
 
         init();
         registerListeners();
@@ -114,7 +143,10 @@ public class MacosWindow extends Region implements MacosControl {
         minimizeButton = new MacosWindowButton(MacosButtonType.MINIMIZE, MacosButtonSize.NORMAL);
         maximizeButton = new MacosWindowButton(MacosButtonType.MAXIMIZE, MacosButtonSize.NORMAL);
 
+        maximizeButton.setDisable(!stage.isResizable());
+
         buttonBox = new HBox(8, closeButton, minimizeButton, maximizeButton);
+        buttonBox.setAlignment(Pos.CENTER);
 
         headerText = new MacosLabel(stage.getTitle());
         headerText.setMaxWidth(Double.MAX_VALUE);
@@ -142,9 +174,6 @@ public class MacosWindow extends Region implements MacosControl {
         headerPane = new AnchorPane();
         headerPane.getStyleClass().add("macos-header");
         headerPane.setEffect(HEADER_SHADOW);
-        headerPane.setMinHeight(HEADER_HEIGHT);
-        headerPane.setMaxHeight(HEADER_HEIGHT);
-        headerPane.setPrefHeight(HEADER_HEIGHT);
         headerPane.getChildren().setAll(headerBox);
 
         AnchorPane.setTopAnchor(content, 1d);
@@ -156,8 +185,9 @@ public class MacosWindow extends Region implements MacosControl {
 
         mainPane = new BorderPane();
         mainPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10), Insets.EMPTY)));
-        mainPane.setTop(headerPane);
         mainPane.setCenter(contentPane);
+        mainPane.setTop(headerPane);
+
 
         getChildren().add(mainPane);
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10, 10, 10, 10, false), Insets.EMPTY)));
@@ -225,6 +255,8 @@ public class MacosWindow extends Region implements MacosControl {
             maximizeButton.setDisable(!nv);
         });
 
+        stage.resizableProperty().addListener((o, ov, nv) -> maximizeButton.setDisable(!nv));
+
         if (null != getScene()) {
             setupBinding();
         } else {
@@ -264,6 +296,11 @@ public class MacosWindow extends Region implements MacosControl {
     public MacosAccentColor getAccentColor() { return accentColor.get(); }
     public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
     public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
+
+    public Double getHeaderHeight() { return headerHeight.getValue().doubleValue(); }
+    public void setHeaderHeight(final HeaderHeight headerHeight)  { setHeaderHeight(headerHeight.getHeight()); }
+    public void setHeaderHeight(final double headerHeight) { this.headerHeight.setValue(headerHeight); }
+    public StyleableProperty<Number> headerHeightProperty() { return headerHeight; }
 
     public void dispose() {
         if (null != watchService) {
