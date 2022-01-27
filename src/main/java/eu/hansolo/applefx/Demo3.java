@@ -64,7 +64,6 @@ public class Demo3 extends Application {
         pane.setPadding(new Insets(0));
 
         macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor());
-        //macosWindow.setHeaderHeight(HeaderHeight.DOUBLE);
 
         Scene scene = new Scene(macosWindow);
 
@@ -74,6 +73,7 @@ public class Demo3 extends Application {
         stage.show();
 
         //macosWindow.setAccentColor(MacosAccentColor.GREEN);
+        //macosWindow.setHeaderHeight(HeaderHeight.STANDARD);
         registerListeners();
     }
 

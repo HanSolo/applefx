@@ -76,7 +76,7 @@ public class MacosWindow extends Region implements MacosControl {
     private static final PseudoClass                           DARK_PSEUDO_CLASS              = PseudoClass.getPseudoClass("dark");
     private static final PseudoClass                           WINDOW_FOCUS_LOST_PSEUDO_CLASS = PseudoClass.getPseudoClass("window-focus-lost");
     private static final StyleablePropertyFactory<MacosWindow> FACTORY                        = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
-    private static final CssMetaData                           HEADER_HEIGHT                  = FACTORY.createSizeCssMetaData("-header-height", s -> s.headerHeight, HeaderHeight.STANDARD.getHeight(), false);
+    private static final CssMetaData                           HEADER_HEIGHT                  = FACTORY.createSizeCssMetaData("-header-height", s -> s.headerHeight, HeaderHeight.DOUBLE.getHeight(), false);
     private              BooleanBinding                        showing;
     private              WatchService                          watchService;
     private              BooleanProperty                       dark;
@@ -169,7 +169,7 @@ public class MacosWindow extends Region implements MacosControl {
         AnchorPane.setTopAnchor(headerBox, 11d);
         AnchorPane.setRightAnchor(headerBox, 11d);
         AnchorPane.setBottomAnchor(headerBox, 11d);
-        AnchorPane.setLeftAnchor(headerBox, 11d);
+        AnchorPane.setLeftAnchor(headerBox, 22d);
 
         headerPane = new AnchorPane();
         headerPane.getStyleClass().add("macos-header");
@@ -298,7 +298,10 @@ public class MacosWindow extends Region implements MacosControl {
     public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
 
     public Double getHeaderHeight() { return headerHeight.getValue().doubleValue(); }
-    public void setHeaderHeight(final HeaderHeight headerHeight)  { setHeaderHeight(headerHeight.getHeight()); }
+    public void setHeaderHeight(final HeaderHeight headerHeight)  {
+        AnchorPane.setLeftAnchor(headerBox, HeaderHeight.DOUBLE == headerHeight ? 22d : 11d);
+        setHeaderHeight(headerHeight.getHeight());
+    }
     public void setHeaderHeight(final double headerHeight) { this.headerHeight.setValue(headerHeight); }
     public StyleableProperty<Number> headerHeightProperty() { return headerHeight; }
 
