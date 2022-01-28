@@ -1338,7 +1338,7 @@
     -fx-pref-height      : -header-height;
     -fx-background-insets: 0 0 0 0, 0.5 0.5 0 0.5, 1 1 0 1, 1.5 1 0 1;
     -fx-background-radius: 10 10 0 0, 9.5 9.5 0 0, 9.5 9.5 0 0, 8.5 8.5 0 0 ;
-    -fx-background-color : rgb(200, 200, 200), rgb(245, 244, 244), rgb(236, 234, 234), -HEADER-BACKGROUND;
+    -fx-background-color : rgb(200, 200, 200), rgb(236, 234, 234), rgb(245, 244, 244), -HEADER-BACKGROUND;
     -fx-effect           : dropshadow(gaussian, rgba(0,0,0,0.45), 1, 0, 0, 1.5);
 }
 .macos-header .macos-label {
@@ -1354,7 +1354,7 @@
     -fx-text-fill  : rgb(166, 164, 164);
 }
 .macos-header:dark {
-    -fx-background-color: rgb(2, 2, 2), rgb(133, 131, 132), linear-gradient(to bottom, rgb(117, 115, 115) 0%, rgb(99, 98, 98) 20%, rgb(99, 98, 98) 100%), -HEADER-BACKGROUND-DARK;
+    -fx-background-color: rgb(2, 2, 2), linear-gradient(to bottom, rgb(117, 115, 115) 0%, rgb(99, 98, 98) 20%, rgb(99, 98, 98) 100%), rgb(133, 131, 132), -HEADER-BACKGROUND-DARK;
 }
 .macos-header:dark:window-focus-lost {
     -fx-background-color: rgb(2, 2, 2), rgb(108, 105, 106), rgb(122, 121, 121), rgb(40, 37, 37);
