@@ -53,6 +53,8 @@ import static eu.hansolo.toolbox.Helper.getOperatingSystem;
 
 
 public class MacosWindow extends Region implements MacosControl {
+    public enum Style { DEFAULT, DECORATED }
+
     public enum HeaderHeight {
         STANDARD(26.25),
         DOUBLE(52.5);
@@ -77,6 +79,7 @@ public class MacosWindow extends Region implements MacosControl {
     private static final PseudoClass                           WINDOW_FOCUS_LOST_PSEUDO_CLASS = PseudoClass.getPseudoClass("window-focus-lost");
     private static final StyleablePropertyFactory<MacosWindow> FACTORY                        = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
     private static final CssMetaData                           HEADER_HEIGHT                  = FACTORY.createSizeCssMetaData("-header-height", s -> s.headerHeight, HeaderHeight.DOUBLE.getHeight(), false);
+    private        final boolean                               decorated;
     private              BooleanBinding                        showing;
     private              WatchService                          watchService;
     private              BooleanProperty                       dark;
@@ -97,15 +100,15 @@ public class MacosWindow extends Region implements MacosControl {
 
     // ******************** Constructors **************************************
     public MacosWindow(final Stage stage, final Parent content) {
-        this(stage, content, false, MacosAccentColor.MULTI_COLOR);
+        this(stage, content, false, MacosAccentColor.MULTI_COLOR, Style.DECORATED);
     }
     public MacosWindow(final Stage stage, final Parent content, final boolean darkMode) {
-        this(stage, content, darkMode, MacosAccentColor.MULTI_COLOR);
+        this(stage, content, darkMode, MacosAccentColor.MULTI_COLOR, Style.DECORATED);
     }
     public MacosWindow(final Stage stage, final Parent content, final MacosAccentColor accentColor) {
-        this(stage, content, false, accentColor);
+        this(stage, content, false, accentColor, Style.DECORATED);
     }
-    public MacosWindow(final Stage stage, final Parent content, final boolean darkMode, final MacosAccentColor accentColor) {
+    public MacosWindow(final Stage stage, final Parent content, final boolean darkMode, final MacosAccentColor accentColor, final Style style) {
         if (null == stage) { throw new IllegalArgumentException("stage cannot be null"); }
         if (null == content) { throw new IllegalArgumentException("content cannot be null"); }
         this.stage        = stage;
@@ -120,6 +123,7 @@ public class MacosWindow extends Region implements MacosControl {
                 @Override public Object getBean() { return MacosWindow.this; }
                 @Override public String getName() { return "accentColor"; }
             };
+        this.decorated    = Style.DECORATED == style;
         this.headerHeight = new StyleableObjectProperty<>() {
             @Override protected void invalidated() { headerPane.setStyle("-header-height: " + get() + ";"); }
             @Override public Object getBean() { return MacosWindow.this; }
@@ -137,126 +141,136 @@ public class MacosWindow extends Region implements MacosControl {
 
     // ******************** Initialization ************************************
     private void init() {
-        stage.initStyle(StageStyle.TRANSPARENT);
+        if (decorated) {
+            stage.initStyle(StageStyle.TRANSPARENT);
 
-        closeButton    = new MacosWindowButton(MacosButtonType.CLOSE, MacosButtonSize.NORMAL);
-        minimizeButton = new MacosWindowButton(MacosButtonType.MINIMIZE, MacosButtonSize.NORMAL);
-        maximizeButton = new MacosWindowButton(MacosButtonType.MAXIMIZE, MacosButtonSize.NORMAL);
+            closeButton    = new MacosWindowButton(MacosButtonType.CLOSE, MacosButtonSize.NORMAL);
+            minimizeButton = new MacosWindowButton(MacosButtonType.MINIMIZE, MacosButtonSize.NORMAL);
+            maximizeButton = new MacosWindowButton(MacosButtonType.MAXIMIZE, MacosButtonSize.NORMAL);
 
-        maximizeButton.setDisable(!stage.isResizable());
+            maximizeButton.setDisable(!stage.isResizable());
 
-        buttonBox = new HBox(8, closeButton, minimizeButton, maximizeButton);
-        buttonBox.setAlignment(Pos.CENTER);
+            buttonBox = new HBox(8, closeButton, minimizeButton, maximizeButton);
+            buttonBox.setAlignment(Pos.CENTER);
 
-        headerText = new MacosLabel(stage.getTitle());
-        headerText.setMaxWidth(Double.MAX_VALUE);
-        headerText.setPrefWidth(MacosLabel.USE_COMPUTED_SIZE);
-        headerText.getStyleClass().add("macos-header-text");
-        headerText.setAlignment(Pos.CENTER);
-        headerText.setMouseTransparent(true);
+            headerText = new MacosLabel(stage.getTitle());
+            headerText.setMaxWidth(Double.MAX_VALUE);
+            headerText.setPrefWidth(MacosLabel.USE_COMPUTED_SIZE);
+            headerText.getStyleClass().add("macos-header-text");
+            headerText.setAlignment(Pos.CENTER);
+            headerText.setMouseTransparent(true);
 
-        Region headerSpacerRight = new Region();
-        headerSpacerRight.setPrefWidth(60);
+            Region headerSpacerRight = new Region();
+            headerSpacerRight.setPrefWidth(60);
 
-        HBox.setHgrow(closeButton, Priority.NEVER);
-        HBox.setHgrow(minimizeButton, Priority.NEVER);
-        HBox.setHgrow(maximizeButton, Priority.NEVER);
-        HBox.setHgrow(headerText, Priority.ALWAYS);
-        HBox.setHgrow(headerSpacerRight, Priority.NEVER);
+            HBox.setHgrow(closeButton, Priority.NEVER);
+            HBox.setHgrow(minimizeButton, Priority.NEVER);
+            HBox.setHgrow(maximizeButton, Priority.NEVER);
+            HBox.setHgrow(headerText, Priority.ALWAYS);
+            HBox.setHgrow(headerSpacerRight, Priority.NEVER);
 
-        headerBox = new HBox(buttonBox, headerText, headerSpacerRight);
-        headerBox.setAlignment(Pos.CENTER_LEFT);
-        AnchorPane.setTopAnchor(headerBox, 11d);
-        AnchorPane.setRightAnchor(headerBox, 11d);
-        AnchorPane.setBottomAnchor(headerBox, 11d);
-        AnchorPane.setLeftAnchor(headerBox, 22d);
+            headerBox = new HBox(buttonBox, headerText, headerSpacerRight);
+            headerBox.setAlignment(Pos.CENTER_LEFT);
+            AnchorPane.setTopAnchor(headerBox, 11d);
+            AnchorPane.setRightAnchor(headerBox, 11d);
+            AnchorPane.setBottomAnchor(headerBox, 11d);
+            AnchorPane.setLeftAnchor(headerBox, 22d);
 
-        headerPane = new AnchorPane();
-        headerPane.getStyleClass().add("macos-header");
-        headerPane.setEffect(HEADER_SHADOW);
-        headerPane.getChildren().setAll(headerBox);
+            headerPane = new AnchorPane();
+            headerPane.getStyleClass().add("macos-header");
+            headerPane.setEffect(HEADER_SHADOW);
+            headerPane.getChildren().setAll(headerBox);
 
-        AnchorPane.setTopAnchor(content, 1d);
-        AnchorPane.setRightAnchor(content, 1d);
-        AnchorPane.setBottomAnchor(content, 1d);
-        AnchorPane.setLeftAnchor(content, 1d);
-        contentPane = new AnchorPane(content);
-        contentPane.getStyleClass().add("macos-content-pane");
+            AnchorPane.setTopAnchor(content, 1d);
+            AnchorPane.setRightAnchor(content, 1d);
+            AnchorPane.setBottomAnchor(content, 1d);
+            AnchorPane.setLeftAnchor(content, 1d);
+            contentPane = new AnchorPane(content);
+            contentPane.getStyleClass().add("macos-content-pane");
 
-        mainPane = new BorderPane();
-        mainPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10), Insets.EMPTY)));
-        mainPane.setCenter(contentPane);
-        mainPane.setTop(headerPane);
+            mainPane = new BorderPane();
+            mainPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10), Insets.EMPTY)));
+            mainPane.setCenter(contentPane);
+            mainPane.setTop(headerPane);
 
+            getChildren().add(mainPane);
 
-        getChildren().add(mainPane);
-        setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10, 10, 10, 10, false), Insets.EMPTY)));
-        setEffect(isFocused() ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
-        setPadding(new Insets(0, OFFSET, OFFSET, OFFSET));
-        setTranslateX(OFFSET);
+            setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10, 10, 10, 10, false), Insets.EMPTY)));
+            setEffect(isFocused() ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
+            setPadding(new Insets(0, OFFSET, OFFSET, OFFSET));
+            setTranslateX(OFFSET);
+        } else {
+            AnchorPane.setTopAnchor(content, 1d);
+            AnchorPane.setRightAnchor(content, 1d);
+            AnchorPane.setBottomAnchor(content, 1d);
+            AnchorPane.setLeftAnchor(content, 1d);
+            contentPane = new AnchorPane(content);
+            contentPane.getStyleClass().add("macos-content-pane");
+            contentPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, isDark());
+            getChildren().add(contentPane);
+        }
     }
 
     private void registerListeners() {
         widthProperty().addListener(o -> resize());
         heightProperty().addListener(o -> resize());
-
         darkProperty().addListener((o, ov, nv) -> enableDarkMode(nv));
+        if (decorated) {
+            headerPane.setOnMousePressed(press -> headerPane.setOnMouseDragged(drag -> {
+                stage.setX(drag.getScreenX() - press.getSceneX());
+                stage.setY(drag.getScreenY() - press.getSceneY());
+            }));
 
-        headerPane.setOnMousePressed(press -> headerPane.setOnMouseDragged(drag -> {
-            stage.setX(drag.getScreenX() - press.getSceneX());
-            stage.setY(drag.getScreenY() - press.getSceneY());
-        }));
-
-        buttonBox.setOnMouseEntered(e -> {
-            closeButton.setHovered(true);
-            minimizeButton.setHovered(true);
-            maximizeButton.setHovered(true);
-        });
-        headerBox.setOnMouseExited(e -> {
-            closeButton.setHovered(false);
-            minimizeButton.setHovered(false);
-            maximizeButton.setHovered(false);
-        });
-        closeButton.setOnMouseReleased((Consumer<MouseEvent>) e -> {
-            if (stage.isShowing()) { stage.hide(); }
-        });
-        minimizeButton.setOnMouseReleased((Consumer<MouseEvent>) e -> {
-            if (stage.isShowing()) { stage.setIconified(!stage.isIconified()); }
-        });
-        maximizeButton.setOnMouseReleased((Consumer<MouseEvent>) e -> {
-            if (stage.isShowing()) {
-                if (stage.isFullScreen()) {
-                    setPadding(new Insets(0, OFFSET, OFFSET, OFFSET));
-                    setTranslateX(OFFSET);
-                    stage.setFullScreen(false);
-                } else {
-                    setPadding(new Insets(0));
-                    setTranslateX(0);
-                    stage.setFullScreen(true);
+            buttonBox.setOnMouseEntered(e -> {
+                closeButton.setHovered(true);
+                minimizeButton.setHovered(true);
+                maximizeButton.setHovered(true);
+            });
+            headerBox.setOnMouseExited(e -> {
+                closeButton.setHovered(false);
+                minimizeButton.setHovered(false);
+                maximizeButton.setHovered(false);
+            });
+            closeButton.setOnMouseReleased((Consumer<MouseEvent>) e -> {
+                if (stage.isShowing()) { stage.hide(); }
+            });
+            minimizeButton.setOnMouseReleased((Consumer<MouseEvent>) e -> {
+                if (stage.isShowing()) { stage.setIconified(!stage.isIconified()); }
+            });
+            maximizeButton.setOnMouseReleased((Consumer<MouseEvent>) e -> {
+                if (stage.isShowing()) {
+                    if (stage.isFullScreen()) {
+                        setPadding(new Insets(0, OFFSET, OFFSET, OFFSET));
+                        setTranslateX(OFFSET);
+                        stage.setFullScreen(false);
+                    } else {
+                        setPadding(new Insets(0));
+                        setTranslateX(0);
+                        stage.setFullScreen(true);
+                    }
                 }
-            }
-        });
+            });
 
-        stage.titleProperty().addListener(o -> headerText.setText(stage.getTitle()));
-        stage.sceneProperty().addListener((o, ov, nv) -> {
-            if (nv != null) {
-                nv.setFill(Color.TRANSPARENT);
-                nv.widthProperty().addListener(o1 -> resize());
-                nv.heightProperty().addListener(o1 -> resize());
-                Platform.runLater(() -> ResizeHelper.addResizeListener(stage));
-            }
-        });
-        stage.focusedProperty().addListener((o, ov, nv) -> {
-            setEffect(nv ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
-            headerPane.pseudoClassStateChanged(WINDOW_FOCUS_LOST_PSEUDO_CLASS, !nv);
-            setAllWindowFocusLost(!nv);
-            closeButton.setDisable(!nv);
-            minimizeButton.setDisable(!nv);
-            maximizeButton.setDisable(!nv);
-        });
+            stage.titleProperty().addListener(o -> headerText.setText(stage.getTitle()));
+            stage.sceneProperty().addListener((o, ov, nv) -> {
+                if (nv != null) {
+                    nv.setFill(Color.TRANSPARENT);
+                    nv.widthProperty().addListener(o1 -> resize());
+                    nv.heightProperty().addListener(o1 -> resize());
+                    Platform.runLater(() -> ResizeHelper.addResizeListener(stage));
+                }
+            });
+            stage.focusedProperty().addListener((o, ov, nv) -> {
+                setEffect(nv ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
+                headerPane.pseudoClassStateChanged(WINDOW_FOCUS_LOST_PSEUDO_CLASS, !nv);
+                setAllWindowFocusLost(!nv);
+                closeButton.setDisable(!nv);
+                minimizeButton.setDisable(!nv);
+                maximizeButton.setDisable(!nv);
+            });
 
-        stage.resizableProperty().addListener((o, ov, nv) -> maximizeButton.setDisable(!nv));
-
+            stage.resizableProperty().addListener((o, ov, nv) -> maximizeButton.setDisable(!nv));
+        }
         if (null != getScene()) {
             setupBinding();
         } else {
@@ -316,13 +330,19 @@ public class MacosWindow extends Region implements MacosControl {
     }
 
     private void enableDarkMode(final boolean enable) {
-        headerPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
-        headerText.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
-        contentPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
-        closeButton.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
-        minimizeButton.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
-        maximizeButton.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
-        Helper.getAllNodes(contentPane).stream().filter(node -> node instanceof MacosControl).forEach(node -> ((MacosControl) node).setDark(enable));
+        if (decorated) {
+            headerPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
+            headerText.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
+            contentPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
+            closeButton.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
+            minimizeButton.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
+            maximizeButton.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
+            Helper.getAllNodes(contentPane).stream().filter(node -> node instanceof MacosControl).forEach(node -> ((MacosControl) node).setDark(enable));
+        } else {
+            contentPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
+            Helper.getAllNodes(content).stream().filter(node -> node instanceof MacosControl).forEach(node -> ((MacosControl) node).setDark(enable));
+        }
+
     }
 
     private void setAllAccentColors(final MacosAccentColor accentColor) {
@@ -382,8 +402,11 @@ public class MacosWindow extends Region implements MacosControl {
         double height = getHeight() - getInsets().getTop() - getInsets().getBottom();
 
         if (width > 0 && height > 0) {
-            mainPane.setPrefWidth(width);
-            mainPane.setPrefHeight(height);
+            if (decorated) {
+                mainPane.setPrefSize(width, height);
+            } else {
+                contentPane.setPrefSize(width, height);
+            }
         }
     }
 }

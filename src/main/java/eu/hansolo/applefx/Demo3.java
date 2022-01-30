@@ -1,18 +1,20 @@
 package eu.hansolo.applefx;
 
-import eu.hansolo.applefx.MacosWindow.HeaderHeight;
+import eu.hansolo.applefx.MacosWindow.Style;
 import eu.hansolo.applefx.tools.Helper;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -59,11 +61,12 @@ public class Demo3 extends Application {
         controlBox.setPadding(new Insets(10));
 
         StackPane pane = new StackPane(controlBox);
+        pane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         pane.setPadding(new Insets(10));
         pane.setPrefSize(400, 500);
         pane.setPadding(new Insets(0));
 
-        macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor());
+        macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor(), Style.DECORATED);
 
         Scene scene = new Scene(macosWindow);
 
