@@ -114,7 +114,7 @@
     -control-background-color-dark: -CONTROL-BACKGROUND-DARK;
     -control-border-color-dark    : -CONTROL-BORDER-DARK;
 
-    -header-height                : -HEADER-HEIGHT-DOUBLE;
+    -header-height                : -HEADER-HEIGHT-STANDARD;
 }
 
 
@@ -708,7 +708,7 @@
     -thumb-border-color : -GRAY-DARK;
     -track-fill         : rgba(255, 255, 255, 0.1);
     -tick-fill          : rgba(255, 255, 255, 0.15);
-    -track-progress-fill: -accent-color;
+    -track-progress-fill: -accent-color-dark;
     -border-color       : rgba(255, 255, 255, 0.05);
 }
 .macos-slider:dark:window-focus-lost {
@@ -1377,6 +1377,7 @@
 /* ComboBox */
 .combo-box-base,
 .combo-box-base:focused {
+    -arrow-button-color  : -accent-color;
     -fx-background-color : linear-gradient(to bottom, #cac7c7, #b3b0b0), white;
     -fx-background-insets: 0, 0.5;
     -fx-background-radius: 5, 5;
@@ -1391,7 +1392,7 @@
 .combo-box-base > .arrow-button,
 .combo-box-base:focused > .arrow-button,
 .combo-box-base:showing > .arrow-button {
-    -fx-background-color : linear-gradient(to bottom, derive(-accent-color, 15%), derive(-accent-color, -15%)), -accent-color;
+    -fx-background-color : linear-gradient(to bottom, derive(-arrow-button-color, 15%), derive(-arrow-button-color, -15%)), -arrow-button-color;
     -fx-background-insets: 0, 0.5;
     -fx-background-radius: 4, 4;
     -fx-border-radius    : 4, 4;
@@ -1420,7 +1421,7 @@
 }
 .combo-box-base > .arrow-button > .arrow {
     -fx-background-insets: -0.5, 1.25;
-    -fx-background-color : white, -accent-color;
+    -fx-background-color : white, -arrow-button-color;
     -fx-padding          : 4.95 3.075 4.95 3.075;
     -fx-shape            : "M 5 6.5 L 8 3.15 L 11 6.5 z M 11 9.65 L 8 13 5 9.65 z";
 }
@@ -1492,6 +1493,7 @@
 
 .combo-box-base:dark,
 .combo-box-base:dark:focused {
+    -arrow-button-color  : -accent-color-dark;
     -fx-background-color : linear-gradient(to bottom, derive(rgb(101, 101, 101), 15%), derive(rgb(101, 101, 101),-15%)), rgb(101, 101, 101);
     -fx-background-insets: 0, 0.5;
     -fx-background-radius: 5, 5;
@@ -1506,7 +1508,7 @@
 .combo-box-base:dark > .arrow-button,
 .combo-box-base:dark:focused > .arrow-button,
 .combo-box-base:dark:showing > .arrow-button {
-    -fx-background-color : linear-gradient(to bottom, derive(-accent-color-dark, 20%), derive(-accent-color-dark, -20%)), -accent-color-dark;
+    -fx-background-color : linear-gradient(to bottom, derive(-arrow-button-color, 20%), derive(-arrow-button-color, -20%)), -arrow-button-color;
     -fx-background-insets: 0, 0.5;
     -fx-background-radius: 4, 4;
     -fx-border-radius    : 4, 4;
@@ -1536,7 +1538,7 @@
 .combo-box-base:dark:focused > .arrow-button > .arrow,
 .combo-box-base:dark:showing > .arrow-button > .arrow {
     -fx-background-insets: -0.5, 1.25;
-    -fx-background-color : white, -accent-color-dark;
+    -fx-background-color : white, -arrow-button-color;
     -fx-padding          : 4.95 3.075 4.95 3.075;
     -fx-shape            : "M 5 6.5 L 8 3.15 L 11 6.5 z M 11 9.65 L 8 13 5 9.65 z";
 }

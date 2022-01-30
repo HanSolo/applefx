@@ -36,19 +36,19 @@ public enum MacosAccentColor {
         this.colorDarkFocus     = colorDarkFocus;
     }
 
-    public Integer getKey()              { return key; }
+    public Integer getKey() { return key; }
 
-    public Color getColorAqua()          { return colorAqua; }
+    public Color getColorAqua() { return colorAqua; }
 
     public Color getColorAquaHighlight() { return colorAquaHighlight; }
 
-    public Color getColorAquaFocus()     { return colorAquaFocus; }
+    public Color getColorAquaFocus() { return colorAquaFocus; }
 
-    public Color getColorDark()          { return colorDark; }
+    public Color getColorDark() { return colorDark; }
 
     public Color getColorDarkHighlight() { return colorDarkHighlight; }
 
-    public Color getColorDarkFocus()     { return colorDarkFocus; }
+    public Color getColorDarkFocus() { return colorDarkFocus; }
 
     public String getAquaStyleClass() {
         switch(this) {
@@ -68,4 +68,13 @@ public enum MacosAccentColor {
     }
 
     public static final List<MacosAccentColor> getAsList() { return Arrays.asList(values()); }
+
+    public static MacosAccentColor fromColor(final Color color) {
+        for (MacosAccentColor accentColor : values()) {
+            if (accentColor.getColorAqua().equals(color) || accentColor.getColorDark().equals(color)) {
+                return accentColor;
+            }
+        }
+        return MacosAccentColor.BLUE;
+    }
 }

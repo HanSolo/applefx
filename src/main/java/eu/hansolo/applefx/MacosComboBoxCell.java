@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-public class MacosComboBoxCell<T> extends ListCell<T> implements MacosControl {
+public class MacosComboBoxCell<T> extends ListCell<T> implements MacosControlWithAccentColor {
     private static final ImageView                        EMPTY_CHECK_MARK  = new ImageView(new Image(MacosComboBoxCell.class.getResourceAsStream("macos-checkmark-empty.png"), 10, 10, true, false));
     private static final ImageView                        BLACK_CHECK_MARK  = new ImageView(new Image(MacosComboBoxCell.class.getResourceAsStream("macos-checkmark-black.png"), 10, 10, true, false));
     private static final ImageView                        WHITE_CHECK_MARK  = new ImageView(new Image(MacosComboBoxCell.class.getResourceAsStream("macos-checkmark-white.png"), 10, 10, true, false));
@@ -53,9 +53,9 @@ public class MacosComboBoxCell<T> extends ListCell<T> implements MacosControl {
     @Override public final void setDark(final boolean dark) { this.dark.set(dark); }
     @Override public final BooleanProperty darkProperty() { return dark; }
 
-    public MacosAccentColor getAccentColor() { return accentColor.get(); }
-    public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
-    public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
+    @Override public MacosAccentColor getAccentColor() { return accentColor.get(); }
+    @Override public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
+    @Override public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
 
 
     @Override protected void updateItem(final T item, final boolean empty) {

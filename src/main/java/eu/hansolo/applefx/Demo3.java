@@ -1,7 +1,9 @@
 package eu.hansolo.applefx;
 
+import eu.hansolo.applefx.MacosWindow.HeaderHeight;
 import eu.hansolo.applefx.MacosWindow.Style;
 import eu.hansolo.applefx.tools.Helper;
+import eu.hansolo.applefx.tools.MacosAccentColor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -75,8 +77,8 @@ public class Demo3 extends Application {
 
         stage.show();
 
-        //macosWindow.setAccentColor(MacosAccentColor.GREEN);
-        //macosWindow.setHeaderHeight(HeaderHeight.STANDARD);
+        //macosWindow.setAccentColor(MacosAccentColor.PINK);
+        //macosWindow.setHeaderHeight(HeaderHeight.DOUBLE);
         registerListeners();
     }
 

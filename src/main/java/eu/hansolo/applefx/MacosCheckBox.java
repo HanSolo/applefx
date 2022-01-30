@@ -12,7 +12,7 @@ import javafx.scene.control.CheckBox;
 import javax.crypto.Mac;
 
 
-public class MacosCheckBox extends CheckBox implements MacosControl {
+public class MacosCheckBox extends CheckBox implements MacosControlWithAccentColor {
     private static final PseudoClass                      DARK_PSEUDO_CLASS = PseudoClass.getPseudoClass("dark");
     private              boolean                          _dark;
     private              BooleanProperty                  dark;
@@ -64,8 +64,8 @@ public class MacosCheckBox extends CheckBox implements MacosControl {
         return dark;
     }
 
-    public MacosAccentColor getAccentColor() { return null == accentColor ? _accentColor : accentColor.get(); }
-    public void setAccentColor(final MacosAccentColor accentColor) {
+    @Override public MacosAccentColor getAccentColor() { return null == accentColor ? _accentColor : accentColor.get(); }
+    @Override public void setAccentColor(final MacosAccentColor accentColor) {
         if (null == this.accentColor) {
             _accentColor = accentColor;
             setStyle(isDark() ? new StringBuilder("-box-fill: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-box-fill: ").append(accentColor.getDarkStyleClass()).append(";").toString());
@@ -73,7 +73,7 @@ public class MacosCheckBox extends CheckBox implements MacosControl {
             this.accentColor.set(accentColor);
         }
     }
-    public ObjectProperty<MacosAccentColor> accentColorProperty() {
+    @Override public ObjectProperty<MacosAccentColor> accentColorProperty() {
         if (null == accentColor) {
             accentColor = new ObjectPropertyBase<>(_accentColor) {
                 @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-box-fill: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-box-fill: ").append(get().getDarkStyleClass()).append(";").toString()); }

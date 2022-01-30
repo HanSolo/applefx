@@ -12,7 +12,7 @@ import javafx.css.PseudoClass;
 import javafx.scene.control.ComboBox;
 
 
-public class MacosComboBox<T> extends ComboBox<T> implements MacosControl {
+public class MacosComboBox<T> extends ComboBox<T> implements MacosControlWithAccentColor {
     private static final PseudoClass                      DARK_PSEUDO_CLASS = PseudoClass.getPseudoClass("dark");
     private              BooleanProperty                  dark;
     private              ObjectProperty<MacosAccentColor> accentColor;
@@ -36,8 +36,16 @@ public class MacosComboBox<T> extends ComboBox<T> implements MacosControl {
             @Override public Object getBean() { return MacosComboBox.this; }
             @Override public String getName() { return "dark"; }
         };
-        this.accentColor = new ObjectPropertyBase<>(Helper.getMacosAccentColor()) {
-            @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(get().getDarkStyleClass()).append(";").toString()); }
+        this.accentColor = new ObjectPropertyBase<>() {
+            @Override protected void invalidated() {
+                String style;
+                if (isDark()) {
+                    style = new StringBuilder().append("-accent-color-dark: ").append(get().getDarkStyleClass()).append(";").append("-arrow-button-color: ").append(get().getDarkStyleClass()).toString();
+                } else {
+                    style = new StringBuilder().append("-accent-color: ").append(get().getAquaStyleClass()).append(";").append("-arrow-button-color: ").append(get().getAquaStyleClass()).toString();
+                }
+                setStyle(style);
+            }
             @Override public Object getBean() { return MacosComboBox.this; }
             @Override public String getName() { return "accentColor"; }
         };
@@ -50,9 +58,9 @@ public class MacosComboBox<T> extends ComboBox<T> implements MacosControl {
     @Override public final void setDark(final boolean dark) { this.dark.set(dark); }
     @Override public final BooleanProperty darkProperty() { return dark; }
 
-    public MacosAccentColor getAccentColor() { return accentColor.get(); }
-    public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
-    public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
+    @Override public MacosAccentColor getAccentColor() { return accentColor.get(); }
+    @Override public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
+    @Override public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
 
 
     // ******************** Style related *************************************

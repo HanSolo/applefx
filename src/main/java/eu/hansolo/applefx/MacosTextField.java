@@ -10,7 +10,7 @@ import javafx.css.PseudoClass;
 import javafx.scene.control.TextField;
 
 
-public class MacosTextField extends TextField implements MacosControl {
+public class MacosTextField extends TextField implements MacosControlWithAccentColor {
     private static final PseudoClass                      DARK_PSEUDO_CLASS = PseudoClass.getPseudoClass("dark");
     private              boolean                          _dark;
     private              BooleanProperty                  dark;
@@ -62,8 +62,8 @@ public class MacosTextField extends TextField implements MacosControl {
         return dark;
     }
 
-    public MacosAccentColor getAccentColor() { return null == accentColor ? _accentColor : accentColor.get(); }
-    public void setAccentColor(final MacosAccentColor accentColor) {
+    @Override public MacosAccentColor getAccentColor() { return null == accentColor ? _accentColor : accentColor.get(); }
+    @Override public void setAccentColor(final MacosAccentColor accentColor) {
         if (null == this.accentColor) {
             _accentColor = accentColor;
             setStyle(isDark() ? new StringBuilder("-fx-focus-color: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-fx-focus-color: ").append(accentColor.getDarkStyleClass()).append(";").toString());
@@ -71,7 +71,7 @@ public class MacosTextField extends TextField implements MacosControl {
             this.accentColor.set(accentColor);
         }
     }
-    public ObjectProperty<MacosAccentColor> accentColorProperty() {
+    @Override public ObjectProperty<MacosAccentColor> accentColorProperty() {
         if (null == accentColor) {
             accentColor = new ObjectPropertyBase<>(_accentColor) {
                 @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-fx-focus-color: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-fx-focus-color: ").append(get().getDarkStyleClass()).append(";").toString()); }

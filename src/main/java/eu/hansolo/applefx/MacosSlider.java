@@ -1,22 +1,27 @@
 package eu.hansolo.applefx;
 
+import eu.hansolo.applefx.tools.Helper;
+import eu.hansolo.applefx.tools.MacosAccentColor;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ObjectPropertyBase;
 import javafx.css.PseudoClass;
 import javafx.scene.control.Skin;
 import javafx.scene.control.Slider;
+import javafx.scene.paint.Color;
 
 
-public class MacosSlider extends Slider implements MacosControl {
-    private static final PseudoClass     BALANCE_PSEUDO_CLASS = PseudoClass.getPseudoClass("balance");
-    private static final PseudoClass     DARK_PSEUDO_CLASS    = PseudoClass.getPseudoClass("dark");
-    private              BooleanProperty balance              = new BooleanPropertyBase(false) {
+public class MacosSlider extends Slider implements MacosControlWithAccentColor {
+    private static final PseudoClass                      BALANCE_PSEUDO_CLASS = PseudoClass.getPseudoClass("balance");
+    private static final PseudoClass                      DARK_PSEUDO_CLASS    = PseudoClass.getPseudoClass("dark");
+    private              BooleanProperty                  balance              = new BooleanPropertyBase(false) {
         @Override protected void invalidated() { pseudoClassStateChanged(BALANCE_PSEUDO_CLASS, get()); }
         @Override public Object getBean() { return MacosSlider.this; }
         @Override public String getName() { return "balance"; }
     };
-    private              boolean         _dark;
-    private              BooleanProperty dark;
+    private              BooleanProperty                  dark;
+    private              ObjectProperty<MacosAccentColor> accentColor;
 
 
     // ******************** Constructors **************************************
@@ -33,7 +38,16 @@ public class MacosSlider extends Slider implements MacosControl {
     // ******************** Initialization ************************************
     private void init() {
         getStyleClass().add("macos-slider");
-        _dark = false;
+        this.dark        = new BooleanPropertyBase() {
+            @Override protected void invalidated() { pseudoClassStateChanged(DARK_PSEUDO_CLASS, get()); }
+            @Override public Object getBean() { return MacosSlider.this; }
+            @Override public String getName() { return "dark"; }
+        };
+        this.accentColor = new ObjectPropertyBase<>() {
+            @Override protected void invalidated() { setStyle(new StringBuilder().append("-track-progress-fill: ").append((isDark() ? get().getDarkStyleClass() : get().getAquaStyleClass())).append(";").toString()); }
+            @Override public Object getBean() { return MacosSlider.this; }
+            @Override public String getName() { return "accentColor"; }
+        };
     }
 
 
@@ -42,28 +56,20 @@ public class MacosSlider extends Slider implements MacosControl {
     public void setBalance(final boolean balance) { this.balance.set(balance); }
     public BooleanProperty balanceProperty() { return balance; }
 
-    @Override public final boolean isDark() {
-        return null == dark ? _dark : dark.get();
-    }
-    @Override public final void setDark(final boolean dark) {
-        if (null == this.dark) {
-            _dark = dark;
-            pseudoClassStateChanged(DARK_PSEUDO_CLASS, dark);
+    @Override public final boolean isDark() { return dark.get(); }
+    @Override public final void setDark(final boolean dark) { this.dark.set(dark); }
+    @Override public final BooleanProperty darkProperty() { return dark; }
+
+    @Override public MacosAccentColor getAccentColor() { return accentColor.get(); }
+    @Override public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
+    @Override public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
+
+    public void setWindowFocusLost(final boolean windowFocusLost) {
+        if (windowFocusLost) {
+            setStyle(new StringBuilder().append(isDark() ? "-track-progress-fill: #6A6968;" : "-track-progress-fill: #D8D8D8;").toString());
         } else {
-            this.dark.set(dark);
+            setStyle(new StringBuilder().append("-track-progress-fill: ").append((isDark() ? getAccentColor().getDarkStyleClass() : getAccentColor().getAquaStyleClass())).append(";").toString());
         }
-    }
-    @Override public final BooleanProperty darkProperty() {
-        if (null == dark) {
-            dark = new BooleanPropertyBase() {
-                @Override protected void invalidated() {
-                    pseudoClassStateChanged(DARK_PSEUDO_CLASS, get());
-                }
-                @Override public Object getBean() { return MacosSlider.this; }
-                @Override public String getName() { return "dark"; }
-            };
-        }
-        return dark;
     }
 
     public double getRange() { return (getMax() - getMin()); }

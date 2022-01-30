@@ -24,6 +24,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.ComboBoxBase;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -52,7 +53,7 @@ import java.util.function.Consumer;
 import static eu.hansolo.toolbox.Helper.getOperatingSystem;
 
 
-public class MacosWindow extends Region implements MacosControl {
+public class MacosWindow extends Region implements MacosControlWithAccentColor {
     public enum Style { DEFAULT, DECORATED }
 
     public enum HeaderHeight {
@@ -78,7 +79,7 @@ public class MacosWindow extends Region implements MacosControl {
     private static final PseudoClass                           DARK_PSEUDO_CLASS              = PseudoClass.getPseudoClass("dark");
     private static final PseudoClass                           WINDOW_FOCUS_LOST_PSEUDO_CLASS = PseudoClass.getPseudoClass("window-focus-lost");
     private static final StyleablePropertyFactory<MacosWindow> FACTORY                        = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
-    private static final CssMetaData                           HEADER_HEIGHT                  = FACTORY.createSizeCssMetaData("-header-height", s -> s.headerHeight, HeaderHeight.DOUBLE.getHeight(), false);
+    private static final CssMetaData                           HEADER_HEIGHT                  = FACTORY.createSizeCssMetaData("-header-height", s -> s.headerHeight, HeaderHeight.STANDARD.getHeight(), false);
     private        final boolean                               decorated;
     private              BooleanBinding                        showing;
     private              WatchService                          watchService;
@@ -174,7 +175,7 @@ public class MacosWindow extends Region implements MacosControl {
             AnchorPane.setTopAnchor(headerBox, 11d);
             AnchorPane.setRightAnchor(headerBox, 11d);
             AnchorPane.setBottomAnchor(headerBox, 11d);
-            AnchorPane.setLeftAnchor(headerBox, 22d);
+            AnchorPane.setLeftAnchor(headerBox, 11d);
 
             headerPane = new AnchorPane();
             headerPane.getStyleClass().add("macos-header");
@@ -307,9 +308,9 @@ public class MacosWindow extends Region implements MacosControl {
     @Override public final void setDark(final boolean dark) { this.dark.set(dark); }
     @Override public final BooleanProperty darkProperty() { return dark; }
 
-    public MacosAccentColor getAccentColor() { return accentColor.get(); }
-    public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
-    public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
+    @Override public MacosAccentColor getAccentColor() { return accentColor.get(); }
+    @Override public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
+    @Override public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
 
     public Double getHeaderHeight() { return headerHeight.getValue().doubleValue(); }
     public void setHeaderHeight(final HeaderHeight headerHeight)  {
@@ -348,15 +349,19 @@ public class MacosWindow extends Region implements MacosControl {
     private void setAllAccentColors(final MacosAccentColor accentColor) {
         List<Node> allNodes = Helper.getAllNodes(contentPane);
         allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getDarkStyleClass()).append(";").toString()));
+        //allNodes.stream().filter(node -> node instanceof MacosControlWithAccentColor).map(node -> ((MacosControlWithAccentColor) node)).forEach(macosControlWithAccentColor -> macosControlWithAccentColor.setAccentColor(accentColor));
         allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setAccentColor(isDark() ? accentColor.getColorDark() : accentColor.getColorAqua()));
         allNodes.stream().filter(node -> node instanceof MacosCheckBox).map(node -> (MacosCheckBox) node).forEach(macosCheckBox -> macosCheckBox.setAccentColor(accentColor));
         allNodes.stream().filter(node -> node instanceof MacosRadioButton).map(node -> (MacosRadioButton) node).forEach(macosRadioButton -> macosRadioButton.setAccentColor(accentColor));
+        allNodes.stream().filter(node -> node instanceof MacosComboBox).map(node -> (MacosComboBox) node).forEach(macosComboBox -> macosComboBox.setAccentColor(accentColor));
+        allNodes.stream().filter(node -> node instanceof MacosSlider).map(node -> (MacosSlider) node).forEach(macosSlider -> macosSlider.setAccentColor(accentColor));
     }
 
     private void setAllWindowFocusLost(final boolean windowFocusLost) {
         List<Node> allNodes = Helper.getAllNodes(contentPane);
         allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.pseudoClassStateChanged(WINDOW_FOCUS_LOST_PSEUDO_CLASS, windowFocusLost));
         allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setWindowFocusLost(windowFocusLost));
+        allNodes.stream().filter(node -> node instanceof MacosSlider).map(node -> (MacosSlider) node).forEach(macosSlider -> macosSlider.setWindowFocusLost(windowFocusLost));
     }
 
     private void watchForAppearanceChanged() {
