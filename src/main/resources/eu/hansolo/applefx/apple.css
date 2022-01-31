@@ -1357,14 +1357,14 @@
     -fx-border-color    : rgb(152, 86, 1);
     -fx-position-shape  : true;
     -fx-scale-shape     : false;
-    -fx-shape           : "M2.0,5.5l8,0l0,1l-8,0l0,-1Z";
+    -fx-shape           : "M7.5,0.758C7.5,0.34 7.16,0 6.742,0L0.758,0C0.34,0 0,0.34 0,0.758C0,1.176 0.34,1.516 0.758,1.516L6.742,1.516C7.16,1.516 7.5,1.176 7.5,0.758Z";
 }
 .macos-window-button:hovered:maximize .symbol {
     -fx-background-color: rgb(0, 97, 0);
     -fx-border-color    : rgb(0, 97, 0);
     -fx-position-shape  : true;
     -fx-scale-shape     : false;
-    -fx-shape           : "M2.696,2.582l4.545,0.656l-3.889,3.889l-0.656,-4.545ZM9.533,9.418l-0.656,-4.545l-3.889,3.889l4.545,0.656Z";
+    -fx-shape           : "M1,0L4.5,0L0,4.5L0,1C0,0.448 0.448,0 1,0ZM6,5C6,5.552 5.552,6 5,6L1.5,6L6,1.5L6,5Z";
 }
 
 .macos-window-button:hovered:close .symbol-small {
@@ -1379,14 +1379,14 @@
     -fx-border-color    : rgb(152, 86, 1);
     -fx-position-shape  : true;
     -fx-scale-shape     : false;
-    -fx-shape           : "M1,2h8v2h-8v-2Z";
+    -fx-shape           : "M7.5,0.758C7.5,0.34 7.16,0 6.742,0L0.758,0C0.34,0 0,0.34 0,0.758C0,1.176 0.34,1.516 0.758,1.516L6.742,1.516C7.16,1.516 7.5,1.176 7.5,0.758Z";
 }
 .macos-window-button:hovered:maximize .symbol-small {
     -fx-background-color: rgb(0, 97, 0);
     -fx-border-color    : rgb(0, 97, 0);
     -fx-position-shape  : true;
     -fx-scale-shape     : false;
-    -fx-shape           : "M7.159,7.059L6.667,3.648L3.748,6.566L7.159,7.059ZM2.028,1.928L5.439,2.42L2.521,5.339L2.028,1.928Z";
+    -fx-shape           : "M1,0L4.5,0L0,4.5L0,1C0,0.448 0.448,0 1,0ZM6,5C6,5.552 5.552,6 5,6L1.5,6L6,1.5L6,5Z";
 }
 
 
@@ -1456,6 +1456,88 @@
 }
 .macos-content-pane:dark {
     -fx-background-color: rgb(2, 2, 2), rgb(84, 82, 81), rgb(32, 28, 28);
+}
+
+
+/* Toolbar Button */
+.macos-toolbar-button,
+.macos-toolbar-button:focused {
+    -shape               : "";
+    -fx-min-width        : 28;
+    -fx-pref-width       : 28;
+    -fx-min-height       : 28;
+    -fx-max-height       : 28;
+    -fx-pref-height      : 28;
+    -fx-background-insets: 0;
+    -fx-padding          : 0;
+    -fx-background-radius: 5;
+    -fx-background-color : transparent;
+    -fx-text-fill        : rgb(176, 174, 174);
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+    -fx-font-family      : 'SF Pro Regular';
+    -fx-font-size        : 10px;
+    -fx-content-display  : graphic-only;
+    -fx-graphic-text-gap : 0;
+}
+.macos-toolbar-button > .icon,
+.macos-toolbar-button:focused > .icon {
+    -fx-min-width        : 12;
+    -fx-min-height       : 12;
+    -fx-max-width        : 12;
+    -fx-max-height       : 12;
+    -fx-pref-width       : 12;
+    -fx-pref-height      : 12;
+    -fx-background-radius: 0;
+    -fx-position-shape   : true;
+    -fx-scale-shape      : false;
+    -fx-shape            : -shape;
+    -fx-background-color : rgb(176, 174, 174);
+}
+.macos-toolbar-button:hover {
+    -fx-background-color : rgb(228, 226, 225);
+    -fx-text-fill        : rgb(99, 97, 96);
+}
+.macos-toolbar-button:hover > .icon {
+    -fx-fill: rgb(99, 97, 96);
+}
+.macos-toolbar-button:armed {
+    -fx-background-color : rgb(215, 213, 212);
+    -fx-text-fill        : rgb(87, 85, 85);
+}
+.macos-toolbar-button:armed > .icon {
+    -fx-fill: rgb(87, 85, 85);
+}
+.macos-toolbar-button:disabled {
+
+}
+
+.macos-toolbar-button:dark,
+.macos-toolbar-button:dark:focused {
+    -fx-background-color : transparent;
+    -fx-text-fill        : rgb(91, 88, 88);
+}
+.macos-toolbar-button:dark > .icon,
+.macos-toolbar-button:dark:focused > .icon {
+    -fx-shape           : -shape;
+    -fx-background-color: rgb(91, 88, 88);
+}
+.macos-toolbar-button:dark:hover {
+    -fx-background-color: rgb(72, 68, 68);
+    -fx-text-fill       : rgb(174, 172, 172);
+}
+.macos-toolbar-button:dark:hover > .icon {
+    -fx-background-color: rgb(174, 172, 172);
+}
+.macos-toolbar-button:dark:armed {
+    -fx-background-color: rgb(83, 80, 80);
+    -fx-text-fill       : rgb(239, 239, 239);
+}
+.macos-toolbar-button:dark:armed > .icon {
+    -fx-background-color: rgb(239, 239, 239);
+}
+.macos-toolbar-button:dark:disabled {
+
 }
 
 

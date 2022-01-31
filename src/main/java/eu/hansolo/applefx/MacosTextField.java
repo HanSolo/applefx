@@ -32,8 +32,9 @@ public class MacosTextField extends TextField implements MacosControlWithAccentC
     // ******************** Initialization ************************************
     private void init() {
         getStyleClass().add("macos-text-field");
-        _dark        = false;
+        _dark        = Helper.isDarkMode();
         _accentColor = Helper.getMacosAccentColor();
+        pseudoClassStateChanged(DARK_PSEUDO_CLASS, _dark);
     }
 
 

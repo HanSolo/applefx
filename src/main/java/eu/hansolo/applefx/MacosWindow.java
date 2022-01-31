@@ -91,6 +91,8 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     private              HBox                                  buttonBox;
     private              HBox                                  headerBox;
     private              AnchorPane                            headerPane;
+    private              HBox                                  headerPaneLeftToolBar;
+    private              HBox                                  headerPaneRightToolBar;
     private              MacosLabel                            headerText;
     private              AnchorPane                            contentPane;
     private              BorderPane                            mainPane;
@@ -128,7 +130,11 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             };
         this.decorated       = Style.DECORATED == style;
         this.headerHeight    = new StyleableObjectProperty<>() {
-            @Override protected void invalidated() { headerPane.setStyle("-header-height: " + get() + ";"); }
+            @Override protected void invalidated() {
+                headerPane.setStyle("-header-height: " + get() + ";");
+                headerPaneLeftToolBar.setVisible(HeaderHeight.DOUBLE.getHeight() == get().doubleValue());
+                headerPaneRightToolBar.setVisible(HeaderHeight.DOUBLE.getHeight() == get().doubleValue());
+            }
             @Override public Object getBean() { return MacosWindow.this; }
             @Override public String getName() { return "headerHeight"; }
             @Override public CssMetaData<? extends Styleable, Number> getCssMetaData() { return HEADER_HEIGHT; }
@@ -160,19 +166,27 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             headerText.setMaxWidth(Double.MAX_VALUE);
             headerText.setPrefWidth(MacosLabel.USE_COMPUTED_SIZE);
             headerText.getStyleClass().add("macos-header-text");
-            headerText.setAlignment(Pos.CENTER);
+            headerText.setAlignment(Pos.CENTER_LEFT);
             headerText.setMouseTransparent(true);
 
-            Region headerSpacerRight = new Region();
-            headerSpacerRight.setPrefWidth(60);
+            headerPaneLeftToolBar = new HBox(5);
+            headerPaneLeftToolBar.setPrefWidth(0);
+            headerPaneLeftToolBar.setVisible(false);
+
+            headerPaneRightToolBar = new HBox(5);
+            headerPaneRightToolBar.setPrefWidth(0);
+            headerPaneRightToolBar.setVisible(false);
 
             HBox.setHgrow(closeButton, Priority.NEVER);
             HBox.setHgrow(minimizeButton, Priority.NEVER);
             HBox.setHgrow(maximizeButton, Priority.NEVER);
-            HBox.setHgrow(headerText, Priority.ALWAYS);
-            HBox.setHgrow(headerSpacerRight, Priority.NEVER);
+            HBox.setHgrow(headerPaneLeftToolBar, Priority.ALWAYS);
+            HBox.setHgrow(headerText, Priority.NEVER);
+            HBox.setHgrow(headerPaneRightToolBar, Priority.ALWAYS);
+            HBox.setMargin(headerPaneLeftToolBar, new Insets(0, 20, 0, 20));
+            HBox.setMargin(headerPaneRightToolBar, new Insets(0, 5, 0, 60));
 
-            headerBox = new HBox(buttonBox, headerText, headerSpacerRight);
+            headerBox = new HBox(buttonBox, headerPaneLeftToolBar, headerText, headerPaneRightToolBar);
             headerBox.setAlignment(Pos.CENTER_LEFT);
             AnchorPane.setTopAnchor(headerBox, 11d);
             AnchorPane.setRightAnchor(headerBox, 11d);
@@ -326,6 +340,25 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     public void setHeaderHeight(final double headerHeight) { this.headerHeight.setValue(headerHeight); }
     public StyleableProperty<Number> headerHeightProperty() { return headerHeight; }
 
+    public void addToToolbarLeft(final MacosToolbarButton toolbarButton) {
+        if (HeaderHeight.STANDARD.getHeight() == getHeaderHeight()) { return; }
+        if (headerPaneLeftToolBar.getChildren().contains(toolbarButton)) { return; }
+        headerPaneLeftToolBar.getChildren().add(toolbarButton);
+    }
+    public void removeFromToolbarLeft(final MacosControl control) {
+        if (headerPaneLeftToolBar.getChildren().contains(control)) { headerPaneLeftToolBar.getChildren().remove(control); }
+    }
+
+    public void addToToolbarRight(final MacosToolbarButton toolbarButton) {
+        if (HeaderHeight.STANDARD.getHeight() == getHeaderHeight()) { return; }
+        if (headerPaneRightToolBar.getChildren().contains(toolbarButton)) { return; }
+        headerPaneRightToolBar.getChildren().add(toolbarButton);
+    }
+    public void removeFromToolbarRight(final MacosControl control) {
+        if (headerPaneRightToolBar.getChildren().contains(control)) { headerPaneRightToolBar.getChildren().remove(control); }
+    }
+
+
     public void dispose() {
         if (null != watchService) {
             try {
@@ -345,6 +378,8 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             minimizeButton.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
             maximizeButton.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
             Helper.getAllNodes(contentPane).stream().filter(node -> node instanceof MacosControl).forEach(node -> ((MacosControl) node).setDark(enable));
+            Helper.getAllNodes(headerPaneLeftToolBar).stream().filter(node -> node instanceof MacosControl).forEach(node -> ((MacosControl) node).setDark(enable));
+            Helper.getAllNodes(headerPaneRightToolBar).stream().filter(node -> node instanceof MacosControl).forEach(node -> ((MacosControl) node).setDark(enable));
         } else {
             contentPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
             Helper.getAllNodes(content).stream().filter(node -> node instanceof MacosControl).forEach(node -> ((MacosControl) node).setDark(enable));
