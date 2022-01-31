@@ -23,6 +23,7 @@ import java.util.List;
 public class Demo3 extends Application {
     private MacosWindow           macosWindow;
     private MacosButton           macosButton;
+    private MacosButton           macosDefaultButton;
     private MacosSwitch           macosSwitch;
     private MacosCheckBox         macosCheckBox;
     private MacosTextField        macosTextField;
@@ -37,12 +38,13 @@ public class Demo3 extends Application {
         System.out.println("Operating System: " + eu.hansolo.toolbox.Helper.getOperatingSystem().getUiString());
         System.out.println("Architecture    : " + eu.hansolo.toolbox.Helper.getArchitecture());
 
-        macosButton       = new MacosButton("Click me");
-        macosSwitch       = new MacosSwitch();
-        macosCheckBox     = new MacosCheckBox("Check me");
-        macosTextField    = new MacosTextField();
-        macosRadioButton1 = new MacosRadioButton("Select me");
-        macosRadioButton2 = new MacosRadioButton("Select me");
+        macosButton        = new MacosButton("Click me");
+        macosDefaultButton = new MacosButton("Default", true);
+        macosSwitch        = new MacosSwitch();
+        macosCheckBox      = new MacosCheckBox("Check me");
+        macosTextField     = new MacosTextField();
+        macosRadioButton1  = new MacosRadioButton("Select me");
+        macosRadioButton2  = new MacosRadioButton("Select me");
         macosSlider1       = new MacosSlider(0, 100, 50);
         macosSlider1.setShowTickMarks(true);
         macosSlider2       = new MacosSlider(0, 100, 50);
@@ -58,7 +60,7 @@ public class Demo3 extends Application {
     @Override public void start(Stage stage) {
         VBox radioBox   = new VBox(10, macosRadioButton1, macosRadioButton2);
         radioBox.setAlignment(Pos.CENTER);
-        VBox controlBox = new VBox(20, macosButton, macosSwitch, macosCheckBox, macosTextField, radioBox, macosSlider1, macosSlider2, macosComboBox);
+        VBox controlBox = new VBox(20, macosButton, macosDefaultButton, macosSwitch, macosCheckBox, macosTextField, radioBox, macosSlider1, macosSlider2, macosComboBox);
         controlBox.setAlignment(Pos.CENTER);
         controlBox.setPadding(new Insets(10));
 

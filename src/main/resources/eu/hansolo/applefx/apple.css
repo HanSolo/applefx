@@ -43,28 +43,46 @@
     -WINDOW-BUTTON-GRAY               : rgb(83, 83, 83);
     -WINDOW-BUTTON-DARK-GRAY          : rgb(52, 53, 53);
 
-    -BLUE-AQUA                        : rgb(0, 122, 255);
-    -BLUE-DARK                        : rgb(10, 132, 255);
-    -BROWN-AQUA                       : rgb(162, 132, 94);
-    -BROWN-DARK                       : rgb(172, 142, 104);
-    -GRAY-AQUA                        : rgb(142, 142, 147);
-    -GRAY-DARK                        : rgb(152, 152, 157);
-    -GREEN-AQUA                       : rgb(40, 205, 65);
-    -GREEN-DARK                       : rgb(50, 215, 75);
-    -INIDIGO-AQUA                     : rgb(88, 86, 214);
-    -INDIGO-DARK                      : rgb(94, 92, 230);
-    -ORANGE-AQUA                      : rgb(255, 149, 0);
-    -ORANGE-DARK                      : rgb(255, 159, 0);
-    -PINK-AQUA                        : rgb(255, 45, 85);
-    -PINK-DARK                        : rgb(255, 55, 95);
-    -PURPLE-AQUA                      : rgb(175, 82, 222);
-    -PURPLE-DARK                      : rgb(191, 90, 242);
-    -RED-AQUA                         : rgb(255, 59, 48);
-    -RED-DARK                         : rgb(255, 69, 58);
-    -TEAL-AQUA                        : rgb(85, 190, 240);
-    -TEAL-DARK                        : rgb(90, 200, 245);
-    -YELLOW-AQUA                      : rgb(255, 204, 0);
-    -YELLOW-DARK                      : rgb(255, 214, 10);
+    -BLUE-AQUA                        : rgb(3, 122, 255);
+    -BLUE-DARK                        : rgb(3, 122, 255);
+    -BLUE-AQUA-HIGHLIGHT              : rgb(129, 172, 240);
+    -BLUE-DARK-HIGHLIGHT              : rgb(29, 104, 151);
+
+    -PURPLE-AQAU                      : rgb(149, 61, 150);
+    -PURPLE-DARK                      : rgb(165, 80, 167);
+    -PURPLE-AQAU-HIGHLIGHT            : rgb(186, 145, 186);
+    -PURPLE-DARK-HIGHLIGHT            : rgb(134, 76, 133);
+
+    -PINK-AQUA                        : rgb(247, 78, 158);
+    -PINK-DARK                        : rgb(247, 78, 158);
+    -PINK-AQUA-HIGHLIGHT              : rgb(237, 152, 189);
+    -PINK-DARK-HIGHLIGHT              : rgb(153, 75, 126);
+
+    -RED-AQUA                         : rgb(247, 56, 62);
+    -RAD-DARK                         : rgb(255, 82, 87);
+    -RED-AQUA-HIGHLIGHT               : rgb(225, 142, 145);
+    -RAD-DARK-HIGHLIGHT               : rgb(153, 77, 80);
+
+    -ORANGE-AQUA                      : rgb(247, 130, 27);
+    -ORANGE-DARK                      : rgb(247, 130, 24);
+    -ORANGE-AQUA-HIGHLIGHT            : rgb(236, 176, 128);
+    -ORANGE-DARK-HIGHLIGHT            : rgb(153, 108, 42);
+
+    -YELLOW-AQUA                      : rgb(255, 199, 38);
+    -YELLOW-DARK                      : rgb(255, 198, 3);
+    -YELLOW-AQUA-HIGHLIGHT            : rgb(240, 210, 135);
+    -YELLOW-DARK-HIGHLIGHT            : rgb(153, 149, 27);
+
+    -GREEN-AQUA                       : rgb(98, 186, 70);
+    -GREEN-DARK                       : rgb(98, 186, 70);
+    -GREEN-AQUA-HIGHLIGHT             : rgb(162, 204, 149);
+    -GREEN-DARK-HIGHLIGHT             : rgb(90, 145, 69);
+
+    -GRAPHITE-AQUA                    : rgb(152, 152, 152);
+    -GRAPHITE-DARK                    : rgb(140, 140, 140);
+    -GRAPHITE-AQUA-HIGHLIGHT          : rgb(153, 153, 157);
+    -GRAPHITE-DARK-HIGHLIGHT          : rgb(120, 118, 118);
+
     -BACKGROUND-AQUA                  : rgb(255, 255, 255);
     -BACKGROUND-DARK                  : rgb(32, 32, 34);
     -TEXT-AQUA                        : rgb(0, 0, 0);
@@ -99,6 +117,7 @@
 
     /* VARIABLE DEFINITIONS */
     -accent-color                 : -BLUE-AQUA;
+    -focus-color                  : -BLUE-AQUA-HIGHLIGHT;
     -background-color             : -BACKGROUND-AQUA;
     -pane-background-color        : -PANE-BACKGROUND-AQUA;
     -text-color                   : -TEXT-AQUA;
@@ -107,6 +126,7 @@
     -control-border-color         : -CONTROL-BORDER-AQUA;
 
     -accent-color-dark            : -BLUE-DARK;
+    -focus-color-dark             : -BLUE-DARK-HIGHLIGHT;
     -background-color-dark        : -BACKGROUND-DARK;
     -pane-background-color-dark   : -PANE-BACKGROUND-DARK;
     -text-color-dark              : -TEXT-DARK;
@@ -517,11 +537,12 @@
 
 /* Button */
 .macos-button,
-.macos-button:focused {
+.macos-button:focused,
+.macos-button:window-focus-lost {
     -fx-pref-height            : 20;
-    -fx-background-insets      : 0 0 0 0, 1 1 1 1;
-    -fx-background-color       : -LIGHT-CTRL-BACKGROUND, -WHITE;
-    -fx-background-radius      : 5px;
+    -fx-background-insets      : 0, 0.5;
+    -fx-background-color       : linear-gradient(to bottom, rgb(211, 210, 210) 0%, rgb(183, 182, 182) 100%), -WHITE;
+    -fx-background-radius      : 5, 4;
     -fx-padding                : 2 10 2 10;
     -fx-text-fill              : -text-color;
     -fx-alignment              : CENTER;
@@ -529,13 +550,36 @@
     -fx-font-family            : 'SF Pro Regular';
     -fx-font-size              : 13px;
 }
+.macos-button:def {
+    -fx-pref-height      : 20;
+    -fx-background-color : derive(-accent-color, 10%), linear-gradient(to bottom, -accent-color 0%, derive(-accent-color, -20%) 100%);
+    -fx-background-insets: 0, 0.5;
+    -fx-background-radius: 5, 4;
+    -fx-padding          : 2 10 2 10;
+    -fx-text-fill        : -text-color-dark;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+}
+.macos-button:def:window-focus-lost {
+    -fx-background-color       : linear-gradient(to bottom, rgb(211, 210, 210) 0%, rgb(183, 182, 182) 100%), -WHITE;
+}
 .macos-button:armed {
     -fx-pref-height      : 20;
-    -fx-background-color : derive(-accent-color, 30%), -accent-color;
-    -fx-background-insets: 0 0 0 0, 1 0 0 0;
-    -fx-background-radius: 5px;
+    -fx-background-color : linear-gradient(to bottom, rgb(183, 182, 182) 0%, rgb(153, 152, 152) 100%), rgb(240, 240, 240);
+    -fx-background-insets: 0, 0.5;
+    -fx-background-radius: 5, 4;
     -fx-padding          : 2 10 2 10;
     -fx-text-fill        : -text-color;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+}
+.macos-button:def:armed {
+    -fx-pref-height      : 20;
+    -fx-background-color : -accent-color, linear-gradient(to bottom, derive(-accent-color, -10%) 0%, derive(-accent-color, -30%) 100%);
+    -fx-background-insets: 0, 0.5;
+    -fx-background-radius: 5, 4;
+    -fx-padding          : 2 10 2 10;
+    -fx-text-fill        : -text-color-dark;
     -fx-alignment        : CENTER;
     -fx-content-display  : LEFT;
 }
@@ -544,11 +588,13 @@
     -fx-text-fill       : -light-disabled-text-color;
 }
 
-.macos-button:dark {
+.macos-button:dark,
+.macos-button:dark:focused,
+.macos-button:dark:window-focus-lost {
     -fx-pref-height      : 20;
-    -fx-background-color : derive(-control-background-color-dark, 30%), -control-background-color-dark;
-    -fx-background-insets: 0 0 0 0, 1 0 0 0;
-    -fx-background-radius: 5px;
+    -fx-background-color : linear-gradient(to bottom, rgb(136, 132, 132) 0%, rgb(26, 20, 21) 100%), -control-background-color-dark;
+    -fx-background-insets: 0, 0.5 0 0 0;
+    -fx-background-radius: 5, 4;
     -fx-padding          : 2 10 2 10;
     -fx-text-fill        : -text-color-dark;
     -fx-alignment        : CENTER;
@@ -558,9 +604,32 @@
 }
 .macos-button:dark:armed {
     -fx-pref-height      : 20;
-    -fx-background-color : derive(-accent-color-dark, 30%), -accent-color-dark;
-    -fx-background-insets: 0 0 0 0, 1 0 0 0;
-    -fx-background-radius: 5px;
+    -fx-background-color : derive(-control-background-color-dark, +10%), derive(-control-background-color-dark, +20%);
+    -fx-background-insets: 0, 0.5 0 0 0;
+    -fx-background-radius: 5, 4;
+    -fx-padding          : 2 10 2 10;
+    -fx-text-fill        : -text-color-dark;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+}
+.macos-button:dark:def {
+    -fx-pref-height      : 20;
+    -fx-background-color : derive(-accent-color-dark, 10%), linear-gradient(to bottom, -accent-color-dark 0%, derive(-accent-color-dark, -20%) 100%);
+    -fx-background-insets: 0, 0.5 0 0 0;
+    -fx-background-radius: 5, 4;
+    -fx-padding          : 2 10 2 10;
+    -fx-text-fill        : -text-color-dark;
+    -fx-alignment        : CENTER;
+    -fx-content-display  : LEFT;
+}
+.macos-button:dark:def:window-focus-lost {
+    -fx-background-color : linear-gradient(to bottom, rgb(136, 132, 132) 0%, rgb(26, 20, 21) 100%), -control-background-color-dark;
+}
+.macos-button:dark:def:armed {
+    -fx-pref-height      : 20;
+    -fx-background-color : derive(-accent-color-dark, 20%), linear-gradient(to bottom, derive(-accent-color-dark, 10%) 0%, derive(-accent-color-dark, -10%) 100%);
+    -fx-background-insets: 0, 0.5 0 0 0;
+    -fx-background-radius: 5, 4;
     -fx-padding          : 2 10 2 10;
     -fx-text-fill        : -text-color-dark;
     -fx-alignment        : CENTER;
@@ -704,8 +773,8 @@
 }
 
 .macos-slider:dark {
-    -thumb-color        : -GRAY-DARK;
-    -thumb-border-color : -GRAY-DARK;
+    -thumb-color        : -GRAPHITE-DARK;
+    -thumb-border-color : -GRAPHITE-DARK;
     -track-fill         : rgba(255, 255, 255, 0.1);
     -tick-fill          : rgba(255, 255, 255, 0.15);
     -track-progress-fill: -accent-color-dark;
@@ -736,7 +805,7 @@
 /* TextField */
 .macos-text-field {
     -fx-control-inner-background: rgb(242, 242, 242);
-    -fx-focus-color             : -accent-color;
+    -fx-focus-color             : -focus-color; /*-accent-color;*/
     -fx-text-fill               : black;
     -fx-highlight-fill          : derive(-fx-control-inner-background,-20%);
     -fx-highlight-text-fill     : -fx-text-inner-color;
@@ -749,18 +818,19 @@
     -fx-padding                 : 4 7 4 7;
 }
 .macos-text-field:focused {
-    -fx-faint-focus-color  : transparent;
+    -fx-faint-focus-color  : -focus-color;
     -fx-highlight-fill     : -accent-color;
     -fx-highlight-text-fill: white;
-    -fx-background-color   : -fx-focus-color, -fx-control-inner-background, -fx-faint-focus-color, linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
-    -fx-background-insets  : -0.5, 1, -1.4, 3;
-    -fx-background-radius  : 0, 0, 0;
+    /*-fx-background-color   : -fx-focus-color, -fx-focus-color, -fx-faint-focus-color, linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);*/
+    -fx-background-color   : -fx-faint-focus-color, -fx-faint-focus-color, -fx-faint-focus-color, linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-insets  : -0.5, 0, 1, 3;
+    -fx-background-radius  : 4, 3, 2, 0;
     -fx-prompt-text-fill   : transparent;
 }
 
 .macos-text-field:dark {
     -fx-control-inner-background: -control-background-color-dark;
-    -fx-focus-color             : -accent-color-dark;
+    -fx-focus-color             : -focus-color-dark; /*-accent-color-dark;*/
     -fx-text-fill               : -text-color-dark;
     -fx-highlight-fill          : derive(-fx-control-inner-background,+20%);
     -fx-highlight-text-fill     : -fx-text-inner-color;
@@ -772,9 +842,10 @@
     -fx-padding                 : 0.333333em 0.583em 0.333333em 0.583em; /* 4 7 4 7 */
 }
 .macos-text-field:dark:focused {
+    -fx-faint-focus-color  : -focus-color-dark;
     -fx-highlight-fill     : -accent-color-dark;
     -fx-highlight-text-fill: -text-color-dark;
-    -fx-background-color   : -fx-focus-color, -fx-control-inner-background, -fx-faint-focus-color, linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-color   : -fx-faint-focus-color, -fx-faint-focus-color, -fx-faint-focus-color, linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets  : -0.2, 1, -1.4, 3;
     -fx-background-radius  : 3, 2, 4, 0;
     -fx-prompt-text-fill   : transparent;
@@ -1180,6 +1251,10 @@
 
 .macos-window-button .circle {
     -fx-stroke-width: 0.5px;
+    -fx-effect      : innershadow(gaussian, rgba(0, 0, 0, 0.45), 0.5, 0, 0, 0);
+}
+.macos-window-button:dark .circle {
+    -fx-effect: innershadow(gaussian, rgba(255, 255, 255, 0.25), 0.5, 0, 0, 0);
 }
 
 .macos-window-button:close .circle,
@@ -1271,35 +1346,45 @@
 }
 
 .macos-window-button:hovered:close .symbol {
-    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
-    -fx-border-color    : -WINDOW-BUTTON-DARK-GRAY;
+    -fx-background-color: rgb(153, 1, 0);
+    -fx-border-color    : rgb(153, 1, 0);
+    -fx-position-shape  : true;
     -fx-scale-shape     : false;
     -fx-shape           : "M6.001,5.429l2.554,-2.555l0.571,0.571l-2.555,2.554l2.55,2.55l-0.572,0.572l-2.55,-2.55l-2.554,2.555l-0.571,-0.571l2.555,-2.554l-2.55,-2.55l0.572,-0.572l2.55,2.55Z";
 }
 .macos-window-button:hovered:minimize .symbol {
-    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-background-color: rgb(152, 86, 1);
+    -fx-border-color    : rgb(152, 86, 1);
+    -fx-position-shape  : true;
     -fx-scale-shape     : false;
     -fx-shape           : "M2.0,5.5l8,0l0,1l-8,0l0,-1Z";
 }
 .macos-window-button:hovered:maximize .symbol {
-    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-background-color: rgb(0, 97, 0);
+    -fx-border-color    : rgb(0, 97, 0);
+    -fx-position-shape  : true;
     -fx-scale-shape     : false;
     -fx-shape           : "M2.696,2.582l4.545,0.656l-3.889,3.889l-0.656,-4.545ZM9.533,9.418l-0.656,-4.545l-3.889,3.889l4.545,0.656Z";
 }
 
 .macos-window-button:hovered:close .symbol-small {
-    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
-    -fx-border-color    : -WINDOW-BUTTON-DARK-GRAY;
+    -fx-background-color: rgb(152, 86, 1);
+    -fx-border-color    : rgb(152, 86, 1);
+    -fx-position-shape  : true;
     -fx-scale-shape     : false;
     -fx-shape           : "M6.25,5.352l-2.368,-2.367l-0.897,0.897l2.367,2.368l-2.367,2.368l0.897,0.897l2.368,-2.367l2.368,2.367l0.897,-0.897l-2.367,-2.368l2.367,-2.368l-0.897,-0.897l-2.368,2.367Z";
 }
 .macos-window-button:hovered:minimize .symbol-small {
-    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-background-color: rgb(152, 86, 1);
+    -fx-border-color    : rgb(152, 86, 1);
+    -fx-position-shape  : true;
     -fx-scale-shape     : false;
     -fx-shape           : "M1,2h8v2h-8v-2Z";
 }
 .macos-window-button:hovered:maximize .symbol-small {
-    -fx-background-color: -WINDOW-BUTTON-DARK-GRAY;
+    -fx-background-color: rgb(0, 97, 0);
+    -fx-border-color    : rgb(0, 97, 0);
+    -fx-position-shape  : true;
     -fx-scale-shape     : false;
     -fx-shape           : "M7.159,7.059L6.667,3.648L3.748,6.566L7.159,7.059ZM2.028,1.928L5.439,2.42L2.521,5.339L2.028,1.928Z";
 }

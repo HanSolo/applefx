@@ -1,5 +1,6 @@
 package eu.hansolo.applefx.tools;
 
+import eu.hansolo.toolboxfx.HelperFX;
 import javafx.scene.paint.Color;
 
 import java.util.Arrays;
@@ -7,15 +8,15 @@ import java.util.List;
 
 
 public enum MacosAccentColor {
-    MULTI_COLOR(null, MacosSystemColor.BLUE.colorAqua, Color.web("#b3d7ff"), Color.web("#7daaf0"), MacosSystemColor.BLUE.colorDark, Color.web("#3f638b"), Color.web("#296e99")),
-    BLUE(4, MacosSystemColor.BLUE.colorAqua, Color.web("#b3d7ff"), Color.web("#7daaf0"), MacosSystemColor.BLUE.colorDark, Color.web("#3f638b"), Color.web("#296e99")),
-    PURPLE(5, MacosSystemColor.PURPLE.colorAqua, Color.web("#dfc5df"), Color.web("#b98ab8"), MacosSystemColor.PURPLE.colorDark, Color.web("#6f566f"), Color.web("#895687")),
-    PINK(6, MacosSystemColor.PINK.colorAqua, Color.web("#fccae2"), Color.web("#eb93bc"), MacosSystemColor.PINK.colorDark, Color.web("#87566d"), Color.web("#995582")),
-    RED(0, MacosSystemColor.RED.colorAqua, Color.web("#f5c3c5"), Color.web("#df878b"), MacosSystemColor.RED.colorDark, Color.web("#8b5758"), Color.web("#99585a")),
-    ORANGE(1, MacosSystemColor.ORANGE.colorAqua, Color.web("#fcd9bb"), Color.web("#ecae7d"), MacosSystemColor.ORANGE.colorDark, Color.web("#886547"), Color.web("#9a7336")),
-    YELLOW(2, MacosSystemColor.YELLOW.colorAqua, Color.web("#feeebe"), Color.web("#f1d283"), MacosSystemColor.YELLOW.colorDark, Color.web("#8b7a40"), Color.web("#9b982b")),
-    GREEN(3, MacosSystemColor.GREEN.colorAqua, Color.web("#d0eac7"), Color.web("#9dcb8f"), MacosSystemColor.GREEN.colorDark, Color.web("#5c7653"), Color.web("#629450")),
-    GRAPHITE(-1, MacosSystemColor.GRAY.colorAqua, Color.web("#e0e0e0"), Color.web("#c4c2c4"), MacosSystemColor.GRAY.colorDark, Color.web("#696665"), Color.web("#7d7b7a"));
+    MULTI_COLOR(null, MacosSystemColor.BLUE.aqua, Color.web("#b3d7ff"), HelperFX.getColorWithOpacity(MacosSystemColor.BLUE.aqua, 0.25), MacosSystemColor.BLUE.dark, Color.web("#3f638b"), HelperFX.getColorWithOpacity(MacosSystemColor.BLUE.dark, 0.25)),
+    BLUE(4, MacosSystemColor.BLUE.aqua, Color.web("#b3d7ff"), HelperFX.getColorWithOpacity(MacosSystemColor.BLUE.aqua, 0.25), MacosSystemColor.BLUE.dark, Color.web("#3f638b"), HelperFX.getColorWithOpacity(MacosSystemColor.BLUE.dark, 0.25)),
+    PURPLE(5, MacosSystemColor.PURPLE.aqua, Color.web("#dfc5df"), HelperFX.getColorWithOpacity(MacosSystemColor.PURPLE.aqua, 0.25), MacosSystemColor.PURPLE.dark, Color.web("#6f566f"), HelperFX.getColorWithOpacity(MacosSystemColor.PURPLE.dark, 0.25)),
+    PINK(6, MacosSystemColor.PINK.aqua, Color.web("#fccae2"), HelperFX.getColorWithOpacity(MacosSystemColor.PINK.aqua, 0.25), MacosSystemColor.PINK.dark, Color.web("#87566d"), HelperFX.getColorWithOpacity(MacosSystemColor.PINK.dark, 0.25)),
+    RED(0, MacosSystemColor.RED.aqua, Color.web("#f5c3c5"), HelperFX.getColorWithOpacity(MacosSystemColor.RED.aqua, 0.25), MacosSystemColor.RED.dark, Color.web("#8b5758"), HelperFX.getColorWithOpacity(MacosSystemColor.RED.dark, 0.25)),
+    ORANGE(1, MacosSystemColor.ORANGE.aqua, Color.web("#fcd9bb"), HelperFX.getColorWithOpacity(MacosSystemColor.ORANGE.aqua, 0.25), MacosSystemColor.ORANGE.dark, Color.web("#886547"), HelperFX.getColorWithOpacity(MacosSystemColor.ORANGE.dark, 0.25)),
+    YELLOW(2, MacosSystemColor.YELLOW.aqua, Color.web("#feeebe"), HelperFX.getColorWithOpacity(MacosSystemColor.YELLOW.aqua, 0.25), MacosSystemColor.YELLOW.dark, Color.web("#8b7a40"), HelperFX.getColorWithOpacity(MacosSystemColor.YELLOW.dark, 0.25)),
+    GREEN(3, MacosSystemColor.GREEN.aqua, Color.web("#d0eac7"), HelperFX.getColorWithOpacity(MacosSystemColor.GREEN.aqua, 0.25), MacosSystemColor.GREEN.dark, Color.web("#5c7653"), HelperFX.getColorWithOpacity(MacosSystemColor.GREEN.dark, 0.25)),
+    GRAPHITE(-1, MacosSystemColor.GRAPHITE.aqua, Color.web("#e0e0e0"), HelperFX.getColorWithOpacity(MacosSystemColor.GRAPHITE.aqua, 0.25), MacosSystemColor.GRAPHITE.dark, Color.web("#696665"), HelperFX.getColorWithOpacity(MacosSystemColor.GRAPHITE.dark, 0.25));
 
     final Integer key;
     final Color   colorAqua;
@@ -60,6 +61,19 @@ public enum MacosAccentColor {
         switch(this) {
             case MULTI_COLOR -> { return "-BLUE-DARK"; }
             default          -> { return "-" + name() + "-DARK"; }
+        }
+    }
+
+    public String getAquaHighlightStyleClass() {
+        switch(this) {
+            case MULTI_COLOR -> { return "-BLUE-AQUA-HIGHLIGHT"; }
+            default          -> { return "-" + name() + "-AQUA-HIGHLIGHT"; }
+        }
+    }
+    public String getDarkHighlightStyleClass() {
+        switch(this) {
+            case MULTI_COLOR -> { return "-BLUE-DARK-HIGHLIGHT"; }
+            default          -> { return "-" + name() + "-DARK-HIGHLIGHT"; }
         }
     }
 

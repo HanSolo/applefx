@@ -395,7 +395,7 @@ public class MacosSwitch extends Region implements MacosControl {
 
 
     private void animateToSelect() {
-        KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.getColorDark() : MacosSystemColor.CTR_BACKGROUND.getColorAqua(), Interpolator.EASE_BOTH);
+        KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
         KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
         KeyValue kvKnobXStart          = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMinX() + height * 0.1, Interpolator.EASE_BOTH);
         KeyValue kvKnobXEnd            = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMaxX() - height * 0.9, Interpolator.EASE_BOTH);
@@ -413,7 +413,7 @@ public class MacosSwitch extends Region implements MacosControl {
     }
     private void animateToDeselect() {
         KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
-        KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.getColorDark() : MacosSystemColor.CTR_BACKGROUND.getColorAqua(), Interpolator.EASE_BOTH);
+        KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
         KeyValue kvKnobXStart          = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMaxX() - height * 0.9, Interpolator.EASE_BOTH);
         KeyValue kvKnobXEnd            = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMinX() + height * 0.1, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityStart     = new KeyValue(one.opacityProperty(), one.getOpacity(), Interpolator.EASE_BOTH);

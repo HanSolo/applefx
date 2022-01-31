@@ -4,9 +4,6 @@ import eu.hansolo.applefx.tools.Helper;
 import eu.hansolo.applefx.tools.MacosAccentColor;
 import eu.hansolo.applefx.tools.ResizeHelper;
 import eu.hansolo.jdktools.OperatingSystem;
-import eu.hansolo.toolbox.evt.EvtType;
-import eu.hansolo.toolboxfx.evt.type.BoundsEvt;
-import eu.hansolo.toolboxfx.geom.Bounds;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -14,6 +11,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.css.CssMetaData;
 import javafx.css.PseudoClass;
 import javafx.css.Styleable;
@@ -24,7 +22,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.ComboBoxBase;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -84,6 +81,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     private              BooleanBinding                        showing;
     private              WatchService                          watchService;
     private              BooleanProperty                       dark;
+    private              BooleanProperty                       windowFocusLost;
     private              ObjectProperty<MacosAccentColor>      accentColor;
     private              StyleableProperty<Number>             headerHeight;
     private              Stage                                 stage;
@@ -112,20 +110,24 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     public MacosWindow(final Stage stage, final Parent content, final boolean darkMode, final MacosAccentColor accentColor, final Style style) {
         if (null == stage) { throw new IllegalArgumentException("stage cannot be null"); }
         if (null == content) { throw new IllegalArgumentException("content cannot be null"); }
-        this.stage        = stage;
-        this.content      = content;
-        this.dark         = new BooleanPropertyBase(darkMode) {
+        this.stage           = stage;
+        this.content         = content;
+        this.dark            = new BooleanPropertyBase(darkMode) {
             @Override protected void invalidated() { pseudoClassStateChanged(DARK_PSEUDO_CLASS, get()); }
             @Override public Object getBean() { return MacosWindow.this; }
             @Override public String getName() { return "dark"; }
         };
-        this.accentColor  = new ObjectPropertyBase<>(accentColor) {
+        this.windowFocusLost = new BooleanPropertyBase() {
+            @Override public Object getBean() { return MacosWindow.this; }
+            @Override public String getName() { return "windowFocusLost"; }
+        };
+        this.accentColor     = new ObjectPropertyBase<>(accentColor) {
                 @Override protected void invalidated() { setAllAccentColors(get()); }
                 @Override public Object getBean() { return MacosWindow.this; }
                 @Override public String getName() { return "accentColor"; }
             };
-        this.decorated    = Style.DECORATED == style;
-        this.headerHeight = new StyleableObjectProperty<>() {
+        this.decorated       = Style.DECORATED == style;
+        this.headerHeight    = new StyleableObjectProperty<>() {
             @Override protected void invalidated() { headerPane.setStyle("-header-height: " + get() + ";"); }
             @Override public Object getBean() { return MacosWindow.this; }
             @Override public String getName() { return "headerHeight"; }
@@ -264,6 +266,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             stage.focusedProperty().addListener((o, ov, nv) -> {
                 setEffect(nv ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
                 headerPane.pseudoClassStateChanged(WINDOW_FOCUS_LOST_PSEUDO_CLASS, !nv);
+                windowFocusLost.set(!nv);
                 setAllWindowFocusLost(!nv);
                 closeButton.setDisable(!nv);
                 minimizeButton.setDisable(!nv);
@@ -308,6 +311,9 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     @Override public final void setDark(final boolean dark) { this.dark.set(dark); }
     @Override public final BooleanProperty darkProperty() { return dark; }
 
+    public final boolean isWindowFocusLost() { return windowFocusLost.get(); }
+    public ReadOnlyBooleanProperty windowFocusLostProperty() { return windowFocusLost; }
+
     @Override public MacosAccentColor getAccentColor() { return accentColor.get(); }
     @Override public void setAccentColor(final MacosAccentColor accentColor) { this.accentColor.set(accentColor); }
     @Override public ObjectProperty<MacosAccentColor> accentColorProperty() { return accentColor; }
@@ -343,7 +349,6 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             contentPane.pseudoClassStateChanged(DARK_PSEUDO_CLASS, enable);
             Helper.getAllNodes(content).stream().filter(node -> node instanceof MacosControl).forEach(node -> ((MacosControl) node).setDark(enable));
         }
-
     }
 
     private void setAllAccentColors(final MacosAccentColor accentColor) {
@@ -355,6 +360,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
         allNodes.stream().filter(node -> node instanceof MacosRadioButton).map(node -> (MacosRadioButton) node).forEach(macosRadioButton -> macosRadioButton.setAccentColor(accentColor));
         allNodes.stream().filter(node -> node instanceof MacosComboBox).map(node -> (MacosComboBox) node).forEach(macosComboBox -> macosComboBox.setAccentColor(accentColor));
         allNodes.stream().filter(node -> node instanceof MacosSlider).map(node -> (MacosSlider) node).forEach(macosSlider -> macosSlider.setAccentColor(accentColor));
+        allNodes.stream().filter(node -> node instanceof MacosTextField).map(node -> (MacosTextField) node).forEach(macosTextField -> macosTextField.setAccentColor(accentColor));
     }
 
     private void setAllWindowFocusLost(final boolean windowFocusLost) {

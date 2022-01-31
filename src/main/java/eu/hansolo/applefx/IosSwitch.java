@@ -72,7 +72,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class IosSwitch extends Region {
     public static final  double                                  MIN_DURATION           = 10;
     public static final  double                                  MAX_DURATION           = 500;
-    public static final  Color                                   DEFAULT_SELECTED_COLOR = MacosSystemColor.GREEN.getColorAqua();
+    public static final  Color                                   DEFAULT_SELECTED_COLOR = MacosSystemColor.GREEN.aqua();
     private static final double                                  PREFERRED_WIDTH        = 38;
     private static final double                                  PREFERRED_HEIGHT       = 23;
     private static final double                                  MINIMUM_WIDTH          = 20;

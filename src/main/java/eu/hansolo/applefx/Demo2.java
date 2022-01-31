@@ -50,7 +50,7 @@ public class Demo2 extends Application {
         macosButton = new MacosButton("Test");
 
         macosSwitch = MacosSwitchBuilder.create()
-                                        .selectedColor(MacosSystemColor.PINK.getColorDark())
+                                        .selectedColor(MacosSystemColor.PINK.dark())
                                         .selected(true)
                                         //.showOnOffText(true)
                                         //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
@@ -100,7 +100,7 @@ public class Demo2 extends Application {
 
         macosSwitchDark = MacosSwitchBuilder.create()
                                             .dark(true)
-                                            .selectedColor(MacosSystemColor.PINK.getColorDark())
+                                            .selectedColor(MacosSystemColor.PINK.dark())
                                             .selected(true)
                                             //.showOnOffText(true)
                                             //.selectedColor(MacOSSystemColor.GREEN.getColorAqua())
@@ -164,18 +164,18 @@ public class Demo2 extends Application {
         VBox pane = new VBox(10, macosScrollPane);
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);
-        pane.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.getColorAqua(), CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.aqua(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         VBox paneDark = new VBox(10, macosScrollPaneDark);
         paneDark.setPadding(new Insets(20));
         paneDark.setAlignment(Pos.CENTER);
-        paneDark.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
+        paneDark.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.dark(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         HBox mainPane = new HBox(pane, paneDark);
 
         mainPane.setPadding(new Insets(20));
         mainPane.setAlignment(Pos.CENTER);
-        mainPane.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.getColorDark(), CornerRadii.EMPTY, Insets.EMPTY)));
+        mainPane.setBackground(new Background(new BackgroundFill(MacosSystemColor.BACKGROUND.dark(), CornerRadii.EMPTY, Insets.EMPTY)));
 
         Scene scene = new Scene(mainPane);
 

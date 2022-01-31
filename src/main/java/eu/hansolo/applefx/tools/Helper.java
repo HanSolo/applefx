@@ -35,14 +35,14 @@ import static eu.hansolo.toolbox.Helper.getOperatingSystem;
 
 
 public class Helper {
-    public static final Map<Integer, Color[]> MACOS_ACCENT_COLOR_MAP = Map.of(-1, new Color[] { MacosSystemColor.GRAY.colorAqua, MacosSystemColor.GRAY.colorDark },
-                                                                              0, new Color[]  { MacosSystemColor.RED.colorAqua, MacosSystemColor.RED.colorDark },
-                                                                              1, new Color[]  { MacosSystemColor.ORANGE.colorAqua, MacosSystemColor.ORANGE.colorDark },
-                                                                              2, new Color[]  { MacosSystemColor.YELLOW.colorAqua, MacosSystemColor.YELLOW.colorDark },
-                                                                              3, new Color[]  { MacosSystemColor.GREEN.colorAqua, MacosSystemColor.GREEN.colorDark },
-                                                                              4, new Color[]  { MacosSystemColor.BLUE.colorAqua, MacosSystemColor.BLUE.colorDark },
-                                                                              5, new Color[]  { MacosSystemColor.PURPLE.colorAqua, MacosSystemColor.PURPLE.colorDark },
-                                                                              6, new Color[]  { MacosSystemColor.PINK.colorAqua, MacosSystemColor.PINK.colorDark });
+    public static final Map<Integer, Color[]> MACOS_ACCENT_COLOR_MAP = Map.of(-1, new Color[] { MacosSystemColor.GRAPHITE.aqua, MacosSystemColor.GRAPHITE.dark },
+                                                                              0, new Color[]  { MacosSystemColor.RED.aqua, MacosSystemColor.RED.dark },
+                                                                              1, new Color[]  { MacosSystemColor.ORANGE.aqua, MacosSystemColor.ORANGE.dark },
+                                                                              2, new Color[]  { MacosSystemColor.YELLOW.aqua, MacosSystemColor.YELLOW.dark },
+                                                                              3, new Color[]  { MacosSystemColor.GREEN.aqua, MacosSystemColor.GREEN.dark },
+                                                                              4, new Color[]  { MacosSystemColor.BLUE.aqua, MacosSystemColor.BLUE.dark },
+                                                                              5, new Color[]  { MacosSystemColor.PURPLE.aqua, MacosSystemColor.PURPLE.dark },
+                                                                              6, new Color[]  { MacosSystemColor.PINK.aqua, MacosSystemColor.PINK.dark });
 
     private static final String   REGQUERY_UTIL      = "reg query ";
     private static final String   REGDWORD_TOKEN     = "REG_DWORD";

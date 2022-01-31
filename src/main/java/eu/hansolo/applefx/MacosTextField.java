@@ -66,7 +66,15 @@ public class MacosTextField extends TextField implements MacosControlWithAccentC
     @Override public void setAccentColor(final MacosAccentColor accentColor) {
         if (null == this.accentColor) {
             _accentColor = accentColor;
-            setStyle(isDark() ? new StringBuilder("-fx-focus-color: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-fx-focus-color: ").append(accentColor.getDarkStyleClass()).append(";").toString());
+            String style;
+            if (isDark()) {
+                style = new StringBuilder().append("-fx-focus-color: ").append(accentColor.getDarkStyleClass()).append(";")
+                                           .append("-focus-color-dark: ").append(accentColor.getDarkHighlightStyleClass()).append(";").toString();
+            } else {
+                style = new StringBuilder().append("-fx-focus-color: ").append(accentColor.getAquaStyleClass()).append(";")
+                                           .append("-focus-color: ").append(accentColor.getAquaHighlightStyleClass()).append(";").toString();
+            }
+            setStyle(style);
         } else {
             this.accentColor.set(accentColor);
         }
@@ -74,7 +82,17 @@ public class MacosTextField extends TextField implements MacosControlWithAccentC
     @Override public ObjectProperty<MacosAccentColor> accentColorProperty() {
         if (null == accentColor) {
             accentColor = new ObjectPropertyBase<>(_accentColor) {
-                @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-fx-focus-color: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-fx-focus-color: ").append(get().getDarkStyleClass()).append(";").toString()); }
+                @Override protected void invalidated() {
+                    String style;
+                    if (isDark()) {
+                        style = new StringBuilder().append("-fx-focus-color: ").append(get().getDarkStyleClass()).append(";")
+                                                   .append("-focus-color-dark: ").append(get().getDarkHighlightStyleClass()).append(";").toString();
+                    } else {
+                        style = new StringBuilder().append("-fx-focus-color: ").append(get().getAquaStyleClass()).append(";")
+                                                   .append("-focus-color: ").append(get().getAquaHighlightStyleClass()).append(";").toString();
+                    }
+                    setStyle(style);
+                }
                 @Override public Object getBean() { return MacosTextField.this; }
                 @Override public String getName() { return "accentColor"; }
             };

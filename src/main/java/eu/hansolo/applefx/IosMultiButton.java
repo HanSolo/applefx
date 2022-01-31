@@ -62,7 +62,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class IosMultiButton extends Region {
     public enum Type { CHECKBOX, ADD, DELETE, CHECK_MARK, DOT, SMALL_DOT, INFO, PLUS, FORWARD }
 
-    public static final  Color                                    DEFAULT_SELECTED_COLOR  = MacosSystemColor.BLUE.getColorAqua();
+    public static final  Color                                    DEFAULT_SELECTED_COLOR  = MacosSystemColor.BLUE.aqua();
     private static final double                                   PREFERRED_WIDTH         = 22;
     private static final double                                   PREFERRED_HEIGHT        = 22;
     private static final double                                   MINIMUM_WIDTH           = 11;

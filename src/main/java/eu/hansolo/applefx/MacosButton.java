@@ -28,9 +28,12 @@ import javafx.scene.control.Button;
 
 
 public class MacosButton extends Button implements MacosControlWithAccentColor {
-    private static final PseudoClass                      DARK_PSEUDO_CLASS = PseudoClass.getPseudoClass("dark");
+    private static final PseudoClass                      DARK_PSEUDO_CLASS    = PseudoClass.getPseudoClass("dark");
+    private static final PseudoClass                      DEFAULT_PSEUDO_CLASS = PseudoClass.getPseudoClass("def");
     private              boolean                          _dark;
     private              BooleanProperty                  dark;
+    private              boolean                          _def;
+    private              BooleanProperty                  def;
     private              MacosAccentColor                 _accentColor;
     private              ObjectProperty<MacosAccentColor> accentColor;
 
@@ -38,23 +41,29 @@ public class MacosButton extends Button implements MacosControlWithAccentColor {
     // ******************** Constructors **************************************
     public MacosButton() {
         super();
-        init();
+        init(false);
     }
     public MacosButton(final String text) {
         super(text);
-        init();
+        init(false);
     }
-    public MacosButton(final String text, final Node graphic) {
+    public MacosButton(final String text, final boolean isDefault) {
+        super(text);
+        init(true);
+    }
+    public MacosButton(final String text, final Node graphic, final boolean isDefault) {
         super(text, graphic);
-        init();
+        init(isDefault);
     }
 
 
     // ******************** Initialization ************************************
-    private void init() {
+    private void init(final boolean isDefault) {
         getStyleClass().add("macos-button");
         _dark        = false;
+        _def         = isDefault;
         _accentColor = Helper.getMacosAccentColor();
+        pseudoClassStateChanged(DEFAULT_PSEUDO_CLASS, isDefault);
     }
 
 
@@ -81,6 +90,30 @@ public class MacosButton extends Button implements MacosControlWithAccentColor {
             };
         }
         return dark;
+    }
+
+    public final boolean isDefault() {
+        return null == def ? _def : def.get();
+    }
+    public final void setDefault(final boolean def) {
+        if (null == this.def) {
+            _def = def;
+            pseudoClassStateChanged(DEFAULT_PSEUDO_CLASS, def);
+        } else {
+            this.def.set(def);
+        }
+    }
+    public final BooleanProperty defaultProperty() {
+        if (null == def) {
+            def = new BooleanPropertyBase() {
+                @Override protected void invalidated() {
+                    pseudoClassStateChanged(DEFAULT_PSEUDO_CLASS, get());
+                }
+                @Override public Object getBean() { return MacosButton.this; }
+                @Override public String getName() { return "default"; }
+            };
+        }
+        return def;
     }
 
     @Override public MacosAccentColor getAccentColor() { return null == accentColor ? _accentColor : accentColor.get(); }
