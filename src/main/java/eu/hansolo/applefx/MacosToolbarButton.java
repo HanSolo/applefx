@@ -77,6 +77,12 @@ public class MacosToolbarButton extends Button implements MacosControl {
         return dark;
     }
 
+    public void setSvgPath(final String svgPath) {
+        if (null != svgPath && !svgPath.isEmpty()) {
+            icon.setStyle("-shape: \"" + svgPath + "\";" );
+        }
+    }
+
 
     // ******************** Style related *************************************
     @Override public String getUserAgentStylesheet() { return MacosButton.class.getResource("apple.css").toExternalForm(); }

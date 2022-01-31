@@ -172,10 +172,12 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             headerPaneLeftToolBar = new HBox(5);
             headerPaneLeftToolBar.setPrefWidth(0);
             headerPaneLeftToolBar.setVisible(false);
+            headerPaneLeftToolBar.setAlignment(Pos.CENTER_LEFT);
 
             headerPaneRightToolBar = new HBox(5);
             headerPaneRightToolBar.setPrefWidth(0);
             headerPaneRightToolBar.setVisible(false);
+            headerPaneRightToolBar.setAlignment(Pos.CENTER_RIGHT);
 
             HBox.setHgrow(closeButton, Priority.NEVER);
             HBox.setHgrow(minimizeButton, Priority.NEVER);

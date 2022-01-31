@@ -75,7 +75,7 @@ public class Demo3 extends Application {
         pane.setPadding(new Insets(0));
 
         macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor(), Style.DECORATED);
-        macosWindow.setHeaderHeight(HeaderHeight.STANDARD);
+        macosWindow.setHeaderHeight(HeaderHeight.DOUBLE);
         macosWindow.addToToolbarLeft(macosToolbarButtonBack);
         macosWindow.addToToolbarLeft(macosToolbarButtonForth);
 
