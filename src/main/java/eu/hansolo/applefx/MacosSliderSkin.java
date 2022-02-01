@@ -41,6 +41,7 @@ public class MacosSliderSkin extends SkinBase<MacosSlider> {
     private StringConverter<Number> stringConverterWrapper;
 
 
+    // ******************** Constructors **************************************
     public MacosSliderSkin(final MacosSlider slider) {
         super(slider);
         this.slider = slider;
@@ -110,6 +111,7 @@ public class MacosSliderSkin extends SkinBase<MacosSlider> {
     }
 
 
+    // ******************** Initialization ************************************
     private void init() {
         thumb = new StackPane() {
             @Override public Object queryAccessibleAttribute(AccessibleAttribute attribute, Object... parameters) {
@@ -177,6 +179,8 @@ public class MacosSliderSkin extends SkinBase<MacosSlider> {
         });
     }
 
+
+    // ******************** Methods *******************************************
     @Override protected double computeMinWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
         if (slider.getOrientation() == Orientation.HORIZONTAL) {
             return (leftInset + minTrackLength() + thumb.minWidth(-1) + rightInset);

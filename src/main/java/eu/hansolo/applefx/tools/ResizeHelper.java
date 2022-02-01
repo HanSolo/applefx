@@ -104,10 +104,10 @@ public class ResizeHelper {
             } else if (MouseEvent.MOUSE_DRAGGED.equals(type)) {
                 if (!Cursor.DEFAULT.equals(cursorEvent)) {
                     if (!Cursor.W_RESIZE.equals(cursorEvent) && !Cursor.E_RESIZE.equals(cursorEvent)) {
-                        double minHeight = MIN_HEIGHT; //stage.getMinHeight() > (border * 2) ? stage.getMinHeight() : (border * 2);
-                        double maxHeight = stage.getMaxHeight();
+                        final double minHeight = stage.getMinHeight();
+                        final double maxHeight = stage.getMaxHeight();
                         if (Cursor.NW_RESIZE.equals(cursorEvent) || Cursor.N_RESIZE.equals(cursorEvent) || Cursor.NE_RESIZE.equals(cursorEvent)) {
-                            double newHeight = Helper.clamp(MIN_HEIGHT, Double.MAX_VALUE, stage.getHeight() - (e.getScreenY() - stage.getY()));
+                            double newHeight = Helper.clamp(minHeight, Double.MAX_VALUE, stage.getHeight() - (e.getScreenY() - stage.getY()));
                             if (newHeight >= minHeight && newHeight <= maxHeight) {
                                 stage.setHeight(newHeight);
                                 stage.setY(e.getScreenY());
@@ -124,10 +124,10 @@ public class ResizeHelper {
                     }
 
                     if (!Cursor.N_RESIZE.equals(cursorEvent) && !Cursor.S_RESIZE.equals(cursorEvent)) {
-                        double minWidth = MIN_WIDTH; //stage.getMinWidth() > (border * 2) ? stage.getMinWidth() : (border * 2);
-                        double maxWidth = stage.getMaxWidth();
+                        final double minWidth = stage.getMinWidth();
+                        final double maxWidth = stage.getMaxWidth();
                         if (Cursor.NW_RESIZE.equals(cursorEvent) || Cursor.W_RESIZE.equals(cursorEvent) || Cursor.SW_RESIZE.equals(cursorEvent)) {
-                            double newWidth = Helper.clamp(MIN_WIDTH, Double.MAX_VALUE, stage.getWidth() - (e.getScreenX() - stage.getX()));
+                            double newWidth = Helper.clamp(minWidth, Double.MAX_VALUE, stage.getWidth() - (e.getScreenX() - stage.getX()));
                             if (newWidth >= minWidth && newWidth <= maxWidth) {
                                 stage.setWidth(newWidth);
                                 stage.setX(e.getScreenX());

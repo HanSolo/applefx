@@ -68,7 +68,6 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
         public double getHeight() { return height; }
     }
 
-
     public static final  double                                OFFSET                         = 40;
     private static final DropShadow                            HEADER_SHADOW                  = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.1), 1, 0.0, 0, 1);
     private static final DropShadow                            STAGE_SHADOW_FOCUSED           = new DropShadow(BlurType.TWO_PASS_BOX, Color.rgb(0, 0, 0, 0.5), 45.0, 0.0, 0.0, 15);
@@ -317,7 +316,10 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             }
         }, sceneProperty(), getScene().windowProperty(), getScene().getWindow().showingProperty());
         showing.addListener(o -> {
-            if (showing.get()) { watchForAppearanceChanged(); }
+            if (showing.get()) {
+                calculateMinSize();
+                watchForAppearanceChanged();
+            }
         });
     }
 
@@ -359,7 +361,6 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     public void removeFromToolbarRight(final MacosControl control) {
         if (headerPaneRightToolBar.getChildren().contains(control)) { headerPaneRightToolBar.getChildren().remove(control); }
     }
-
 
     public void dispose() {
         if (null != watchService) {
@@ -407,6 +408,12 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
         allNodes.stream().filter(node -> node instanceof MacosSlider).map(node -> (MacosSlider) node).forEach(macosSlider -> macosSlider.setWindowFocusLost(windowFocusLost));
     }
 
+    private void calculateMinSize() {
+        double width  = content.getChildrenUnmodifiable().stream().map(node -> node.getLayoutBounds().getWidth()).reduce(0.0, Double::sum);
+        double height = content.getChildrenUnmodifiable().stream().map(node -> node.getLayoutBounds().getHeight()).reduce(0.0, Double::sum);
+        contentPane.setMinSize(width, height);
+    }
+
     private void watchForAppearanceChanged() {
         if (OperatingSystem.MACOS != getOperatingSystem()) { return; }
         final Path path = FileSystems.getDefault().getPath(System.getProperty("user.home"), "/Library/Preferences/");
@@ -443,6 +450,10 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     // ******************** Layout ********************************************
     private void resize() {
         if (null != stage) {
+            stage.setMinWidth(contentPane.getMinWidth() + 2 * OFFSET);
+            stage.setMinHeight(contentPane.getMinHeight() + 2 * OFFSET);
+            setMinWidth(contentPane.getMinWidth() + 2 * OFFSET);
+            setMinHeight(contentPane.getMinHeight() + 2 * OFFSET);
             setPrefWidth(stage.getWidth());
             setPrefHeight(stage.getHeight());
         }

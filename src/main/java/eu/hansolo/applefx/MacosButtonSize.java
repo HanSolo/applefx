@@ -7,6 +7,8 @@ public enum MacosButtonSize {
 
     public final double px;
 
+
+    // ******************** Constructors **************************************
     MacosButtonSize(final double px) {
         this.px = px;
     }
