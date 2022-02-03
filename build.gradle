@@ -86,15 +86,6 @@ task Demo(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
-task Demo2(type: JavaExec) {
-    main = "eu.hansolo.applefx.Launcher2"
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-task Demo3(type: JavaExec) {
-    main = "eu.hansolo.applefx.Launcher3"
-    classpath = sourceSets.main.runtimeClasspath
-}
 
 // Fix problems with loading resources
 sourceSets {
