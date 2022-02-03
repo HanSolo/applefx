@@ -289,9 +289,9 @@ public class MacosSwitch extends Region implements MacosControl {
             _selected = selected;
             if (_selected) {
                 fireMacEvt(selected ? selectedEvt : deselectedEvt);
-                animateToSelect();
+                animateToSelected();
             } else {
-                animateToDeselect();
+                animateToDeselected();
             }
         } else {
             this.selected.set(selected);
@@ -303,9 +303,9 @@ public class MacosSwitch extends Region implements MacosControl {
                 @Override protected void invalidated() {
                     fireMacEvt(get() ? selectedEvt : deselectedEvt);
                     if (get()) {
-                        animateToSelect();
+                        animateToSelected();
                     } else {
-                        animateToDeselect();
+                        animateToDeselected();
                     }
                 }
                 @Override public Object getBean() { return MacosSwitch.this; }
@@ -327,6 +327,7 @@ public class MacosSwitch extends Region implements MacosControl {
         if (null == this.dark) {
             _dark = dark;
             pseudoClassStateChanged(DARK_PSEUDO_CLASS, dark);
+            backgroundArea.setFill(dark ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua());
         } else {
             this.dark.set(dark);
         }
@@ -336,6 +337,7 @@ public class MacosSwitch extends Region implements MacosControl {
             dark = new BooleanPropertyBase() {
                 @Override protected void invalidated() {
                     pseudoClassStateChanged(DARK_PSEUDO_CLASS, get());
+                    backgroundArea.setFill(get() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua());
                 }
                 @Override public Object getBean() { return MacosSwitch.this; }
                 @Override public String getName() { return "dark"; }
@@ -394,7 +396,7 @@ public class MacosSwitch extends Region implements MacosControl {
     protected HashMap<String, Property> getSettings() { return settings; }
 
 
-    private void animateToSelect() {
+    private void animateToSelected() {
         KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
         KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
         KeyValue kvKnobXStart          = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMinX() + height * 0.1, Interpolator.EASE_BOTH);
@@ -411,7 +413,7 @@ public class MacosSwitch extends Region implements MacosControl {
         timeline.getKeyFrames().setAll(kf0, kf1, kf2);
         timeline.play();
     }
-    private void animateToDeselect() {
+    private void animateToDeselected() {
         KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
         KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
         KeyValue kvKnobXStart          = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMaxX() - height * 0.9, Interpolator.EASE_BOTH);

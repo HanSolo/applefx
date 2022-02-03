@@ -69,11 +69,12 @@ public class MacosTextField extends TextField implements MacosControlWithAccentC
             _accentColor = accentColor;
             String style;
             if (isDark()) {
-                style = new StringBuilder().append("-fx-focus-color: ").append(accentColor.getDarkStyleClass()).append(";")
-                                           .append("-focus-color-dark: ").append(accentColor.getDarkHighlightStyleClass()).append(";").toString();
+                style = new StringBuilder().append("-fx-focus-color: ").append(accentColor.getDarkHighlightStyleClass()).append(";")
+                                           .append("-fx-faint-focus-color: ").append(accentColor.getDarkHighlightStyleClass()).append(";")
+                                           .append("-highlight-color-dark: ").append(accentColor.getDarkHighlightStyleClass()).append(";").toString();
             } else {
                 style = new StringBuilder().append("-fx-focus-color: ").append(accentColor.getAquaStyleClass()).append(";")
-                                           .append("-focus-color: ").append(accentColor.getAquaHighlightStyleClass()).append(";").toString();
+                                           .append("-highlight-color: ").append(accentColor.getAquaHighlightStyleClass()).append(";").toString();
             }
             setStyle(style);
         } else {

@@ -120,7 +120,7 @@ public class MacosButton extends Button implements MacosControlWithAccentColor {
     @Override public void setAccentColor(final MacosAccentColor accentColor) {
         if (null == this.accentColor) {
             _accentColor = accentColor;
-            setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getDarkStyleClass()).append(";").toString());
+            setStyle(isDark() ? new StringBuilder("-button-color: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-button-color: ").append(accentColor.getDarkStyleClass()).append(";").toString());
         } else {
             this.accentColor.set(accentColor);
         }
