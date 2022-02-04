@@ -21,9 +21,9 @@ Because the WatcherService needs some time to detect the switch between modes it
 take up to 5-10 seconds before the app will change it's appearance.
 
 
-## Macos Bright Mode
-![BrightMode](https://i.ibb.co/x3CWwjq/Bright-Mode.png)
+## Macos Light Mode
+![BrightMode](https://i.ibb.co/xLjNxNb/Apple-FX-light.png)
 
 
 ## Macos Dark Mode
-![DarkMode](https://i.ibb.co/ZNcsJ26/DarkMode.png)
+![DarkMode](https://i.ibb.co/bbTmsW3/Apple-FX-dark.png)
