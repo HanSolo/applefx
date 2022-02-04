@@ -56,7 +56,6 @@ public class Demo extends Application {
         iosSwitch               = new MacosSwitch();
         iosSwitch.setIos(true);
         iosSwitch.setShowOnOffText(true);
-        macosSwitch.setShowOnOffText(true);
         macosCheckBox           =  new MacosCheckBox("Check me");
         macosTextField          = new MacosTextField();
         macosRadioButton1       = new MacosRadioButton("Select me");
