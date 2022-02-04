@@ -197,8 +197,8 @@
 .macos-button:dark:focused,
 .macos-button:dark:window-focus-lost {
     -fx-pref-height      : 20;
-    -fx-background-color : linear-gradient(to bottom, rgb(136, 132, 132) 0%, rgb(26, 20, 21) 100%), -control-background-color-dark;
     -fx-background-insets: 0, 0.5 0 0 0;
+    -fx-background-color : linear-gradient(to bottom, rgb(136, 132, 132) 0%, rgb(26, 20, 21) 100%), -control-background-color-dark;
     -fx-text-fill        : -text-color-dark;
 }
 .macos-button:dark:armed {
@@ -1420,4 +1420,145 @@
 
 .macos-toggle-button-bar-separator:dark {
     -fx-background-color : transparent, linear-gradient(to bottom, transparent 0%, transparent 15%, rgb(37, 34, 33) 15%, rgb(37, 34, 33) 85%, transparent 85%, transparent 100%);
+}
+
+
+/* Plus-Minus-Button */
+.macos-add-remove-button {
+    -fx-min-width        : 51;
+    -fx-min-height       : 22;
+    -fx-max-width        : 51;
+    -fx-max-height       : 22;
+    -fx-pref-width       : 51;
+    -fx-pref-height      : 22;
+    -fx-background-insets: 0, 0.5;
+    -fx-background-color : linear-gradient(to bottom, rgb(211, 210, 210) 0%, rgb(183, 182, 182) 100%), -WHITE;
+    -fx-background-radius: 6, 5;
+    -fx-padding          : 1;
+    -txt-color           : -text-color;
+}
+.macos-add-remove-button:dark {
+    -fx-background-color : linear-gradient(to bottom, rgb(136, 132, 132) 0%, rgb(26, 20, 21) 100%), -control-background-color-dark;
+    -fx-background-insets: 0, 0.5 0 0 0;
+    -txt-color           : -text-color-dark;
+}
+
+.macos-add-remove-button > .macos-add-button {
+    -fx-min-width        : 23;
+    -fx-min-height       : 20;
+    -fx-max-width        : 23;
+    -fx-max-height       : 20;
+    -fx-pref-width       : 23;
+    -fx-pref-height      : 20;
+    -fx-background-radius: 5 0 0 5;
+    -fx-background-insets: 0;
+    -fx-background-color : -WHITE;
+}
+.macos-add-remove-button:dark > .macos-add-button:dark {
+    -fx-min-width        : 23;
+    -fx-min-height       : 20;
+    -fx-max-width        : 23;
+    -fx-max-height       : 20;
+    -fx-pref-width       : 23;
+    -fx-pref-height      : 20;
+    -fx-background-radius: 5 0 0 5;
+    -fx-background-insets: 0;
+    -fx-background-color : -control-background-color-dark;
+}
+.macos-add-remove-button > .macos-add-button:armed {
+    -fx-background-color : derive(-control-background-color, +20%);
+    -fx-background-insets: 0;
+}
+.macos-add-remove-button:dark > .macos-add-button:dark:armed {
+    -fx-background-color : derive(-control-background-color-dark, +20%);
+    -fx-background-insets: 0;
+}
+
+.macos-add-remove-button > .macos-add-button > .macos-plus-icon {
+    -fx-min-width        : 10.5;
+    -fx-min-height       : 10.5;
+    -fx-max-width        : 10.5;
+    -fx-max-height       : 10.5;
+    -fx-pref-width       : 10.5;
+    -fx-pref-height      : 10.5;
+    -fx-background-color: rgb(38, 38, 38);
+    -fx-position-shape  : true;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M4.5,4.5l0,-3.75c0,-0.414 0.336,-0.75 0.75,-0.75c0.414,0 0.75,0.336 0.75,0.75l-0,3.75l3.75,0c0.414,0 0.75,0.336 0.75,0.75c0,0.414 -0.336,0.75 -0.75,0.75l-3.75,-0l-0,3.75c-0,0.414 -0.336,0.75 -0.75,0.75c-0.414,0 -0.75,-0.336 -0.75,-0.75l0,-3.75l-3.75,-0c-0.414,-0 -0.75,-0.336 -0.75,-0.75c0,-0.414 0.336,-0.75 0.75,-0.75l3.75,0Z";
+}
+.macos-add-remove-button:dark > .macos-add-button:dark > .macos-plus-icon:dark {
+    -fx-background-color: rgb(231, 230, 230);
+}
+
+.macos-add-remove-button > .macos-remove-button {
+    -fx-min-width        : 23;
+    -fx-min-height       : 20;
+    -fx-max-width        : 23;
+    -fx-max-height       : 20;
+    -fx-pref-width       : 23;
+    -fx-pref-height      : 20;
+    -fx-background-radius: 0 5 5 0;
+    -fx-background-insets: 0;
+    -fx-background-color : -WHITE;
+}
+.macos-add-remove-button:dark > .macos-remove-button:dark {
+    -fx-min-width        : 23;
+    -fx-min-height       : 20;
+    -fx-max-width        : 23;
+    -fx-max-height       : 20;
+    -fx-pref-width       : 23;
+    -fx-pref-height      : 20;
+    -fx-background-radius: 0 5 5 0;
+    -fx-background-insets: 0;
+    -fx-background-color : -control-background-color-dark;
+}
+.macos-add-remove-button > .macos-remove-button:armed {
+    -fx-background-color : derive(-control-background-color, +20%);
+    -fx-background-insets: 0;
+}
+.macos-add-remove-button:dark > .macos-remove-button:dark:armed {
+    -fx-background-color : derive(-control-background-color-dark, +20%);
+    -fx-background-insets: 0;
+}
+
+.macos-add-remove-button > .macos-remove-button > .macos-minus-icon {
+    -fx-min-width        : 10.5;
+    -fx-min-height       : 10.5;
+    -fx-max-width        : 10.5;
+    -fx-max-height       : 10.5;
+    -fx-pref-width       : 10.5;
+    -fx-pref-height      : 10.5;
+    -fx-background-color: rgb(38, 38, 38);
+    -fx-position-shape  : true;
+    -fx-scale-shape     : false;
+    -fx-shape           : "M10.5,5.25c-0,-0.416 -0.338,-0.755 -0.755,-0.755l-8.99,0c-0.417,0 -0.755,0.339 -0.755,0.755c0,0.416 0.338,0.755 0.755,0.755l8.99,-0c0.417,-0 0.755,-0.339 0.755,-0.755Z";
+}
+.macos-add-remove-button:dark > .macos-remove-button:dark > .macos-minus-icon:dark {
+    -fx-background-color: rgb(231, 230, 230);
+}
+
+.macos-add-remove-button > .macos-toggle-button-bar-separator {
+    -fx-min-width       : 3;
+    -fx-max-width       : 3;
+    -fx-pref-width      : 3;
+    -fx-min-height      : 20;
+    -fx-max-height      : 20;
+    -fx-pref-height     : 20;
+    -fx-position-shape  : true;
+    -fx-shape           : "M0,0L1,0L1,22L0,22,L0,0z";
+    -fx-border-color    : transparent;
+    -fx-background-insets: 0, 2;
+    -fx-background-color : transparent, linear-gradient(to bottom, transparent 0%, transparent 10%, rgb(229, 229, 229) 10%, rgb(229, 229, 229) 90%, transparent 90%, transparent 100%);
+}
+.macos-add-remove-button:dark > .macos-toggle-button-bar-separator:dark {
+    -fx-background-color : transparent, linear-gradient(to bottom, transparent 0%, transparent 10%, rgb(70, 70, 70) 10%, rgb(70, 70, 70) 90%, transparent 90%, transparent 100%);
+}
+
+.macos-add-remove-button > .macos-add-button:disabled > .macos-plus-icon,
+.macos-add-remove-button > .macos-remove-button:disabled > .macos-minus-icon {
+    -fx-background-color: rgb(140, 140, 140);
+}
+.macos-add-remove-button:dark > .macos-add-button:dark:disabled > .macos-plus-icon:dark,
+.macos-add-remove-button:dark > .macos-remove-button:dark:disabled > .macos-minus-icon:dark {
+    -fx-background-color: rgb(180, 180, 180);
 }

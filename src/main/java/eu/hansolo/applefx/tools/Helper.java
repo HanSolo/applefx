@@ -35,6 +35,9 @@ import static eu.hansolo.toolbox.Helper.getOperatingSystem;
 
 
 public class Helper {
+
+    private Helper() {}
+
     public static final Map<Integer, Color[]> MACOS_ACCENT_COLOR_MAP = Map.of(-1, new Color[] { MacosSystemColor.GRAPHITE.aqua, MacosSystemColor.GRAPHITE.dark },
                                                                               0, new Color[]  { MacosSystemColor.RED.aqua, MacosSystemColor.RED.dark },
                                                                               1, new Color[]  { MacosSystemColor.ORANGE.aqua, MacosSystemColor.ORANGE.dark },
@@ -49,8 +52,6 @@ public class Helper {
     private static final String   DARK_THEME_CMD     = REGQUERY_UTIL + "\"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"" + " /v AppsUseLightTheme";
 
 
-    public static final int ANIMATION_DURATION = 75;
-
     public static final void enableNode(final Node node, final boolean enable) {
         node.setVisible(enable);
         node.setManaged(enable);
@@ -63,29 +64,27 @@ public class Helper {
     }
 
     public static final double clamp(final double min, final double max, final double value) {
-        if (value < min) return min;
-        if (value > max) return max;
+        if (value < min) { return min; }
+        if (value > max) { return max; }
         return value;
     }
 
     public static final boolean isDarkMode() {
         switch(getOperatingSystem()) {
-            case WINDOWS: return isWindowsDarkMode();
-            case MACOS  : return isMacOsDarkMode();
-            case LINUX  :
-            case SOLARIS:
-            default     : return false;
+            case WINDOWS -> { return isWindowsDarkMode(); }
+            case MACOS   -> { return isMacOsDarkMode(); }
+            default      -> { return false; }
         }
     }
 
-    public static final boolean isMacOsDarkMode() {
+    private static final boolean isMacOsDarkMode() {
         try {
-            boolean           isDarkMode = false;
-            Runtime           runtime = Runtime.getRuntime();
-            Process           process = runtime.exec("defaults read -g AppleInterfaceStyle");
-            InputStreamReader isr     = new InputStreamReader(process.getInputStream());
-            BufferedReader    rdr     = new BufferedReader(isr);
-            String            line;
+            final Runtime           runtime = Runtime.getRuntime();
+            final Process           process = runtime.exec("defaults read -g AppleInterfaceStyle");
+            final InputStreamReader isr     = new InputStreamReader(process.getInputStream());
+            final BufferedReader    rdr     = new BufferedReader(isr);
+            boolean isDarkMode = false;
+            String  line;
             while((line = rdr.readLine()) != null) {
                 if (line.equals("Dark")) { isDarkMode = true; }
             }
@@ -96,22 +95,22 @@ public class Helper {
         }
     }
 
-    public static boolean isWindowsDarkMode() {
+    private static final boolean isWindowsDarkMode() {
         try {
-            Process      process = Runtime.getRuntime().exec(DARK_THEME_CMD);
-            StreamReader reader  = new StreamReader(process.getInputStream());
+            final Process      process = Runtime.getRuntime().exec(DARK_THEME_CMD);
+            final StreamReader reader  = new StreamReader(process.getInputStream());
 
             reader.start();
             process.waitFor();
             reader.join();
 
-            String result = reader.getResult();
-            int p = result.indexOf(REGDWORD_TOKEN);
+            final String result = reader.getResult();
+            final int    p      = result.indexOf(REGDWORD_TOKEN);
 
             if (p == -1) { return false; }
 
             // 1 == Light Mode, 0 == Dark Mode
-            String temp = result.substring(p + REGDWORD_TOKEN.length()).trim();
+            final String temp = result.substring(p + REGDWORD_TOKEN.length()).trim();
             return ((Integer.parseInt(temp.substring("0x".length()), 16))) == 0;
         }
         catch (Exception e) {
@@ -119,7 +118,7 @@ public class Helper {
         }
     }
 
-    public static MacosAccentColor getMacosAccentColor() {
+    public static final MacosAccentColor getMacosAccentColor() {
         if (OperatingSystem.MACOS != getOperatingSystem()) { return MacosAccentColor.MULTI_COLOR; }
         final boolean isDarkMode = isMacOsDarkMode();
         try {
@@ -143,7 +142,7 @@ public class Helper {
             return MacosAccentColor.MULTI_COLOR;
         }
     }
-    public static Color getMacosAccentColorAsColor() {
+    public static final Color getMacosAccentColorAsColor() {
         if (OperatingSystem.MACOS != getOperatingSystem()) { return MacosAccentColor.MULTI_COLOR.getColorAqua(); }
         final boolean isDarkMode = isMacOsDarkMode();
         try {
@@ -167,12 +166,12 @@ public class Helper {
         }
     }
 
-    public static List<Node> getAllNodes(Parent root) {
+    public static final List<Node> getAllNodes(Parent root) {
         List<Node> nodes = new ArrayList<Node>();
         addAllDescendents(root, nodes);
         return nodes;
     }
-    private static void addAllDescendents(Parent parent, List<Node> nodes) {
+    private static final void addAllDescendents(Parent parent, List<Node> nodes) {
         for (Node node : parent.getChildrenUnmodifiable()) {
             nodes.add(node);
             if (node instanceof Parent) { addAllDescendents((Parent)node, nodes); }
@@ -182,10 +181,10 @@ public class Helper {
 
     // ******************** Internal Classes **********************************
     static class StreamReader extends Thread {
-        private InputStream  is;
-        private StringWriter sw;
+        private final InputStream  is;
+        private final StringWriter sw;
 
-        StreamReader(InputStream is) {
+        StreamReader(final InputStream is) {
             this.is = is;
             sw = new StringWriter();
         }
@@ -193,9 +192,8 @@ public class Helper {
         public void run() {
             try {
                 int c;
-                while ((c = is.read()) != -1)
-                    sw.write(c);
-            } catch (IOException e) { ; }
+                while ((c = is.read()) != -1) { sw.write(c); }
+            } catch (IOException e) { }
         }
 
         String getResult() { return sw.toString(); }

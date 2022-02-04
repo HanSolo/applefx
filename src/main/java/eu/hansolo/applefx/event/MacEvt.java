@@ -33,6 +33,8 @@ public class MacEvt extends ChangeEvt {
     public static final EvtType<MacEvt> INCREASE           = new EvtType<>(MacEvt.ANY, "INCREASE");
     public static final EvtType<MacEvt> DECREASE           = new EvtType<>(MacEvt.ANY, "DECREASE");
     public static final EvtType<MacEvt> APPEARANCE_CHANGED = new EvtType<>(MacEvt.ANY, "APPEARANCE_CHANGED");
+    public static final EvtType<MacEvt> ADD                = new EvtType<>(MacEvt.ANY, "ADD");
+    public static final EvtType<MacEvt> REMOVE             = new EvtType<>(MacEvt.ANY, "REMOVE");
 
 
     // ******************** Constructors **************************************
