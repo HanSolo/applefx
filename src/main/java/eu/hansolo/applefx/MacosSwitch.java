@@ -66,12 +66,12 @@ public class MacosSwitch extends Region implements MacosControl {
     public static final  double                                  MAX_DURATION           = 500;
     public static final  Color                                   DEFAULT_ACCENT_COLOR   = MacosAccentColor.BLUE.getColorAqua();
     private static final double                                  PREFERRED_WIDTH        = 38;
-    private static final double                                  PREFERRED_HEIGHT       = 25;
+    private static final double                                  PREFERRED_HEIGHT       = 22;
     private static final double                                  MINIMUM_WIDTH          = 38;
-    private static final double                                  MINIMUM_HEIGHT         = 25;
+    private static final double                                  MINIMUM_HEIGHT         = 22;
     private static final double                                  MAXIMUM_WIDTH          = 38;
-    private static final double                                  MAXIMUM_HEIGHT         = 25;
-    private static final double                                  ASPECT_RATIO           = PREFERRED_HEIGHT / PREFERRED_WIDTH;
+    private static final double                                  MAXIMUM_HEIGHT         = 22;
+    private static final double                                  KNOB_RADIUS            = 10;
     private static final StyleablePropertyFactory<MacosSwitch>   FACTORY                = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
     private static final PseudoClass                             DARK_PSEUDO_CLASS      = PseudoClass.getPseudoClass("dark");
     private final        MacEvt                                  selectedEvt            = new MacEvt(MacosSwitch.this, MacEvt.SELECTED);
@@ -81,10 +81,8 @@ public class MacosSwitch extends Region implements MacosControl {
     private              boolean                                 _dark;
     private              BooleanProperty                         dark;
     private              BooleanProperty                         windowFocusLost;
-    private              double                                  width;
-    private              double                                  height;
     private              Rectangle                               backgroundArea;
-    private              Rectangle                               knob;
+    private              Circle                                  knob;
     private              Circle                                  zero;
     private              Rectangle                               one;
     private              Pane                                    pane;
@@ -150,7 +148,9 @@ public class MacosSwitch extends Region implements MacosControl {
 
         getStyleClass().add("macos-switch");
 
-        backgroundArea = new Rectangle();
+        backgroundArea = new Rectangle(MAXIMUM_WIDTH, MAXIMUM_HEIGHT);
+        backgroundArea.setArcWidth(MAXIMUM_HEIGHT);
+        backgroundArea.setArcHeight(MAXIMUM_HEIGHT);
         backgroundArea.getStyleClass().addAll("background-area");
         if (isSelected()) {
             backgroundArea.setFill(getAccentColor());
@@ -166,9 +166,11 @@ public class MacosSwitch extends Region implements MacosControl {
         zero.setMouseTransparent(true);
         zero.setVisible(false);
 
-        knob = new Rectangle();
+        knob = new Circle(KNOB_RADIUS);
         knob.getStyleClass().addAll("knob");
         knob.setMouseTransparent(true);
+        knob.setCenterX(isSelected() ? (MAXIMUM_WIDTH - KNOB_RADIUS - 1) : (KNOB_RADIUS + 1));
+        knob.setCenterY(11);
 
         pane = new Pane(backgroundArea, one, zero, knob);
 
@@ -176,8 +178,6 @@ public class MacosSwitch extends Region implements MacosControl {
     }
 
     private void registerListeners() {
-        widthProperty().addListener(o -> resize());
-        heightProperty().addListener(o -> resize());
         disabledProperty().addListener(o -> setOpacity(isDisabled() ? 0.5 : 1.0));
         backgroundArea.addEventHandler(MouseEvent.MOUSE_CLICKED, clickedHandler);
         if (null != getScene()) {
@@ -395,12 +395,11 @@ public class MacosSwitch extends Region implements MacosControl {
 
     protected HashMap<String, Property> getSettings() { return settings; }
 
-
     private void animateToSelected() {
         KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
         KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
-        KeyValue kvKnobXStart          = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMinX() + height * 0.1, Interpolator.EASE_BOTH);
-        KeyValue kvKnobXEnd            = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMaxX() - height * 0.9, Interpolator.EASE_BOTH);
+        KeyValue kvKnobXStart          = new KeyValue(knob.centerXProperty(), KNOB_RADIUS + 1, Interpolator.EASE_BOTH);
+        KeyValue kvKnobXEnd            = new KeyValue(knob.centerXProperty(), MAXIMUM_WIDTH - KNOB_RADIUS - 1, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityStart     = new KeyValue(one.opacityProperty(), 0, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityEnd       = new KeyValue(one.opacityProperty(), 1, Interpolator.EASE_BOTH);
         KeyValue kvZeroOpacityStart    = new KeyValue(zero.opacityProperty(), zero.getOpacity(), Interpolator.EASE_BOTH);
@@ -416,8 +415,8 @@ public class MacosSwitch extends Region implements MacosControl {
     private void animateToDeselected() {
         KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
         KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
-        KeyValue kvKnobXStart          = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMaxX() - height * 0.9, Interpolator.EASE_BOTH);
-        KeyValue kvKnobXEnd            = new KeyValue(knob.xProperty(), backgroundArea.getLayoutBounds().getMinX() + height * 0.1, Interpolator.EASE_BOTH);
+        KeyValue kvKnobXStart          = new KeyValue(knob.centerXProperty(), MAXIMUM_WIDTH - KNOB_RADIUS - 1, Interpolator.EASE_BOTH);
+        KeyValue kvKnobXEnd            = new KeyValue(knob.centerXProperty(), KNOB_RADIUS + 1, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityStart     = new KeyValue(one.opacityProperty(), one.getOpacity(), Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityEnd       = new KeyValue(one.opacityProperty(), 0, Interpolator.EASE_BOTH);
         KeyValue kvZeroOpacityStart    = new KeyValue(zero.opacityProperty(), 0, Interpolator.EASE_BOTH);
@@ -452,51 +451,6 @@ public class MacosSwitch extends Region implements MacosControl {
         observers.entrySet().stream().filter(entry -> entry.getKey().equals(MacEvt.ANY)).forEach(entry -> entry.getValue().forEach(observer -> observer.handle(evt)));
         if (observers.containsKey(type) && !type.equals(MacEvt.ANY)) {
             observers.get(type).forEach(observer -> observer.handle(evt));
-        }
-    }
-
-
-    // ******************** Resizing ******************************************
-    private void resize() {
-        width  = getWidth() - getInsets().getLeft() - getInsets().getRight();
-        height = getHeight() - getInsets().getTop() - getInsets().getBottom();
-
-        if (width > 0 && height > 0) {
-            if (ASPECT_RATIO * width > height) {
-                width = 1 / (ASPECT_RATIO / height);
-            } else if (1 / (ASPECT_RATIO / height) > width) {
-                height = ASPECT_RATIO * width;
-            }
-
-            backgroundArea.setWidth(width);
-            backgroundArea.setHeight(height);
-            backgroundArea.setArcWidth(height);
-            backgroundArea.setArcHeight(height);
-
-            one.setWidth(height * 0.0326087);
-            one.setHeight(height * 0.32608696);
-            one.setX(width * 0.225 - (one.getWidth() * 0.5));
-            one.setY((height - one.getHeight()) * 0.5);
-
-            zero.setRadius(height * 0.1413);
-            zero.setCenterX(width * 0.765);
-            zero.setCenterY(height * 0.5);
-            zero.setStrokeWidth(height * 0.04);
-
-            knob.setWidth(height * 0.84);
-            knob.setHeight(height * 0.84);
-            knob.setArcWidth(height * 0.84);
-            knob.setArcHeight(height * 0.84);
-            if (isSelected()) {
-                knob.setX(backgroundArea.getLayoutBounds().getMaxX() - height * 0.9);
-            } else {
-                knob.setX(backgroundArea.getLayoutBounds().getMinX() + height * 0.1);
-            }
-            knob.setY((backgroundArea.getLayoutBounds().getHeight() - knob.getLayoutBounds().getHeight()) * 0.5);
-
-            pane.setMaxSize(width, height);
-            pane.setPrefSize(width, height);
-            pane.relocate((getWidth() - width) * 0.5, (getHeight() - height) * 0.5);
         }
     }
 

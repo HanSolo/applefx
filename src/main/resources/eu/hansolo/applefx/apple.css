@@ -131,6 +131,8 @@
     -pane-background-color-dark   : -PANE-BACKGROUND-DARK;
     -text-color-dark              : -TEXT-DARK;
     -text-selected-color-dark     : -TEXT-SELECTED-DARK;
+    -text-color-disabled          : rgb(140, 140, 140);
+    -text-color-disabled-dark     : rgb(180, 180, 180);
     -control-background-color-dark: -CONTROL-BACKGROUND-DARK;
     -control-border-color-dark    : -CONTROL-BORDER-DARK;
 
@@ -189,8 +191,8 @@
     -fx-content-display  : LEFT;
 }
 .macos-button:disabled {
-    -fx-background-color: -light-disabled-color;
-    -fx-text-fill       : -light-disabled-text-color;
+    -fx-background-color: -WHITE;
+    -fx-text-fill       : -text-color-disabled;
 }
 
 .macos-button:dark,
@@ -224,17 +226,18 @@
     -fx-text-fill        : -text-color-dark;
 }
 .macos-button:dark:disabled {
-    -fx-background-color: -disabled-color;
-    -fx-text-fill       : -disabled-text-color;
+    -fx-background-color: -control-background-color-dark;
+    -fx-text-fill       : -text-color-disabled-dark;
 }
 
 
 /* Switch */
 .macos-switch {
-    -knob-color: -WHITE;
+    -knob-color: rgb(208, 207, 206);
 }
 .macos-switch .background-area {
-    -fx-fill: -LIGHT-CTRL-BACKGROUND;
+    -fx-fill  : rgb(175, 175, 175);
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.25), 1, 0, 0, 0);
 }
 .macos-switch .one {
     -fx-fill: -WHITE;
@@ -244,11 +247,13 @@
     -fx-stroke: rgb(175, 175, 175);
 }
 .macos-switch .knob {
-    -fx-fill: -knob-color;
+    -fx-fill  : -WHITE;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 1, 0, 0, 0);
 }
 
 .macos-switch:dark .background-area {
-    -fx-fill: -DARK-CTRL-BACKGROUND;
+    -fx-fill  : -DARK-CTRL-BACKGROUND;
+    -fx-effect: innershadow(gaussian, rgba(255, 255, 255, 0.25), 1, 0, 0, 0);
 }
 .macos-switch:dark .one {
     -fx-fill: -WHITE;
@@ -258,7 +263,8 @@
     -fx-stroke: rgb(175, 175, 175);
 }
 .macos-switch:dark .knob {
-    -fx-fill: -knob-color;
+    -fx-fill  : -knob-color;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 1, 0, 0, 0);
 }
 
 
