@@ -65,21 +65,32 @@ public class MacosSwitch extends Region implements MacosControl {
     public static final  double                                  MIN_DURATION           = 10;
     public static final  double                                  MAX_DURATION           = 500;
     public static final  Color                                   DEFAULT_ACCENT_COLOR   = MacosAccentColor.BLUE.getColorAqua();
-    private static final double                                  PREFERRED_WIDTH        = 38;
-    private static final double                                  PREFERRED_HEIGHT       = 22;
-    private static final double                                  MINIMUM_WIDTH          = 38;
-    private static final double                                  MINIMUM_HEIGHT         = 22;
-    private static final double                                  MAXIMUM_WIDTH          = 38;
-    private static final double                                  MAXIMUM_HEIGHT         = 22;
-    private static final double                                  KNOB_RADIUS            = 10;
+    private static final double                                  MACOS_WIDTH            = 38;
+    private static final double                                  MACOS_HEIGHT           = 22;
+    private static final double                                  MACOS_KNOB_RADIUS      = 10;
+    private static final double                                  MACOS_KNOB_INSET       = 1;
+    private static final double                                  MACOS_KNOB_CENTER_Y    = 11;
+    private static final double                                  IOS_WIDTH              = 38;
+    private static final double                                  IOS_HEIGHT             = 25.5;
+    private static final double                                  IOS_KNOB_RADIUS        = 11;
+    private static final double                                  IOS_KNOB_INSET         = 1.5;
+    private static final double                                  IOS_KNOB_CENTER_Y      = 12.75;
+    private              double                                  width                  = MACOS_WIDTH;
+    private              double                                  height                 = MACOS_HEIGHT;
+    private              double                                  knobRadius             = MACOS_KNOB_RADIUS;
+    private              double                                  knobInset              = MACOS_KNOB_INSET;
+    private              double                                  knobCenterY            = MACOS_KNOB_CENTER_Y;
     private static final StyleablePropertyFactory<MacosSwitch>   FACTORY                = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
     private static final PseudoClass                             DARK_PSEUDO_CLASS      = PseudoClass.getPseudoClass("dark");
+    private static final PseudoClass                             IOS_PSEUDO_CLASS       = PseudoClass.getPseudoClass("ios");
     private final        MacEvt                                  selectedEvt            = new MacEvt(MacosSwitch.this, MacEvt.SELECTED);
     private final        MacEvt                                  deselectedEvt          = new MacEvt(MacosSwitch.this, MacEvt.DESELECTED);
     private final        StyleableProperty<Color>                accentColor;
     private              Map<EvtType, List<EvtObserver<MacEvt>>> observers;
     private              boolean                                 _dark;
     private              BooleanProperty                         dark;
+    private              boolean                                 _ios;
+    private              BooleanProperty                         ios;
     private              BooleanProperty                         windowFocusLost;
     private              Rectangle                               backgroundArea;
     private              Circle                                  knob;
@@ -107,6 +118,7 @@ public class MacosSwitch extends Region implements MacosControl {
         _selected       = false;
         accentColor     = FACTORY.createStyleableColorProperty(MacosSwitch.this, "accentColor", "-accent-color", s -> s.accentColor, DEFAULT_ACCENT_COLOR);
         _dark           = false;
+        _ios            = false;
         windowFocusLost = new BooleanPropertyBase() {
             @Override protected void invalidated() {
                 if (isSelected()) {
@@ -137,40 +149,35 @@ public class MacosSwitch extends Region implements MacosControl {
 
     // ******************** Initialization ************************************
     private void initGraphics() {
-        if (Double.compare(getPrefWidth(), 0.0) <= 0 || Double.compare(getPrefHeight(), 0.0) <= 0 || Double.compare(getWidth(), 0.0) <= 0 ||
-            Double.compare(getHeight(), 0.0) <= 0) {
-            if (getPrefWidth() > 0 && getPrefHeight() > 0) {
-                setPrefSize(getPrefWidth(), getPrefHeight());
-            } else {
-                setPrefSize(PREFERRED_WIDTH, PREFERRED_HEIGHT);
-            }
-        }
+        setMinSize(width, height);
+        setMaxSize(width, height);
+        setPrefSize(width, height);
 
         getStyleClass().add("macos-switch");
 
-        backgroundArea = new Rectangle(MAXIMUM_WIDTH, MAXIMUM_HEIGHT);
-        backgroundArea.setArcWidth(MAXIMUM_HEIGHT);
-        backgroundArea.setArcHeight(MAXIMUM_HEIGHT);
+        backgroundArea = new Rectangle(width, height);
+        backgroundArea.setArcWidth(height);
+        backgroundArea.setArcHeight(height);
         backgroundArea.getStyleClass().addAll("background-area");
         if (isSelected()) {
             backgroundArea.setFill(getAccentColor());
         }
 
-        one = new Rectangle();
+        one = new Rectangle(8, 8, 0.7, 6);
         one.getStyleClass().addAll("one");
         one.setMouseTransparent(true);
         one.setVisible(false);
 
-        zero = new Circle();
+        zero = new Circle(30, 11, 3);
         zero.getStyleClass().addAll("zero");
         zero.setMouseTransparent(true);
         zero.setVisible(false);
 
-        knob = new Circle(KNOB_RADIUS);
+        knob = new Circle(knobRadius);
         knob.getStyleClass().addAll("knob");
         knob.setMouseTransparent(true);
-        knob.setCenterX(isSelected() ? (MAXIMUM_WIDTH - KNOB_RADIUS - 1) : (KNOB_RADIUS + 1));
-        knob.setCenterY(11);
+        knob.setCenterX(isSelected() ? (width - knobRadius - knobInset) : (knobRadius + knobInset));
+        knob.setCenterY(knobCenterY);
 
         pane = new Pane(backgroundArea, one, zero, knob);
 
@@ -249,6 +256,8 @@ public class MacosSwitch extends Region implements MacosControl {
                 setAccentColor(((ObjectProperty<Color>) settings.get(key)).get());
             } else if("dark".equals(key)) {
                 setDark(((BooleanProperty) settings.get(key)).get());
+            } else if ("ios".equals(key)) {
+                setIos(((BooleanProperty) settings.get(key)).get());
             } else if ("showOnOffText".equals(key)) {
                 setShowOnOffText(((BooleanProperty) settings.get(key)).get());
             } else if ("duration".equals(key)) {
@@ -274,12 +283,12 @@ public class MacosSwitch extends Region implements MacosControl {
         super.layoutChildren();
     }
 
-    @Override protected double computeMinWidth(final double height) { return MINIMUM_WIDTH; }
-    @Override protected double computeMinHeight(final double width) { return MINIMUM_HEIGHT; }
-    @Override protected double computePrefWidth(final double height) { return super.computePrefWidth(height); }
-    @Override protected double computePrefHeight(final double width) { return super.computePrefHeight(width); }
-    @Override protected double computeMaxWidth(final double height) { return MAXIMUM_WIDTH; }
-    @Override protected double computeMaxHeight(final double width) { return MAXIMUM_HEIGHT; }
+    @Override protected double computeMinWidth(final double height) { return width; }
+    @Override protected double computeMinHeight(final double width) { return height; }
+    @Override protected double computePrefWidth(final double height) { return width; }
+    @Override protected double computePrefHeight(final double width) { return height; }
+    @Override protected double computeMaxWidth(final double height) { return width; }
+    @Override protected double computeMaxHeight(final double width) { return height; }
 
     @Override public ObservableList<Node> getChildren() { return super.getChildren(); }
 
@@ -346,6 +355,102 @@ public class MacosSwitch extends Region implements MacosControl {
         return dark;
     }
 
+    public final boolean isIos() {
+        return null == ios ? _ios : ios.get();
+    }
+    public final void setIos(final boolean ios) {
+        if (null == this.ios) {
+            _ios = ios;
+            pseudoClassStateChanged(IOS_PSEUDO_CLASS, ios);
+            if (ios) {
+                width       = IOS_WIDTH;
+                height      = IOS_HEIGHT;
+                knobRadius  = IOS_KNOB_RADIUS;
+                knobInset   = IOS_KNOB_INSET;
+                knobCenterY = IOS_KNOB_CENTER_Y;
+                one.setX(7);
+                one.setY(9);
+                one.setWidth(0.7);
+                one.setHeight(7.5);
+                zero.setRadius(3.75);
+                zero.setCenterX(31);
+                zero.setCenterY(12.75);
+            } else {
+                width       = MACOS_WIDTH;
+                height      = MACOS_HEIGHT;
+                knobRadius  = MACOS_KNOB_RADIUS;
+                knobInset   = MACOS_KNOB_INSET;
+                knobCenterY = MACOS_KNOB_CENTER_Y;
+                one.setX(8);
+                one.setY(8);
+                one.setWidth(0.7);
+                one.setHeight(6);
+                zero.setRadius(3);
+                zero.setCenterX(30);
+                zero.setCenterY(11);
+            }
+            setMinSize(width, height);
+            setMaxSize(width, height);
+            setPrefSize(width, height);
+            backgroundArea.setHeight(height);
+            backgroundArea.setArcWidth(height);
+            backgroundArea.setArcHeight(height);
+            knob.setRadius(knobRadius);
+            knob.setCenterX(isSelected() ? (width - knobRadius - knobInset) : (knobRadius + knobInset));
+            knob.setCenterY(knobCenterY);
+        } else {
+            this.dark.set(ios);
+        }
+    }
+    public final BooleanProperty iosProperty() {
+        if (null == ios) {
+            ios = new BooleanPropertyBase() {
+                @Override protected void invalidated() {
+                    pseudoClassStateChanged(IOS_PSEUDO_CLASS, get());
+                    if (get()) {
+                        width       = IOS_WIDTH;
+                        height      = IOS_HEIGHT;
+                        knobRadius  = IOS_KNOB_RADIUS;
+                        knobInset   = IOS_KNOB_INSET;
+                        knobCenterY = IOS_KNOB_CENTER_Y;
+                        one.setX(7);
+                        one.setY(9);
+                        one.setWidth(0.7);
+                        one.setHeight(7.5);
+                        zero.setRadius(3.75);
+                        zero.setCenterX(31);
+                        zero.setCenterY(12.75);
+                    } else {
+                        width       = MACOS_WIDTH;
+                        height      = MACOS_HEIGHT;
+                        knobRadius  = MACOS_KNOB_RADIUS;
+                        knobInset   = MACOS_KNOB_INSET;
+                        knobCenterY = MACOS_KNOB_CENTER_Y;
+                        one.setX(8);
+                        one.setY(8);
+                        one.setWidth(0.7);
+                        one.setHeight(6);
+                        zero.setRadius(3);
+                        zero.setCenterX(30);
+                        zero.setCenterY(11);
+                    }
+                    setMinSize(width, height);
+                    setMaxSize(width, height);
+                    setPrefSize(width, height);
+                    backgroundArea.setHeight(height);
+                    backgroundArea.setArcWidth(height);
+                    backgroundArea.setArcHeight(height);
+                    knob.setRadius(knobRadius);
+                    knob.setCenterX(isSelected() ? (width - knobRadius - knobInset) : (knobRadius + knobInset));
+                    knob.setCenterY(knobCenterY);
+                }
+                @Override public Object getBean() { return MacosSwitch.this; }
+                @Override public String getName() { return "ios"; }
+            };
+        }
+        return ios;
+    }
+
     public double getDuration() { return null == duration ? _duration : duration.get(); }
     public void setDuration(final double duration) {
         if (null == this.duration) {
@@ -398,8 +503,8 @@ public class MacosSwitch extends Region implements MacosControl {
     private void animateToSelected() {
         KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
         KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
-        KeyValue kvKnobXStart          = new KeyValue(knob.centerXProperty(), KNOB_RADIUS + 1, Interpolator.EASE_BOTH);
-        KeyValue kvKnobXEnd            = new KeyValue(knob.centerXProperty(), MAXIMUM_WIDTH - KNOB_RADIUS - 1, Interpolator.EASE_BOTH);
+        KeyValue kvKnobXStart          = new KeyValue(knob.centerXProperty(), knobRadius + knobInset, Interpolator.EASE_BOTH);
+        KeyValue kvKnobXEnd            = new KeyValue(knob.centerXProperty(), width - knobRadius - knobInset, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityStart     = new KeyValue(one.opacityProperty(), 0, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityEnd       = new KeyValue(one.opacityProperty(), 1, Interpolator.EASE_BOTH);
         KeyValue kvZeroOpacityStart    = new KeyValue(zero.opacityProperty(), zero.getOpacity(), Interpolator.EASE_BOTH);
@@ -415,8 +520,8 @@ public class MacosSwitch extends Region implements MacosControl {
     private void animateToDeselected() {
         KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
         KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
-        KeyValue kvKnobXStart          = new KeyValue(knob.centerXProperty(), MAXIMUM_WIDTH - KNOB_RADIUS - 1, Interpolator.EASE_BOTH);
-        KeyValue kvKnobXEnd            = new KeyValue(knob.centerXProperty(), KNOB_RADIUS + 1, Interpolator.EASE_BOTH);
+        KeyValue kvKnobXStart          = new KeyValue(knob.centerXProperty(), width - knobRadius - knobInset, Interpolator.EASE_BOTH);
+        KeyValue kvKnobXEnd            = new KeyValue(knob.centerXProperty(), knobRadius + knobInset, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityStart     = new KeyValue(one.opacityProperty(), one.getOpacity(), Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityEnd       = new KeyValue(one.opacityProperty(), 0, Interpolator.EASE_BOTH);
         KeyValue kvZeroOpacityStart    = new KeyValue(zero.opacityProperty(), 0, Interpolator.EASE_BOTH);

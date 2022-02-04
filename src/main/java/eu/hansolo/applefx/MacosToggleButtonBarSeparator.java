@@ -16,6 +16,12 @@ public class MacosToggleButtonBarSeparator extends Region implements MacosContro
     // ******************** Constructors **************************************
     public MacosToggleButtonBarSeparator() {
         super();
+        _dark = Helper.isDarkMode();
+        init();
+    }
+    public MacosToggleButtonBarSeparator(final boolean dark) {
+        super();
+        _dark = dark;
         init();
     }
 
@@ -23,7 +29,6 @@ public class MacosToggleButtonBarSeparator extends Region implements MacosContro
     // ******************** Initialization ************************************
     private void init() {
         getStyleClass().add("macos-toggle-button-bar-separator");
-        _dark = Helper.isDarkMode();
     }
 
 

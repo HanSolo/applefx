@@ -55,6 +55,11 @@ public class MacosSwitchBuilder<B extends MacosSwitchBuilder<B>> {
         return (B)this;
     }
 
+    public final B ios(final boolean ios) {
+        properties.put("ios", new SimpleBooleanProperty(ios));
+        return (B)this;
+    }
+
     public final B showOnOffText(final boolean show) {
         properties.put("showOnOffText", new SimpleBooleanProperty(show));
         return (B)this;

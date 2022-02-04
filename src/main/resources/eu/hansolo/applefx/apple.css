@@ -244,11 +244,30 @@
 }
 .macos-switch .zero {
     -fx-fill  : null;
-    -fx-stroke: rgb(175, 175, 175);
+    -fx-stroke: rgb(140, 140, 140);
 }
 .macos-switch .knob {
     -fx-fill  : -WHITE;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 1, 0, 0, 0);
+}
+
+.macos-switch:ios {
+    -knob-color: -WHITE;
+}
+.macos-switch:ios .background-area {
+    -fx-fill: rgb(215, 213, 213);
+    -fx-effect: none;
+}
+.macos-switch:ios .one {
+    -fx-fill: -WHITE;
+}
+.macos-switch:ios .zero {
+    -fx-fill  : null;
+    -fx-stroke: rgb(140, 140, 140);
+}
+.macos-switch:ios .knob {
+    -fx-fill  : -WHITE;
+    -fx-effect: none;
 }
 
 .macos-switch:dark .background-area {
@@ -265,6 +284,22 @@
 .macos-switch:dark .knob {
     -fx-fill  : -knob-color;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.65), 1, 0, 0, 0);
+}
+
+.macos-switch:ios:dark .background-area {
+    -fx-fill  : rgb(61, 59, 61);
+    -fx-effect: none;
+}
+.macos-switch:ios:dark .one {
+    -fx-fill: -WHITE;
+}
+.macos-switch:ios:dark .zero {
+    -fx-fill  : null;
+    -fx-stroke: rgb(175, 175, 175);
+}
+.macos-switch:ios:dark .knob {
+    -fx-fill  : -knob-color;
+    -fx-effect: none;
 }
 
 
