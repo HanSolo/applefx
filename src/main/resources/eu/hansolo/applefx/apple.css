@@ -433,7 +433,7 @@
 
 /* TextField */
 .macos-text-field {
-    -fx-control-inner-background: rgb(242, 242, 242);
+    -fx-control-inner-background: -WHITE;
     -fx-focus-color             : -highlight-color;
     -fx-text-fill               : black;
     -fx-highlight-fill          : derive(-fx-control-inner-background,-20%);
@@ -444,6 +444,8 @@
     -fx-background-radius       : 0, 0;
     -fx-cursor                  : text;
     -fx-padding                 : 4 7 4 7;
+    -fx-font-family            : 'SF Pro Regular';
+    -fx-font-size              : 13px;
 }
 .macos-text-field:focused {
     -fx-faint-focus-color  : -highlight-color;
@@ -456,7 +458,7 @@
 }
 
 .macos-text-field:dark {
-    -fx-control-inner-background: -control-background-color-dark;
+    -fx-control-inner-background: rgb(45, 42, 43); /*-control-background-color-dark;*/
     -fx-focus-color             : -highlight-color-dark;
     -fx-text-fill               : -text-color-dark;
     -fx-highlight-fill          : derive(-fx-control-inner-background,+20%);
