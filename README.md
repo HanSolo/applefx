@@ -12,6 +12,11 @@ Available Macos controls:
 - MacosScrollPane
 - MacosSlider
 - MacosSwitch
+- MacosAddRemoveButton
+- MacosToggleButtonBar
+- MacosToggleButton
+- MacosTextField
+- MacosProgress
 - MacosWindowButton
 - MacosWindow
 
