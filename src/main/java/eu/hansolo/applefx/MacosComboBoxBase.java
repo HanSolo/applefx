@@ -28,7 +28,7 @@ public class MacosComboBoxBase<T> extends ComboBoxBase<T> implements MacosContro
     // ******************** Initialization ************************************
     private void init() {
         //getStyleClass().add("macos-combo-box-base");
-        _dark        = false;
+        _dark        = Helper.isDarkMode();
         _accentColor = Helper.getMacosAccentColor();
     }
 

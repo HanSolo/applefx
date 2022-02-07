@@ -1,5 +1,6 @@
 package eu.hansolo.applefx;
 
+import eu.hansolo.applefx.tools.Helper;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
@@ -73,7 +74,7 @@ public class MacosWindowButton extends Region implements MacosControl {
             @Override public Object getBean() { return MacosWindowButton.this; }
             @Override public String getName() { return "type"; }
         };
-        this.dark = new BooleanPropertyBase(false) {
+        this.dark     = new BooleanPropertyBase(Helper.isDarkMode()) {
             @Override protected void invalidated() { pseudoClassStateChanged(DARK_PSEUDO_CLASS, get()); }
             @Override public Object getBean() { return MacosWindowButton.this; }
             @Override public String getName() { return "darkMode"; }

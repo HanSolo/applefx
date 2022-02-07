@@ -100,13 +100,13 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
 
     // ******************** Constructors **************************************
     public MacosWindow(final Stage stage, final Parent content) {
-        this(stage, content, false, MacosAccentColor.MULTI_COLOR, Style.DECORATED);
+        this(stage, content, Helper.isDarkMode(), MacosAccentColor.MULTI_COLOR, Style.DECORATED);
     }
     public MacosWindow(final Stage stage, final Parent content, final boolean darkMode) {
-        this(stage, content, darkMode, MacosAccentColor.MULTI_COLOR, Style.DECORATED);
+        this(stage, content, Helper.isDarkMode(), MacosAccentColor.MULTI_COLOR, Style.DECORATED);
     }
     public MacosWindow(final Stage stage, final Parent content, final MacosAccentColor accentColor) {
-        this(stage, content, false, accentColor, Style.DECORATED);
+        this(stage, content, Helper.isDarkMode(), Helper.getMacosAccentColor(), Style.DECORATED);
     }
     public MacosWindow(final Stage stage, final Parent content, final boolean darkMode, final MacosAccentColor accentColor, final Style style) {
         if (null == stage) { throw new IllegalArgumentException("stage cannot be null"); }

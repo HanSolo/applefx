@@ -38,16 +38,18 @@ public class MacosSlider extends Slider implements MacosControlWithAccentColor {
     // ******************** Initialization ************************************
     private void init() {
         getStyleClass().add("macos-slider");
-        this.dark        = new BooleanPropertyBase() {
+        this.dark        = new BooleanPropertyBase(Helper.isDarkMode()) {
             @Override protected void invalidated() { pseudoClassStateChanged(DARK_PSEUDO_CLASS, get()); }
             @Override public Object getBean() { return MacosSlider.this; }
             @Override public String getName() { return "dark"; }
         };
-        this.accentColor = new ObjectPropertyBase<>() {
+        this.accentColor = new ObjectPropertyBase<>(Helper.getMacosAccentColor()) {
             @Override protected void invalidated() { setStyle(new StringBuilder().append("-track-progress-fill: ").append((isDark() ? get().getDarkStyleClass() : get().getAquaStyleClass())).append(";").toString()); }
             @Override public Object getBean() { return MacosSlider.this; }
             @Override public String getName() { return "accentColor"; }
         };
+
+        pseudoClassStateChanged(DARK_PSEUDO_CLASS, isDark());
     }
 
 

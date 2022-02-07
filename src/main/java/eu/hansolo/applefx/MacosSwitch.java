@@ -117,7 +117,7 @@ public class MacosSwitch extends Region implements MacosControl {
     public MacosSwitch(final Map<String, Property> settings) {
         _selected       = false;
         accentColor     = FACTORY.createStyleableColorProperty(MacosSwitch.this, "accentColor", "-accent-color", s -> s.accentColor, DEFAULT_ACCENT_COLOR);
-        _dark           = false;
+        _dark           = Helper.isDarkMode();
         _ios            = false;
         windowFocusLost = new BooleanPropertyBase() {
             @Override protected void invalidated() {

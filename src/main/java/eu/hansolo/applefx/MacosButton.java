@@ -60,7 +60,7 @@ public class MacosButton extends Button implements MacosControlWithAccentColor {
     // ******************** Initialization ************************************
     private void init(final boolean isDefault) {
         getStyleClass().add("macos-button");
-        _dark        = false;
+        _dark        = Helper.isDarkMode();
         _def         = isDefault;
         _accentColor = Helper.getMacosAccentColor();
         pseudoClassStateChanged(DEFAULT_PSEUDO_CLASS, isDefault);

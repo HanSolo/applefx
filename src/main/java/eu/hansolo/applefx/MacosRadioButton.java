@@ -32,7 +32,7 @@ public class MacosRadioButton extends RadioButton implements MacosControlWithAcc
     // ******************** Initialization ************************************
     private void init() {
         getStyleClass().add("macos-radio-button");
-        _dark        = false;
+        _dark        = Helper.isDarkMode();
         _accentColor = Helper.getMacosAccentColor();
     }
 

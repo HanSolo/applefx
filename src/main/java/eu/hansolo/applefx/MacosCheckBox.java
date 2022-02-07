@@ -34,15 +34,13 @@ public class MacosCheckBox extends CheckBox implements MacosControlWithAccentCol
     // ******************** Initialization ************************************
     private void init() {
         getStyleClass().add("macos-check-box");
-        _dark        = false;
+        _dark        = Helper.isDarkMode();
         _accentColor = Helper.getMacosAccentColor();
     }
 
 
     // ******************** Methods *******************************************
-    @Override public final boolean isDark() {
-        return null == dark ? _dark : dark.get();
-    }
+    @Override public final boolean isDark() { return null == dark ? _dark : dark.get(); }
     @Override public final void setDark(final boolean dark) {
         if (null == this.dark) {
             _dark = dark;
