@@ -54,7 +54,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     public enum Style { DEFAULT, DECORATED }
 
     public enum HeaderHeight {
-        STANDARD(26.25),
+        STANDARD(28.75),
         DOUBLE(52.5);
 
         private final double height;
