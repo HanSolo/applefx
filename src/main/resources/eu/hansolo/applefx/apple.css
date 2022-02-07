@@ -1431,6 +1431,9 @@
 
 /* ToggleButtonBar */
 .macos-toggle-button-bar {
+    -fx-min-height       : 22;
+    -fx-max-height       : 22;
+    -fx-pref-height      : 22;
     -fx-background-color : linear-gradient(to bottom, rgb(199, 198, 198) 0%, rgb(218, 216, 216) 100%),
                            linear-gradient(to bottom, rgb(222, 221, 221) 0%, rgb(227, 225, 225) 10%, rgb(227, 225, 225) 90%, rgb(222, 221, 221) 100%);
     -fx-background-radius: 5, 4;
@@ -1451,9 +1454,9 @@
     -fx-min-width       : 3;
     -fx-max-width       : 3;
     -fx-pref-width      : 3;
-    -fx-min-height      : 22;
-    -fx-max-height      : 22;
-    -fx-pref-height     : 22;
+    -fx-min-height      : 20;
+    -fx-max-height      : 20;
+    -fx-pref-height     : 20;
     -fx-position-shape  : true;
     -fx-shape           : "M0,0L1,0L1,22L0,22,L0,0z";
     -fx-border-color    : transparent;
