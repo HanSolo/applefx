@@ -3,7 +3,9 @@ package eu.hansolo.applefx;
 import eu.hansolo.applefx.MacosWindow.HeaderHeight;
 import eu.hansolo.applefx.MacosWindow.Style;
 import eu.hansolo.applefx.event.MacEvt;
+import eu.hansolo.applefx.fonts.Fonts;
 import eu.hansolo.applefx.tools.Helper;
+import eu.hansolo.applefx.tools.SFIcon;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -42,8 +44,9 @@ public class Demo extends Application {
     private MacosToggleButton     macosToggleButton2;
     private MacosToggleButton     macosToggleButton3;
     private MacosToggleButton     macosToggleButton4;
-    private MacosToggleButtonBar macosToggleButtonBar;
-    private MacosAddRemoveButton macosPlusMinusButton;
+    private MacosToggleButtonBar  macosToggleButtonBar;
+    private MacosAddRemoveButton  macosPlusMinusButton;
+    private MacosLabel            macosSFSymbolLabel;
 
 
     @Override public void init() {
@@ -88,6 +91,9 @@ public class Demo extends Application {
         macosPlusMinusButton.setRemoveDisable(true);
         macosPlusMinusButton.addMacEvtObserver(MacEvt.ADD, e -> System.out.println("Add pressed"));
         macosPlusMinusButton.addMacEvtObserver(MacEvt.REMOVE, e -> System.out.println("Removed pressed"));
+
+        macosSFSymbolLabel = new MacosLabel(SFIcon.camera.utf8());
+        macosSFSymbolLabel.setFont(Fonts.sfIconSets(32));
     }
 
     private MacosToggleButton createToggleButton(final String text, final ToggleGroup toggleGroup) {
@@ -104,7 +110,7 @@ public class Demo extends Application {
     @Override public void start(Stage stage) {
         VBox radioBox   = new VBox(10, macosRadioButton1, macosRadioButton2);
         radioBox.setAlignment(Pos.CENTER);
-        VBox controlBox = new VBox(20, macosButton, macosDefaultButton, macosSwitch, iosSwitch, macosCheckBox, macosTextField, radioBox, macosSlider1, macosSlider2, macosComboBox, macosPlusMinusButton, macosToggleButtonBar);
+        VBox controlBox = new VBox(20, macosButton, macosDefaultButton, macosSwitch, iosSwitch, macosCheckBox, macosTextField, radioBox, macosSlider1, macosSlider2, macosComboBox, macosPlusMinusButton, macosSFSymbolLabel, macosToggleButtonBar);
         controlBox.setAlignment(Pos.CENTER);
         controlBox.setPadding(new Insets(10));
 
