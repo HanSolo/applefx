@@ -202,6 +202,15 @@ public class MacosSwitch extends Region implements MacosControl {
                 }
             });
         }
+        accentColorProperty().addListener(o -> {
+            if (isSelected()) {
+                if (isDark()) {
+                    backgroundArea.setFill(isWindowFocusLost() ? Color.rgb(106, 105, 104) : getAccentColor());
+                } else {
+                    backgroundArea.setFill(isWindowFocusLost() ? Color.rgb(179, 179, 179) : getAccentColor());
+                }
+            }
+        });
     }
 
     private void setupBinding() {
