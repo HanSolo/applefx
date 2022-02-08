@@ -31,6 +31,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -44,6 +45,7 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -77,6 +79,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     private static final StyleablePropertyFactory<MacosWindow> FACTORY                        = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
     private static final CssMetaData                           HEADER_HEIGHT                  = FACTORY.createSizeCssMetaData("-header-height", s -> s.headerHeight, HeaderHeight.STANDARD.getHeight(), false);
     private        final boolean                               decorated;
+    private        final boolean                               shadowEnabled;
     private              BooleanBinding                        showing;
     private              WatchService                          watchService;
     private              BooleanProperty                       dark;
@@ -100,15 +103,15 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
 
     // ******************** Constructors **************************************
     public MacosWindow(final Stage stage, final Parent content) {
-        this(stage, content, Helper.isDarkMode(), MacosAccentColor.MULTI_COLOR, Style.DECORATED);
+        this(stage, content, Helper.isDarkMode(), MacosAccentColor.MULTI_COLOR, Style.DEFAULT, false);
     }
     public MacosWindow(final Stage stage, final Parent content, final boolean darkMode) {
-        this(stage, content, Helper.isDarkMode(), MacosAccentColor.MULTI_COLOR, Style.DECORATED);
+        this(stage, content, Helper.isDarkMode(), MacosAccentColor.MULTI_COLOR, Style.DEFAULT, false);
     }
     public MacosWindow(final Stage stage, final Parent content, final MacosAccentColor accentColor) {
-        this(stage, content, Helper.isDarkMode(), Helper.getMacosAccentColor(), Style.DECORATED);
+        this(stage, content, Helper.isDarkMode(), Helper.getMacosAccentColor(), Style.DEFAULT, false);
     }
-    public MacosWindow(final Stage stage, final Parent content, final boolean darkMode, final MacosAccentColor accentColor, final Style style) {
+    public MacosWindow(final Stage stage, final Parent content, final boolean darkMode, final MacosAccentColor accentColor, final Style style, final boolean shadowEnabled) {
         if (null == stage) { throw new IllegalArgumentException("stage cannot be null"); }
         if (null == content) { throw new IllegalArgumentException("content cannot be null"); }
         this.stage           = stage;
@@ -128,7 +131,8 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
                 @Override public String getName() { return "accentColor"; }
             };
         this.decorated       = Style.DECORATED == style;
-        this.headerHeight    = new StyleableObjectProperty<>() {
+        this.shadowEnabled   = shadowEnabled;
+        this.headerHeight    = new StyleableObjectProperty<>(HeaderHeight.STANDARD.getHeight()) {
             @Override protected void invalidated() {
                 headerPane.setStyle("-header-height: " + get() + ";");
                 headerPaneLeftToolBar.setVisible(HeaderHeight.DOUBLE.getHeight() == get().doubleValue());
@@ -210,13 +214,16 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             mainPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10), Insets.EMPTY)));
             mainPane.setCenter(contentPane);
             mainPane.setTop(headerPane);
+            mainPane.setMinSize(270, 100);
 
             getChildren().add(mainPane);
 
-            setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10, 10, 10, 10, false), Insets.EMPTY)));
-            setEffect(isFocused() ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
-            setPadding(new Insets(0, OFFSET, OFFSET, OFFSET));
-            setTranslateX(OFFSET);
+            setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(10), Insets.EMPTY)));
+            if (shadowEnabled) {
+                setEffect(isFocused() ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
+                setPadding(new Insets(0, OFFSET, OFFSET, OFFSET));
+                setTranslateX(OFFSET);
+            }
         } else {
             AnchorPane.setTopAnchor(content, 1d);
             AnchorPane.setRightAnchor(content, 1d);
@@ -258,8 +265,10 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             maximizeButton.setOnMouseReleased((Consumer<MouseEvent>) e -> {
                 if (stage.isShowing()) {
                     if (stage.isFullScreen()) {
-                        setPadding(new Insets(0, OFFSET, OFFSET, OFFSET));
-                        setTranslateX(OFFSET);
+                        if (shadowEnabled) {
+                            setPadding(new Insets(0, OFFSET, OFFSET, OFFSET));
+                            setTranslateX(OFFSET);
+                        }
                         stage.setFullScreen(false);
                     } else {
                         setPadding(new Insets(0));
@@ -275,20 +284,24 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
                     nv.setFill(Color.TRANSPARENT);
                     nv.widthProperty().addListener(o1 -> resize());
                     nv.heightProperty().addListener(o1 -> resize());
-                    Platform.runLater(() -> ResizeHelper.addResizeListener(stage));
+                    Platform.runLater(() -> ResizeHelper.addResizeListener(stage, shadowEnabled ? OFFSET : 0));
                 }
             });
             stage.focusedProperty().addListener((o, ov, nv) -> {
-                setEffect(nv ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW);
+                if (shadowEnabled) { setEffect(nv ? STAGE_SHADOW_FOCUSED : STAGE_SHADOW); }
                 headerPane.pseudoClassStateChanged(WINDOW_FOCUS_LOST_PSEUDO_CLASS, !nv);
-                windowFocusLost.set(!nv);
-                setAllWindowFocusLost(!nv);
                 closeButton.setDisable(!nv);
                 minimizeButton.setDisable(!nv);
                 maximizeButton.setDisable(!nv);
+                windowFocusLost.set(!nv);
+                setAllWindowFocusLost(!nv);
             });
-
             stage.resizableProperty().addListener((o, ov, nv) -> maximizeButton.setDisable(!nv));
+        } else {
+            stage.focusedProperty().addListener((o, ov, nv) -> {
+                windowFocusLost.set(!nv);
+                setAllWindowFocusLost(!nv);
+            });
         }
         if (null != getScene()) {
             setupBinding();
@@ -317,8 +330,17 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
         }, sceneProperty(), getScene().windowProperty(), getScene().getWindow().showingProperty());
         showing.addListener(o -> {
             if (showing.get()) {
-                calculateMinSize();
                 watchForAppearanceChanged();
+                if (decorated) {
+                    calculateMinSize();
+                    if (content instanceof Pane) {
+                        Pane   p         = (Pane) content;
+                        double minWidth  = p.getChildren().stream().filter(node -> node instanceof Region).map(node -> (Region) node).map(region -> region.getWidth()).max(Comparator.naturalOrder()).get();
+                        double minHeight = p.getChildren().stream().filter(node -> node instanceof Region).map(node -> (Region) node).map(region -> region.getHeight()).max(Comparator.naturalOrder()).get();
+                        mainPane.setMinWidth(minWidth);
+                        mainPane.setMinHeight(minHeight + getHeaderHeight());
+                    }
+                }
             }
         });
     }
@@ -463,10 +485,17 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     // ******************** Layout ********************************************
     private void resize() {
         if (null != stage) {
-            stage.setMinWidth(contentPane.getMinWidth() + 2 * OFFSET);
-            stage.setMinHeight(contentPane.getMinHeight() + 2 * OFFSET);
-            setMinWidth(contentPane.getMinWidth() + 2 * OFFSET);
-            setMinHeight(contentPane.getMinHeight() + 2 * OFFSET);
+            if (shadowEnabled) {
+                stage.setMinWidth(contentPane.getMinWidth() + 2 * OFFSET);
+                stage.setMinHeight(contentPane.getMinHeight() + 2 * OFFSET);
+                setMinWidth(contentPane.getMinWidth() + 2 * OFFSET);
+                setMinHeight(contentPane.getMinHeight() + 2 * OFFSET);
+            } else {
+                if (decorated) {
+                    stage.setMinWidth(mainPane.getMinWidth());
+                    stage.setMinHeight(mainPane.getMinHeight());
+                }
+            }
             setPrefWidth(stage.getWidth());
             setPrefHeight(stage.getHeight());
         }

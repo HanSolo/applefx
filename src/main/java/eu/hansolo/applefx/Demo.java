@@ -120,7 +120,8 @@ public class Demo extends Application {
         pane.setPrefSize(400, 500);
         pane.setPadding(new Insets(0));
 
-        macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor(), Style.DECORATED);
+        macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor(), Style.DECORATED, true);
+        //macosWindow = new MacosWindow(stage, pane, Helper.isDarkMode(), Helper.getMacosAccentColor(), Style.DEFAULT, false);
         macosWindow.setHeaderHeight(HeaderHeight.DOUBLE);
         macosWindow.addToToolbarLeft(macosToolbarButtonBack);
         macosWindow.addToToolbarLeft(macosToolbarButtonForth);
