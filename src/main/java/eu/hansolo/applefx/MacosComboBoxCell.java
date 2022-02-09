@@ -33,7 +33,7 @@ public class MacosComboBoxCell<T> extends ListCell<T> implements MacosControlWit
             @Override public String getName() { return "dark"; }
         };
         this.accentColor = new ObjectPropertyBase<>(Helper.getMacosAccentColor()) {
-            @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(get().getDarkStyleClass()).append(";").toString()); }
+            @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(get().getAquaStyleClass()).append(";").toString()); }
             @Override public Object getBean() { return MacosComboBoxCell.this; }
             @Override public String getName() { return "accentColor"; }
         };

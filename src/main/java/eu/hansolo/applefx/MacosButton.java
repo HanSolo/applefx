@@ -18,6 +18,7 @@ package eu.hansolo.applefx;
 
 import eu.hansolo.applefx.tools.Helper;
 import eu.hansolo.applefx.tools.MacosAccentColor;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.ObjectProperty;
@@ -120,7 +121,7 @@ public class MacosButton extends Button implements MacosControlWithAccentColor {
     @Override public void setAccentColor(final MacosAccentColor accentColor) {
         if (null == this.accentColor) {
             _accentColor = accentColor;
-            setStyle(isDark() ? new StringBuilder("-button-color: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-button-color: ").append(accentColor.getDarkStyleClass()).append(";").toString());
+            Platform.runLater(() -> setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getAquaStyleClass()).append(";").toString()));
         } else {
             this.accentColor.set(accentColor);
         }
@@ -128,7 +129,9 @@ public class MacosButton extends Button implements MacosControlWithAccentColor {
     @Override public ObjectProperty<MacosAccentColor> accentColorProperty() {
         if (null == accentColor) {
             accentColor = new ObjectPropertyBase<>(_accentColor) {
-                @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(get().getDarkStyleClass()).append(";").toString()); }
+                @Override protected void invalidated() {
+                    Platform.runLater(() -> setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(get().getAquaStyleClass()).append(";").toString()));
+                }
                 @Override public Object getBean() { return MacosButton.this; }
                 @Override public String getName() { return "accentColor"; }
             };

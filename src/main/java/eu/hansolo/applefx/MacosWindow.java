@@ -414,7 +414,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
     private void setAllAccentColors(final MacosAccentColor accentColor) {
         List<Node> allNodes = Helper.getAllNodes(contentPane);
         if (Platform.isFxApplicationThread()) {
-            allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getDarkStyleClass()).append(";").toString()));
+            allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getAquaStyleClass()).append(";").toString()));
             //allNodes.stream().filter(node -> node instanceof MacosControlWithAccentColor).map(node -> ((MacosControlWithAccentColor) node)).forEach(macosControlWithAccentColor -> macosControlWithAccentColor.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setAccentColor(isDark() ? accentColor.getColorDark() : accentColor.getColorAqua()));
             allNodes.stream().filter(node -> node instanceof MacosCheckBox).map(node -> (MacosCheckBox) node).forEach(macosCheckBox -> macosCheckBox.setAccentColor(accentColor));
@@ -422,9 +422,10 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             allNodes.stream().filter(node -> node instanceof MacosComboBox).map(node -> (MacosComboBox) node).forEach(macosComboBox -> macosComboBox.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosSlider).map(node -> (MacosSlider) node).forEach(macosSlider -> macosSlider.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosTextField).map(node -> (MacosTextField) node).forEach(macosTextField -> macosTextField.setAccentColor(accentColor));
+            allNodes.stream().filter(node -> node instanceof MacosButton).map(node -> (MacosButton) node).forEach(macosButton -> macosButton.setAccentColor(accentColor));
         } else {
             Platform.runLater(() -> {
-                allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getDarkStyleClass()).append(";").toString()));
+                allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getAquaStyleClass()).append(";").toString()));
                 //allNodes.stream().filter(node -> node instanceof MacosControlWithAccentColor).map(node -> ((MacosControlWithAccentColor) node)).forEach(macosControlWithAccentColor -> macosControlWithAccentColor.setAccentColor(accentColor));
                 allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setAccentColor(isDark() ? accentColor.getColorDark() : accentColor.getColorAqua()));
                 allNodes.stream().filter(node -> node instanceof MacosCheckBox).map(node -> (MacosCheckBox) node).forEach(macosCheckBox -> macosCheckBox.setAccentColor(accentColor));
@@ -432,6 +433,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
                 allNodes.stream().filter(node -> node instanceof MacosComboBox).map(node -> (MacosComboBox) node).forEach(macosComboBox -> macosComboBox.setAccentColor(accentColor));
                 allNodes.stream().filter(node -> node instanceof MacosSlider).map(node -> (MacosSlider) node).forEach(macosSlider -> macosSlider.setAccentColor(accentColor));
                 allNodes.stream().filter(node -> node instanceof MacosTextField).map(node -> (MacosTextField) node).forEach(macosTextField -> macosTextField.setAccentColor(accentColor));
+                allNodes.stream().filter(node -> node instanceof MacosButton).map(node -> (MacosButton) node).forEach(macosButton -> macosButton.setAccentColor(accentColor));
             });
         }
     }

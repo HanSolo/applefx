@@ -66,7 +66,7 @@ public class MacosCheckBox extends CheckBox implements MacosControlWithAccentCol
     @Override public void setAccentColor(final MacosAccentColor accentColor) {
         if (null == this.accentColor) {
             _accentColor = accentColor;
-            setStyle(isDark() ? new StringBuilder("-box-fill: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-box-fill: ").append(accentColor.getDarkStyleClass()).append(";").toString());
+            setStyle(isDark() ? new StringBuilder("-box-fill: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-box-fill: ").append(accentColor.getAquaStyleClass()).append(";").toString());
         } else {
             this.accentColor.set(accentColor);
         }
@@ -74,7 +74,7 @@ public class MacosCheckBox extends CheckBox implements MacosControlWithAccentCol
     @Override public ObjectProperty<MacosAccentColor> accentColorProperty() {
         if (null == accentColor) {
             accentColor = new ObjectPropertyBase<>(_accentColor) {
-                @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-box-fill: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-box-fill: ").append(get().getDarkStyleClass()).append(";").toString()); }
+                @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-box-fill: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-box-fill: ").append(get().getAquaStyleClass()).append(";").toString()); }
                 @Override public Object getBean() { return MacosCheckBox.this; }
                 @Override public String getName() { return "accentColor"; }
             };

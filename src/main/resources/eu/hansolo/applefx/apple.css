@@ -59,9 +59,9 @@
     -PINK-DARK-HIGHLIGHT              : rgb(153, 75, 126);
 
     -RED-AQUA                         : rgb(247, 56, 62);
-    -RAD-DARK                         : rgb(255, 82, 87);
+    -RED-DARK                         : rgb(255, 82, 87);
     -RED-AQUA-HIGHLIGHT               : rgb(225, 142, 145);
-    -RAD-DARK-HIGHLIGHT               : rgb(153, 77, 80);
+    -RED-DARK-HIGHLIGHT               : rgb(153, 77, 80);
 
     -ORANGE-AQUA                      : rgb(247, 130, 27);
     -ORANGE-DARK                      : rgb(247, 130, 24);
@@ -156,7 +156,6 @@
     -fx-font-size              : 13px;
 }
 .macos-button:def {
-    -button-color        : -accent-color;
     -fx-pref-height      : 20;
     -fx-background-color : derive(-accent-color, 10%), linear-gradient(to bottom, -button-color 0%, derive(-button-color, -20%) 100%);
     -fx-background-insets: 0, 0.5;
@@ -182,7 +181,7 @@
 }
 .macos-button:def:armed {
     -fx-pref-height      : 20;
-    -fx-background-color : -button-color, linear-gradient(to bottom, derive(-button-color, -10%) 0%, derive(-button-color, -30%) 100%);
+    -fx-background-color : -accent-color, linear-gradient(to bottom, derive(-accent-color, -10%) 0%, derive(-accent-color, -30%) 100%);
     -fx-background-insets: 0, 0.5;
     -fx-background-radius: 5, 4;
     -fx-padding          : 2 10 2 10;
@@ -210,9 +209,8 @@
     -fx-text-fill        : -text-color-dark;
 }
 .macos-button:dark:def {
-    -button-color        : -accent-color-dark;
     -fx-pref-height      : 20;
-    -fx-background-color : derive(-accent-color-dark, 10%), linear-gradient(to bottom, -button-color 0%, derive(-button-color, -20%) 100%);
+    -fx-background-color : derive(-accent-color-dark, 10%), linear-gradient(to bottom, -accent-color-dark 0%, derive(-accent-color-dark, -20%) 100%);
     -fx-background-insets: 0, 0.5 0 0 0;
     -fx-text-fill        : -text-color-dark;
 }
@@ -221,7 +219,7 @@
 }
 .macos-button:dark:def:armed {
     -fx-pref-height      : 20;
-    -fx-background-color : derive(-button-color, 20%), linear-gradient(to bottom, derive(-button-color, 10%) 0%, derive(-button-color, -10%) 100%);
+    -fx-background-color : derive(-accent-color-dark, 20%), linear-gradient(to bottom, derive(-accent-color-dark, 10%) 0%, derive(-accent-color-dark, -10%) 100%);
     -fx-background-insets: 0, 0.5 0 0 0;
     -fx-text-fill        : -text-color-dark;
 }
@@ -398,7 +396,7 @@
     -fx-background-insets: 0, 0.5;
     -fx-background-color : -thumb-border-color, derive(-thumb-color, -10%);
     -fx-background-radius: 20px;
-    -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.15), 1, 0.0, 0, 1)
+    -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.15), 1, 0.0, 0, 1);
 }
 
 .macos-slider:dark {

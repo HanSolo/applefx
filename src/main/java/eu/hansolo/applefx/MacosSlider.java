@@ -48,7 +48,6 @@ public class MacosSlider extends Slider implements MacosControlWithAccentColor {
             @Override public Object getBean() { return MacosSlider.this; }
             @Override public String getName() { return "accentColor"; }
         };
-
         pseudoClassStateChanged(DARK_PSEUDO_CLASS, isDark());
     }
 
