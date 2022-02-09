@@ -210,7 +210,11 @@
 }
 .macos-button:dark:def {
     -fx-pref-height      : 20;
+<<<<<<< HEAD
     -fx-background-color : derive(-accent-color-dark, 10%), linear-gradient(to bottom, -accent-color-dark 0%, derive(-accent-color-dark, -20%) 100%);
+=======
+    -fx-background-color : derive(-button-color, 10%), linear-gradient(to bottom, -button-color 0%, derive(-button-color, -20%) 100%);
+>>>>>>> 6a728bb0ec7f79cd57bc197e77eca1336a250b50
     -fx-background-insets: 0, 0.5 0 0 0;
     -fx-text-fill        : -text-color-dark;
 }
