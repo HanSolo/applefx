@@ -62,7 +62,7 @@ public class MacosComboBoxBase<T> extends ComboBoxBase<T> implements MacosContro
     public void setAccentColor(final MacosAccentColor accentColor) {
         if (null == this.accentColor) {
             _accentColor = accentColor;
-            setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getDarkStyleClass()).append(";").toString());
+            setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getAquaStyleClass()).append(";").toString());
         } else {
             this.accentColor.set(accentColor);
         }
@@ -70,7 +70,7 @@ public class MacosComboBoxBase<T> extends ComboBoxBase<T> implements MacosContro
     public ObjectProperty<MacosAccentColor> accentColorProperty() {
         if (null == accentColor) {
             accentColor = new ObjectPropertyBase<>(_accentColor) {
-                @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(get().getDarkStyleClass()).append(";").toString()); }
+                @Override protected void invalidated() { setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(get().getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(get().getAquaStyleClass()).append(";").toString()); }
                 @Override public Object getBean() { return MacosComboBoxBase.this; }
                 @Override public String getName() { return "accentColor"; }
             };

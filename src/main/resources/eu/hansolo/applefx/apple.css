@@ -212,7 +212,7 @@
 .macos-button:dark:def {
     -button-color        : -accent-color-dark;
     -fx-pref-height      : 20;
-    -fx-background-color : derive(-accent-color-dark, 10%), linear-gradient(to bottom, -button-color 0%, derive(-button-color, -20%) 100%);
+    -fx-background-color : derive(-button-color, 10%), linear-gradient(to bottom, -button-color 0%, derive(-button-color, -20%) 100%);
     -fx-background-insets: 0, 0.5 0 0 0;
     -fx-text-fill        : -text-color-dark;
 }
@@ -398,7 +398,7 @@
     -fx-background-insets: 0, 0.5;
     -fx-background-color : -thumb-border-color, derive(-thumb-color, -10%);
     -fx-background-radius: 20px;
-    -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.15), 1, 0.0, 0, 1)
+    -fx-effect           : dropshadow(two-pass-box, rgba(0, 0, 0, 0.15), 1, 0.0, 0, 1);
 }
 
 .macos-slider:dark {

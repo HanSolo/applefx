@@ -422,6 +422,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             allNodes.stream().filter(node -> node instanceof MacosComboBox).map(node -> (MacosComboBox) node).forEach(macosComboBox -> macosComboBox.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosSlider).map(node -> (MacosSlider) node).forEach(macosSlider -> macosSlider.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosTextField).map(node -> (MacosTextField) node).forEach(macosTextField -> macosTextField.setAccentColor(accentColor));
+            allNodes.stream().filter(node -> node instanceof MacosButton).map(node -> (MacosButton) node).forEach(macosButton -> macosButton.setAccentColor(accentColor));
         } else {
             Platform.runLater(() -> {
                 allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getDarkStyleClass()).append(";").toString()));
