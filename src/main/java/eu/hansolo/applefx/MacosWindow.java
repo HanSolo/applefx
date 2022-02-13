@@ -453,8 +453,8 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
 
     private void watchForAppearanceChanged() {
         if (OperatingSystem.MACOS != getOperatingSystem()) { return; }
-        final Path path = FileSystems.getDefault().getPath(System.getProperty("user.home"), "/Library/Preferences/");
-        new Thread(() -> {
+        final Path   path = FileSystems.getDefault().getPath(System.getProperty("user.home"), "/Library/Preferences/");
+        final Thread t    = new Thread(() -> {
             try {
                 watchService = FileSystems.getDefault().newWatchService();
                 try {
@@ -476,7 +476,9 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        t.setDaemon(true);
+        t.start();
     }
 
 
