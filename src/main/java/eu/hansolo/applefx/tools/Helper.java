@@ -71,9 +71,9 @@ public class Helper {
 
     public static final boolean isDarkMode() {
         switch(getOperatingSystem()) {
-            case WINDOWS -> { return isWindowsDarkMode(); }
-            case MACOS   -> { return isMacOsDarkMode(); }
-            default      -> { return false; }
+            case WINDOWS: return isWindowsDarkMode();
+            case MACOS  : return isMacOsDarkMode();
+            default     : return false;
         }
     }
 

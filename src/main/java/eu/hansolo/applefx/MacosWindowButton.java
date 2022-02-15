@@ -54,21 +54,21 @@ public class MacosWindowButton extends Region implements MacosControl {
         this.type     = new ObjectPropertyBase<>(type) {
             @Override protected void invalidated() {
                 switch(get()) {
-                    case CLOSE    -> {
+                    case CLOSE:
                         pseudoClassStateChanged(CLOSE_PSEUDO_CLASS, true);
                         pseudoClassStateChanged(MINIMIZE_PSEUDO_CLASS, false);
                         pseudoClassStateChanged(MAXIMIZE_PSEUDO_CLASS, false);
-                    }
-                    case MINIMIZE -> {
+                        break;
+                    case MINIMIZE:
                         pseudoClassStateChanged(CLOSE_PSEUDO_CLASS, false);
                         pseudoClassStateChanged(MINIMIZE_PSEUDO_CLASS, true);
                         pseudoClassStateChanged(MAXIMIZE_PSEUDO_CLASS, false);
-                    }
-                    case MAXIMIZE -> {
+                        break;
+                    case MAXIMIZE:
                         pseudoClassStateChanged(CLOSE_PSEUDO_CLASS, false);
                         pseudoClassStateChanged(MINIMIZE_PSEUDO_CLASS, false);
                         pseudoClassStateChanged(MAXIMIZE_PSEUDO_CLASS, true);
-                    }
+                        break;
                 }
             }
             @Override public Object getBean() { return MacosWindowButton.this; }

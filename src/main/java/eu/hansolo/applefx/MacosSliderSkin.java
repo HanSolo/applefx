@@ -116,8 +116,8 @@ public class MacosSliderSkin extends SkinBase<MacosSlider> {
         thumb = new StackPane() {
             @Override public Object queryAccessibleAttribute(AccessibleAttribute attribute, Object... parameters) {
                 switch (attribute) {
-                    case VALUE -> { return slider.getValue(); }
-                    default    -> { return super.queryAccessibleAttribute(attribute, parameters); }
+                    case VALUE: { return slider.getValue(); }
+                    default   : { return super.queryAccessibleAttribute(attribute, parameters); }
                 }
             }
         };

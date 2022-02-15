@@ -53,27 +53,27 @@ public enum MacosAccentColor {
 
     public String getAquaStyleClass() {
         switch(this) {
-            case MULTI_COLOR -> { return "-BLUE-AQUA"; }
-            default          -> { return "-" + name() + "-AQUA"; }
+            case MULTI_COLOR: return "-BLUE-AQUA";
+            default         : return "-" + name() + "-AQUA";
         }
     }
     public String getDarkStyleClass() {
         switch(this) {
-            case MULTI_COLOR -> { return "-BLUE-DARK"; }
-            default          -> { return "-" + name() + "-DARK"; }
+            case MULTI_COLOR: return "-BLUE-DARK";
+            default         : return "-" + name() + "-DARK";
         }
     }
 
     public String getAquaHighlightStyleClass() {
         switch(this) {
-            case MULTI_COLOR -> { return "-BLUE-AQUA-HIGHLIGHT"; }
-            default          -> { return "-" + name() + "-AQUA-HIGHLIGHT"; }
+            case MULTI_COLOR: return "-BLUE-AQUA-HIGHLIGHT";
+        default             : return "-" + name() + "-AQUA-HIGHLIGHT";
         }
     }
     public String getDarkHighlightStyleClass() {
         switch(this) {
-            case MULTI_COLOR -> { return "-BLUE-DARK-HIGHLIGHT"; }
-            default          -> { return "-" + name() + "-DARK-HIGHLIGHT"; }
+            case MULTI_COLOR: return "-BLUE-DARK-HIGHLIGHT";
+            default         : return "-" + name() + "-DARK-HIGHLIGHT";
         }
     }
 
