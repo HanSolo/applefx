@@ -29,9 +29,9 @@ public class Demo extends Application {
     private MacosButton           macosButton;
     private MacosButton           macosDefaultButton;
     private MacosSwitch           macosSwitch;
-    private MacosSwitch         iosSwitch;
-    private MacosCheckBoxSwitch macosSwitch1;
-    private MacosCheckBox       macosCheckBox;
+    private MacosSwitch           iosSwitch;
+    private MacosCheckBoxSwitch   macosSwitch1;
+    private MacosCheckBox         macosCheckBox;
     private MacosTextField        macosTextField;
     private MacosRadioButton      macosRadioButton1;
     private MacosRadioButton      macosRadioButton2;
