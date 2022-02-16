@@ -345,7 +345,7 @@ public class MacosSwitch extends Region implements MacosControl {
         if (null == this.dark) {
             _dark = dark;
             pseudoClassStateChanged(DARK_PSEUDO_CLASS, dark);
-            backgroundArea.setFill(dark ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua());
+            backgroundArea.setFill(dark ? MacosSystemColor.CTRL_BACKGROUND.dark() : MacosSystemColor.CTRL_BACKGROUND.aqua());
         } else {
             this.dark.set(dark);
         }
@@ -355,7 +355,7 @@ public class MacosSwitch extends Region implements MacosControl {
             dark = new BooleanPropertyBase() {
                 @Override protected void invalidated() {
                     pseudoClassStateChanged(DARK_PSEUDO_CLASS, get());
-                    backgroundArea.setFill(get() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua());
+                    backgroundArea.setFill(get() ? MacosSystemColor.CTRL_BACKGROUND.dark() : MacosSystemColor.CTRL_BACKGROUND.aqua());
                 }
                 @Override public Object getBean() { return MacosSwitch.this; }
                 @Override public String getName() { return "dark"; }
@@ -510,7 +510,7 @@ public class MacosSwitch extends Region implements MacosControl {
     protected HashMap<String, Property> getSettings() { return settings; }
 
     private void animateToSelected() {
-        KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
+        KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTRL_BACKGROUND.dark() : MacosSystemColor.CTRL_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
         KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
         KeyValue kvKnobXStart          = new KeyValue(knob.centerXProperty(), knobRadius + knobInset, Interpolator.EASE_BOTH);
         KeyValue kvKnobXEnd            = new KeyValue(knob.centerXProperty(), width - knobRadius - knobInset, Interpolator.EASE_BOTH);
@@ -528,7 +528,7 @@ public class MacosSwitch extends Region implements MacosControl {
     }
     private void animateToDeselected() {
         KeyValue kvBackgroundFillStart = new KeyValue(backgroundArea.fillProperty(), getAccentColor(), Interpolator.EASE_BOTH);
-        KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTR_BACKGROUND.dark() : MacosSystemColor.CTR_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
+        KeyValue kvBackgroundFillEnd   = new KeyValue(backgroundArea.fillProperty(), isDark() ? MacosSystemColor.CTRL_BACKGROUND.dark() : MacosSystemColor.CTRL_BACKGROUND.aqua(), Interpolator.EASE_BOTH);
         KeyValue kvKnobXStart          = new KeyValue(knob.centerXProperty(), width - knobRadius - knobInset, Interpolator.EASE_BOTH);
         KeyValue kvKnobXEnd            = new KeyValue(knob.centerXProperty(), knobRadius + knobInset, Interpolator.EASE_BOTH);
         KeyValue kvOneOpacityStart     = new KeyValue(one.opacityProperty(), one.getOpacity(), Interpolator.EASE_BOTH);

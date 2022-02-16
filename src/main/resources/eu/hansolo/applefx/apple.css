@@ -1606,3 +1606,47 @@
 .macos-add-remove-button:dark > .macos-remove-button:dark:disabled > .macos-minus-icon:dark {
     -fx-background-color: rgb(180, 180, 180);
 }
+
+
+/* Switch based on CheckBox */
+.macos-checkbox-switch {
+    -bkg-color  : -LIGHT-CTRL-BACKGROUND;
+    -thumb-color: -WHITE;
+}
+.macos-checkbox-switch:selected {
+    -bkg-color: -accent-color;
+}
+.macos-checkbox-switch:selected:window-focus-lost {
+    -bkg-color: rgb(179, 179, 179);
+}
+.macos-checkbox-switch .switch-background {
+    -fx-background-radius: 2em;
+    -fx-background-color : -bkg-color;
+}
+.macos-checkbox-switch .switch-background .switch-one {
+    -fx-fill: -WHITE;
+}
+.macos-checkbox-switch .switch-background .switch-zero {
+    -fx-fill  : transparent;
+    -fx-stroke: rgb(140, 140, 140);
+}
+.macos-checkbox-switch .switch-background .switch-thumb {
+    -fx-fill: -thumb-color;
+}
+
+.macos-checkbox-switch:dark {
+    -bkg-color: -DARK-CTRL-BACKGROUND;
+}
+.macos-checkbox-switch:dark:selected {
+    -bkg-color: -accent-color-dark;
+}
+.macos-checkbox-switch:dark:selected:window-focus-lost {
+    -bkg-color: rgb(106, 105, 104);
+}
+.macos-checkbox-switch:dark .switch-background .switch-one {
+    -fx-fill: -WHITE;
+}
+.macos-checkbox-switch:dark .switch-background .switch-zero {
+    -fx-fill  : transparent;
+    -fx-stroke: rgb(175, 175, 175);
+}
