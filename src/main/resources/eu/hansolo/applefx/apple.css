@@ -157,7 +157,7 @@
 }
 .macos-button:def {
     -fx-pref-height      : 20;
-    -fx-background-color : derive(-accent-color, 10%), linear-gradient(to bottom, -button-color 0%, derive(-button-color, -20%) 100%);
+    -fx-background-color : derive(-accent-color, 10%), linear-gradient(to bottom, -accent-color 0%, derive(-accent-color, -20%) 100%);
     -fx-background-insets: 0, 0.5;
     -fx-background-radius: 5, 4;
     -fx-padding          : 2 10 2 10;
