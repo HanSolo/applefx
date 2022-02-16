@@ -35,6 +35,7 @@ import static eu.hansolo.toolbox.Helper.getOperatingSystem;
 
 
 public class Helper {
+    public static boolean jproMode = false;
 
     private Helper() {}
 
@@ -70,6 +71,7 @@ public class Helper {
     }
 
     public static final boolean isDarkMode() {
+        if (jproMode) { return false; }
         switch(getOperatingSystem()) {
             case WINDOWS -> { return isWindowsDarkMode(); }
             case MACOS   -> { return isMacOsDarkMode(); }
@@ -119,7 +121,7 @@ public class Helper {
     }
 
     public static final MacosAccentColor getMacosAccentColor() {
-        if (OperatingSystem.MACOS != getOperatingSystem()) { return MacosAccentColor.MULTI_COLOR; }
+        if (jproMode || OperatingSystem.MACOS != getOperatingSystem()) { return MacosAccentColor.MULTI_COLOR; }
         final boolean isDarkMode = isMacOsDarkMode();
         try {
             Integer           colorKey    = null;
