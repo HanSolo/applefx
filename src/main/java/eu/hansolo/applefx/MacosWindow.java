@@ -417,6 +417,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
             allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getAquaStyleClass()).append(";").toString()));
             //allNodes.stream().filter(node -> node instanceof MacosControlWithAccentColor).map(node -> ((MacosControlWithAccentColor) node)).forEach(macosControlWithAccentColor -> macosControlWithAccentColor.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setAccentColor(isDark() ? accentColor.getColorDark() : accentColor.getColorAqua()));
+            allNodes.stream().filter(node -> node instanceof MacosCheckBoxSwitch).map(node -> (MacosCheckBoxSwitch) node).forEach(macosSwitch -> macosSwitch.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosCheckBox).map(node -> (MacosCheckBox) node).forEach(macosCheckBox -> macosCheckBox.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosRadioButton).map(node -> (MacosRadioButton) node).forEach(macosRadioButton -> macosRadioButton.setAccentColor(accentColor));
             allNodes.stream().filter(node -> node instanceof MacosComboBox).map(node -> (MacosComboBox) node).forEach(macosComboBox -> macosComboBox.setAccentColor(accentColor));
@@ -428,6 +429,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
                 allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.setStyle(isDark() ? new StringBuilder("-accent-color-dark: ").append(accentColor.getDarkStyleClass()).append(";").toString() : new StringBuilder("-accent-color: ").append(accentColor.getAquaStyleClass()).append(";").toString()));
                 //allNodes.stream().filter(node -> node instanceof MacosControlWithAccentColor).map(node -> ((MacosControlWithAccentColor) node)).forEach(macosControlWithAccentColor -> macosControlWithAccentColor.setAccentColor(accentColor));
                 allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setAccentColor(isDark() ? accentColor.getColorDark() : accentColor.getColorAqua()));
+                allNodes.stream().filter(node -> node instanceof MacosCheckBoxSwitch).map(node -> (MacosCheckBoxSwitch) node).forEach(macosSwitch -> macosSwitch.setAccentColor(accentColor));
                 allNodes.stream().filter(node -> node instanceof MacosCheckBox).map(node -> (MacosCheckBox) node).forEach(macosCheckBox -> macosCheckBox.setAccentColor(accentColor));
                 allNodes.stream().filter(node -> node instanceof MacosRadioButton).map(node -> (MacosRadioButton) node).forEach(macosRadioButton -> macosRadioButton.setAccentColor(accentColor));
                 allNodes.stream().filter(node -> node instanceof MacosComboBox).map(node -> (MacosComboBox) node).forEach(macosComboBox -> macosComboBox.setAccentColor(accentColor));
@@ -443,6 +445,7 @@ public class MacosWindow extends Region implements MacosControlWithAccentColor {
         allNodes.stream().filter(node -> node instanceof MacosControl).forEach(node -> node.pseudoClassStateChanged(WINDOW_FOCUS_LOST_PSEUDO_CLASS, windowFocusLost));
         allNodes.stream().filter(node -> node instanceof MacosSwitch).map(node -> (MacosSwitch) node).forEach(macosSwitch -> macosSwitch.setWindowFocusLost(windowFocusLost));
         allNodes.stream().filter(node -> node instanceof MacosSlider).map(node -> (MacosSlider) node).forEach(macosSlider -> macosSlider.setWindowFocusLost(windowFocusLost));
+        allNodes.stream().filter(node -> node instanceof MacosCheckBoxSwitch).map(node -> (MacosCheckBoxSwitch) node).forEach(macosSwitch -> macosSwitch.setWindowFocusLost(windowFocusLost));
     }
 
     private void calculateMinSize() {

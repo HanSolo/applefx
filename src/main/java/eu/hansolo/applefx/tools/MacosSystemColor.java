@@ -17,7 +17,7 @@ public enum MacosSystemColor {
     GRAPHITE(Color.rgb(152, 152, 152), Color.rgb(140, 140, 140)),
 
     BACKGROUND(Color.rgb(236, 234, 234), Color.rgb(31, 28, 29)),
-    CTR_BACKGROUND(Color.rgb(211, 210, 211), Color.rgb(61, 59, 61));
+    CTRL_BACKGROUND(Color.rgb(211, 210, 211), Color.rgb(61, 59, 61));
 
     final Color aqua;
     final Color dark;
