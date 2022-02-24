@@ -49,7 +49,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static eu.hansolo.toolbox.Helper.getOperatingSystem;
+import static eu.hansolo.jdktools.util.Helper.getOperatingSystem;
 
 
 public class MacosWindow extends Region implements MacosControlWithAccentColor {

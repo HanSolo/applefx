@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static eu.hansolo.toolbox.Helper.getOperatingSystem;
+import static eu.hansolo.jdktools.util.Helper.getOperatingSystem;
 
 
 public class Helper {

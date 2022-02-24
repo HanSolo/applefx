@@ -6,6 +6,7 @@ import eu.hansolo.applefx.event.MacEvt;
 import eu.hansolo.applefx.fonts.Fonts;
 import eu.hansolo.applefx.tools.Helper;
 import eu.hansolo.applefx.tools.SFIcon;
+import eu.hansolo.jdktools.util.Helper.OsArcMode;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,8 +52,10 @@ public class Demo extends Application {
 
 
     @Override public void init() {
-        System.out.println("Operating System: " + eu.hansolo.toolbox.Helper.getOperatingSystem().getUiString());
-        System.out.println("Architecture    : " + eu.hansolo.toolbox.Helper.getArchitecture());
+        OsArcMode sysInfo = eu.hansolo.jdktools.util.Helper.getOperaringSystemArchitectureOperatingMode();
+        System.out.println("Operating System: " + sysInfo.operatingMode().getUiString());
+        System.out.println("Architecture    : " + sysInfo.architecture().getUiString());
+        System.out.println("Operating Mode  : " + sysInfo.operatingMode().getUiString());
 
         macosButton             = new MacosButton("Click me");
         macosDefaultButton      = new MacosButton("Default", true);
