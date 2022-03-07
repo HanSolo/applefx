@@ -48,7 +48,7 @@ public class Demo extends Application {
     private MacosToggleButton     macosToggleButton4;
     private MacosToggleButtonBar  macosToggleButtonBar;
     private MacosAddRemoveButton  macosPlusMinusButton;
-    private MacosLabel            macosSFSymbolLabel;
+    private MacosSelectableLabel  macosSFSymbolLabel;
 
 
     @Override public void init() {
@@ -97,7 +97,7 @@ public class Demo extends Application {
         macosPlusMinusButton.addMacEvtObserver(MacEvt.ADD, e -> System.out.println("Add pressed"));
         macosPlusMinusButton.addMacEvtObserver(MacEvt.REMOVE, e -> System.out.println("Removed pressed"));
 
-        macosSFSymbolLabel = new MacosLabel(SFIcon.camera.utf8());
+        macosSFSymbolLabel = new MacosSelectableLabel(SFIcon.camera.utf8());
         macosSFSymbolLabel.setFont(Fonts.sfIconSets(32));
     }
 
@@ -110,7 +110,9 @@ public class Demo extends Application {
         return toggleButton;
     }
 
-    private void registerListeners() { }
+    private void registerListeners() {
+        macosSFSymbolLabel.setOnMousePressed(e -> macosSFSymbolLabel.setSelected(!macosSFSymbolLabel.isSelected()));
+    }
 
     @Override public void start(Stage stage) {
         VBox radioBox   = new VBox(10, macosRadioButton1, macosRadioButton2);

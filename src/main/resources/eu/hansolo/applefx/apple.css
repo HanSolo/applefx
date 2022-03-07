@@ -797,9 +797,6 @@
     -fx-background-insets: 0;
     -fx-background-radius: 0;
 }
-.macos-scroll-pane {
-    -fx-background-color: transparent;
-}
 .macos-scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
@@ -1035,11 +1032,17 @@
     -fx-font     : normal normal 13 'SF Pro Display';
     -fx-text-fill: -text-color;
 }
+.macos-label:selected {
+    -fx-text-fill: -accent-color;
+}
 
 .macos-label:dark {
     -fx-alignment: center-left;
     -fx-font     : normal normal 13 'SF Pro Regular';
     -fx-text-fill: -text-color-dark;
+}
+.macos-label:dark:selected {
+    -fx-text-fill: -accent-color-dark;
 }
 
 
@@ -1238,7 +1241,7 @@
     -fx-text-fill   : -text-color;
     -fx-border-style: none;
     -fx-border-color: transparent;
-    -fx-padding     : 0;
+    -fx-padding     : -1 0 0 0;
 }
 .combo-box .macos-combo-box-cell {
     -fx-font-family : 'SF Pro';
@@ -1278,12 +1281,10 @@
     -fx-background-color : derive(rgb(237, 236, 236), -5%);
 }
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .macos-combo-box-cell:filled:selected:hover {
-    -fx-background-color : -accent-color;
     -fx-background-color : derive(rgb(237, 236, 236), -5%), -accent-color;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 0, 4;
 }
-
 
 .combo-box-base:dark,
 .combo-box-base:dark:focused {
@@ -1349,7 +1350,7 @@
     -fx-font-family: 'SF Pro';
     -fx-font-size  : 13;
     -fx-text-fill  : -text-color-dark;
-    -fx-padding    : 0;
+    -fx-padding    : -1 0 0 0;
 }
 .combo-box:dark .macos-combo-box-cell:dark {
     -fx-font-family: 'SF Pro';
@@ -1376,10 +1377,9 @@
     -fx-text-fill        : -text-color-dark;
 }
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .macos-combo-box-cell:dark:filled:selected {
-    -fx-background-color : -HEADER-BACKGROUND-DARK;
+    -fx-background-color: -HEADER-BACKGROUND-DARK;
 }
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .macos-combo-box-cell:dark:filled:selected:hover {
-    -fx-background-color : -accent-color-dark;
     -fx-background-color : -HEADER-BACKGROUND-DARK, -accent-color-dark;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 0, 4;
