@@ -42,9 +42,9 @@ dependencies {
     implementation "org.openjfx:javafx-graphics:${javafxVersion}:${platform}"
     implementation "org.openjfx:javafx-controls:${javafxVersion}:${platform}"
     implementation "org.openjfx:javafx-swing:${javafxVersion}:${platform}"
-    implementation "eu.hansolo:jdktools:17.0.7"
-    implementation "eu.hansolo:toolbox:17.0.18"
-    implementation "eu.hansolo:toolboxfx:17.0.25"
+    implementation "eu.hansolo:jdktools:17.0.11"
+    implementation "eu.hansolo:toolbox:17.0.19"
+    implementation "eu.hansolo:toolboxfx:17.0.26"
 }
 
 
@@ -73,9 +73,18 @@ jar {
                 'Bundle-Description'    : description,
                 'Bundle-SymbolicName'   : 'eu.hansolo.applefx',
                 'Export-Package'        : 'eu.hansolo.applefx.event, eu.hansolo.applefx.fonts, eu.hansolo.applefx.tools',
-                'Class-Path'            : '${project.name}-${project.version}.jar',
+                'Class-Path'            : configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
                 'Main-Class'            : 'eu.hansolo.applefx.Launcher'
         )
+    }
+}
+
+
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
     }
 }
 
