@@ -34,6 +34,7 @@ public class Demo extends Application {
     private MacosCheckBoxSwitch   macosSwitch1;
     private MacosCheckBox         macosCheckBox;
     private MacosTextField        macosTextField;
+    private MacosPasswordField    macosPasswordField;
     private MacosRadioButton      macosRadioButton1;
     private MacosRadioButton      macosRadioButton2;
     private MacosSlider           macosSlider1;
@@ -66,6 +67,7 @@ public class Demo extends Application {
         macosSwitch1            = new MacosCheckBoxSwitch();
         macosCheckBox           = new MacosCheckBox("Check me");
         macosTextField          = new MacosTextField();
+        macosPasswordField      = new MacosPasswordField();
         macosRadioButton1       = new MacosRadioButton("Select me");
         macosRadioButton2       = new MacosRadioButton("Select me");
         macosSlider1            = new MacosSlider(0, 100, 50);
@@ -117,7 +119,7 @@ public class Demo extends Application {
     @Override public void start(Stage stage) {
         VBox radioBox   = new VBox(10, macosRadioButton1, macosRadioButton2);
         radioBox.setAlignment(Pos.CENTER);
-        VBox controlBox = new VBox(20, macosButton, macosDefaultButton, macosSwitch, iosSwitch, macosSwitch1, macosCheckBox, macosTextField, radioBox, macosSlider1, macosSlider2, macosComboBox, macosPlusMinusButton, macosSFSymbolLabel, macosToggleButtonBar);
+        VBox controlBox = new VBox(20, macosButton, macosDefaultButton, macosSwitch, iosSwitch, macosSwitch1, macosCheckBox, macosTextField, macosPasswordField, radioBox, macosSlider1, macosSlider2, macosComboBox, macosPlusMinusButton, macosSFSymbolLabel, macosToggleButtonBar);
         controlBox.setAlignment(Pos.CENTER);
         controlBox.setPadding(new Insets(10));
 
