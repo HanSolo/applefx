@@ -5,10 +5,10 @@ module eu.hansolo.applefx {
     requires java.desktop;
 
     // Java-FX
-    requires transitive javafx.base;
-    requires transitive javafx.graphics;
-    requires transitive javafx.controls;
-    requires transitive javafx.swing;
+    requires javafx.base;
+    requires javafx.graphics;
+    requires javafx.controls;
+    requires javafx.swing;
 
     // 3rd party
     requires transitive eu.hansolo.jdktools;

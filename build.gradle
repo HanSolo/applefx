@@ -41,8 +41,8 @@ dependencies {
     implementation "org.openjfx:javafx-controls:${javafxVersion}:${platform}"
     implementation "org.openjfx:javafx-swing:${javafxVersion}:${platform}"
     implementation "eu.hansolo:jdktools:17.0.33"
-    implementation "eu.hansolo:toolbox:17.0.55"
-    implementation "eu.hansolo:toolboxfx:17.0.45"
+    implementation "eu.hansolo:toolbox:17.0.57"
+    implementation "eu.hansolo:toolboxfx:17.0.47"
 }
 
 
@@ -68,7 +68,7 @@ jar {
                 'Implementation-Version': project.version,
                 'Bundle-Name'           : project.name,
                 'Bundle-License'        : 'https://www.apache.org/licenses/LICENSE-2.0;description=Apache License Version 2.0;link=https://spdx.org/licenses/Apache-2.0.html',
-                'Bundle-Description'    : description,
+                'Bundle-Description'    : project.description,
                 'Bundle-SymbolicName'   : 'eu.hansolo.applefx',
                 'Export-Package'        : 'eu.hansolo.applefx.event, eu.hansolo.applefx.fonts, eu.hansolo.applefx.tools',
                 'Class-Path'            : configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
